@@ -1,4 +1,4 @@
-# 04 - CSS Intermedio
+# CSS Intermedio
 Sigamos jugando con CSS.
 
 ## Bordes
@@ -405,3 +405,6 @@ body {
     font-weight: 300;
 }
 ```
+
+## Hosting
+- [netlify.com](https://www.netlify.com/)

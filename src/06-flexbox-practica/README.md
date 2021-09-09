@@ -1,4 +1,4 @@
-# 06 - CSS Flexbox [Práctica]
+# CSS Flexbox [Práctica]
 
 Comenzaremos a crear nuestro primer sitio web con Flexbox
 
@@ -685,3 +685,6 @@ body {
     text-align: center;
 }
 ```
+
+## Hosting
+- [netlify.com](https://www.netlify.com/)

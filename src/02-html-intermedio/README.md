@@ -1,4 +1,4 @@
-# 02 - HTML Intermedio
+# HTML Intermedio
 Conozcamos cosas más avanzadas de HTML
 
 ## Tablas

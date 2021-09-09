@@ -1,4 +1,4 @@
-# 01 - HTML
+# HTML
 Las siglas HTML vienen de “Hyper Text Markup Language” o Lenguaje Marcado de Hipertexto.
 Comenzaremos con las instalaciones necesarias:
 

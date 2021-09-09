@@ -1,4 +1,4 @@
-# 03 - CSS Fundamentos
+# CSS Fundamentos
 * CSS (en inglés Cascading Style Sheets) Hojas de estilo en Cascada. 
 * Es el responsable de todo lo visual de nuestro sitio web.
 * CSS describe cómo deben mostrarse los elementos HTML.

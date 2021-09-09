@@ -1,8 +1,9 @@
 module.exports = {
-    title: "Desarrollo Web",
+    title: "HTML, CSS y Bootstrap 5 (bluuweb)",
     dest: "docs",
     base: "/desarrollo-web-bluuweb/",
-    description: "Desarrollo web con bluuweb",
+    description:
+        "Curso presencial (Google Meet) de HTML, CSS y Bootstrap 5, Docente: Ignacio Gutiérrez (bluuweb)",
     head: [
         ["meta", { name: "theme-color", content: "#3eaf7c" }],
         ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
@@ -14,7 +15,8 @@ module.exports = {
     themeConfig: {
         editLinks: false,
         editLinkText: "",
-        lastUpdated: false,
+        lastUpdated: "Last Updated",
+        smoothScroll: true,
         nav: [
             {
                 text: "Guía",
@@ -46,8 +48,8 @@ module.exports = {
             "/04-css-intermedio/",
             "/05-flexbox/",
             "/06-flexbox-practica/",
-            //   '/07-grid-css/',
-            //   '/08-formularios/',
+            "/07-bootstrap/",
+            "/08-github/",
         ],
     },
 
@@ -56,3 +58,7 @@ module.exports = {
      */
     plugins: ["@vuepress/plugin-back-to-top", "@vuepress/plugin-medium-zoom"],
 };
+
+{
+    /* <img :src="$withBase('/img/beautify.PNG')" alt="foo"></img> */
+}
