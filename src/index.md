@@ -1,7 +1,7 @@
 # Curso HTML, CSS y Bootstrap 5
 
 <div style="text-align: center; padding: 2rem 0">
-    <img :src="$withBase('/img/html-2021.jpg')" alt="foo" style="maxWidth: 300px;"></img>
+    <img :src="$withBase('/img/html-2021-2.jpg')" alt="foo" style="maxWidth: 300px;"></img>
 </div>
 
 Este curso intensivo tiene como finalidad entregar las herramientas necesarias para comenzar en el desarrollo web con HTML, CSS y Bootstrap 5.
