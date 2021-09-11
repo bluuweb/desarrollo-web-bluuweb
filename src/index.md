@@ -1,6 +1,4 @@
-
-
-<h1 style="text-align: center;">Curso HTML, CSS y Bootstrap 5</h1>
+# Curso HTML, CSS y Bootstrap 5
 
 <div style="text-align: center; padding: 2rem 0">
     <img :src="$withBase('/img/html-2021.jpg')" alt="foo" style="maxWidth: 300px;"></img>
