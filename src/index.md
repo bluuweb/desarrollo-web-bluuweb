@@ -10,7 +10,7 @@ Está orientado a la práctica por ende a través de diferentes ejemplos compren
 
 Al finalizar el curso el estudiante podrá construir sitios web responsives utilizando HTML, CSS y Bootstrap 5. 👌
 
-## Planificación del curso
+<!-- ## Planificación del curso
 - El curso tiene una duración de **8 semanas consecutivas**.
 - Dos clases en vivo por semana de 2.5 horas. (Plataforma Google Meet)
 - Los días de clases son Miércoles y Viernes de 20:00 a 22:30 horas. (Hora Chile Continental GMT-3)
@@ -114,4 +114,4 @@ Todo llega a su fin, pero tu carrera aún está empezando, Ignacio se encargará
 - Curso de Javascript [Frontend]
 - Curso de Vue.js 3
 - Curso de React Hooks
-- Curso de Node.js [REST API]
+- Curso de Node.js [REST API] -->
