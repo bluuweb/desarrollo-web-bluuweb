@@ -74,3 +74,11 @@ module.exports = {
 {
     /* <img :src="$withBase('/img/beautify.PNG')" alt="foo"></img> */
 }
+
+{
+    /* 
+    <div class="text-center">
+        <img :src="$withBase('/img/git-vscode.JPG')" alt="icono visual studio code git" width="500px">
+    </div> 
+*/
+}

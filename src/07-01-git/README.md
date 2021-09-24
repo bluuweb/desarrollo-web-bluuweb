@@ -9,6 +9,14 @@ Está guía está diseñada para poder obtener el código del curso de GIT / GIT
 ## ¿Qué es GIT?
 Es un software de control de versiones, su propósito es llevar registro de los cambios en archivos de computadora y coordinar el trabajo que varias personas realizan sobre archivos compartidos (También puedes trabajar solo no hay problema :)). Existe la posibilidad de trabajar de forma remota y una opción es GitHub.
 
+## ¿Para qué usar GIT?
+- Permite regresar a versiones anteriores de forma sencilla y muy rápida.
+- Facilita el trabajo colaborativo.
+- Permite respaldar tus proyectos en la nube (ej con github).
+- Reduce considerablemente los tiempos de deploy.
+- Las "branches" o ramas, permiten trabajar con una base de código paralela al proyecto en sí.
+- [Fuente](https://blog.coffeedevs.com/8-razones-para-usar-git/)
+
 ### Flujo de trabajo de GIT
 <div class="text-center">
 <br>
@@ -21,6 +29,10 @@ Es un software de control de versiones, su propósito es llevar registro de los 
 <img :src="$withBase('/img/git-flujo.png')" alt="flujo git" width="500px">
 
 </div>
+
+:::tip
+Tus proyectos vinculados a git serán un repositorio
+:::
 
 **Tratando de explicar la imagen:** Tenemos nuestro directorio local (una carpeta en nuestro pc) con muchos archivos, Git nos irá registrando los cambios de archivos o códigos cuando nosotros le indiquemos, así podremos viajar en el tiempo retrocediendo cambios o restaurando versiones de código, ya sea en Local o de forma Remota (servidor externo). En la práctica quedará más claro.
 
@@ -82,6 +94,10 @@ git status -s
 git add .
 ```
 
+<div class="text-center">
+    <img :src="$withBase('/img/scaner.gif')" alt="add archivos git">
+</div>
+
 ``` js
 // Crear commit (fotografía del proyecto en ese momento)
 git commit -m "primer commit"
@@ -118,7 +134,7 @@ Para salir del modo edición de la líneas de comando precionar `:q`, en caso de
 Visual Studio Code tiene un apartado de Git, el cual de manera visual podemos trabajar.
 
 <div class="text-center">
-    <img :src="$withBase('/img/git-vscode.JPG')" alt="icono visual studio code git" width="500px">
+    <img :src="$withBase('/img/git-vscode.JPG')" alt="icono visual studio code git">
 </div>
 
 ## Github
@@ -131,7 +147,7 @@ Visual Studio Code tiene un apartado de Git, el cual de manera visual podemos tr
 
 ## Crear repositorio
 <div class="text-center">
-    <img :src="$withBase('/img/repo-github.JPG')" alt="icono visual studio code git" width="500px">
+    <img :src="$withBase('/img/repo-github.JPG')" alt="icono visual studio code git">
 </div>
 
 ```sh

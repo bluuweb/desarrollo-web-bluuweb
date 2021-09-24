@@ -94,6 +94,10 @@ git checkout nombreRama
 
 Podemos unir la rama master con la nueva, para eso tenemos que estar en la master para ejecutar el siguiente comando:
 
+<div class="text-center">
+    <img :src="$withBase('/img/git-merge.gif')" alt="git merge" width="500px">
+</div>
+
 ```js
 // Nos movemos a la nueva rama
 git merge nombreRama
