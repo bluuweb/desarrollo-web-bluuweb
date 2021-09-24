@@ -1,47 +1,7 @@
 # GIT Intermedio
 Github es la plataforma online para trabajar con proyectos en git, en simples palabras es utilizar git de forma remota pero entiendase que son cosas totamente distintas
 
-## Creando alias globales
-Los alias nos sirven para crear atajos de comandos, podemos guardar diferentes alias de forma global y quedarán guardados en la configuración de git.
-
-``` js
-// Guardamos el alias "lg" que ejecutará todo lo que está entre comillas
-git config --global alias.lg "log --oneline --decorate --all --graph"
-```
-
-``` js
-// Para ver el archivo config con los alias creados
-git config --global -e
-```
-
-**Vim** es el editor de código en la línea de comandos
-
-::: tip Salir del modo edición "Vim"
-Para salir del modo edición de la líneas de comando precionar `:q`, en caso de realizar algún cambio sin guardar escribir `:qa` <br>
-`:q!` también sirve para salir sin guardar
-:::
-
-``` js
-// Modo lectura sin poder modificar
-git config --global -l
-```
-
-``` js
-// Realiza el add . y commit más mensaje al mismo tiempo
-git commit -am "más comandos agregados"
-```
-
-``` js
-// Para editar un commit, como por ej: el mensaje
-git commit --amend
-```
-
-:::tip Trucos de editor Vim
-`i` para comenzar a editar <br>
-`esc` para salir del modo edición <br>
-`wq` para guardar y salir <br>
-`:q!` salir sin guardar cambios
-:::
+- [Explicación simple](https://pixelpioneers.co/blog/2017/git-basics-explained-by-designing-a-new-car)
 
 
 ## Viajes a través de los commit
