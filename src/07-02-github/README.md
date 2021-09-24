@@ -14,6 +14,15 @@ git push -u origin master
 
 Al ejecutar estas líneas de comando te pedirá el usuario y contraseña de tu cuenta de github.
 
+:::warning
+En caso de que no pida las credenciales o bien tengas otra cuenta vinculada, puedes reiniciar con:
+- Panel de control ->
+- Cuentas de usuario ->
+- Administrar credenciales ->
+- Credenciales de Windows ->
+- Buscar git:https//github.com y quitar
+:::
+
 ``` js
 // Nos muestra en que repositorio estamos enlazados remotamente.
 git remote -v

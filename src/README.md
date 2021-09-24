@@ -1,7 +1,13 @@
 # Curso HTML, CSS y Bootstrap 5
 
 <div style="text-align: center; padding: 2rem 0">
-    <img :src="$withBase('/img/html-2021-2.jpg')" alt="foo" style="maxWidth: 300px;"></img>
+    <a href="https://bit.ly/3lNnPeh" target="_blank">
+        <img :src="$withBase('/img/html-2021-2.jpg')" alt="foo" style="maxWidth: 300px;"></img>
+    </a>
+    <br>
+    <a href="https://bit.ly/3lNnPeh" target="_blank" class="ancla-btn">
+        😍 ACCEDE AL CURSO AQUÍ 😍
+    </a>
 </div>
 
 Este curso intensivo tiene como finalidad entregar las herramientas necesarias para comenzar en el desarrollo web con HTML, CSS y Bootstrap 5.
@@ -9,6 +15,18 @@ Este curso intensivo tiene como finalidad entregar las herramientas necesarias p
 Está orientado a la práctica por ende a través de diferentes ejemplos comprenderemos como es el camino del desarrollo web.
 
 Al finalizar el curso el estudiante podrá construir sitios web responsives utilizando HTML, CSS y Bootstrap 5. 👌
+
+:::tip 🎉 Accede al curso con un super descuento 🎉
+Este curso está publicado en Udemy, puedes acceder con un descuento especial en el siguiente enlace:
+- [Ir al curso en Udemy aquí](https://bit.ly/3lNnPeh)
+:::
+
+## Gist
+Aquí iré detallando diferentes notas:
+- [Notas de HTML y CSS](https://gist.github.com/bluuweb/8612c7e1c82bb85bce5b92d67f5b285c)
+
+
+
 
 <!-- ## Planificación del curso
 - El curso tiene una duración de **8 semanas consecutivas**.

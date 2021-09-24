@@ -1,10 +1,6 @@
-# Introducción a GIT
+# GIT Fundamentos
 
 Está guía está diseñada para poder obtener el código del curso de GIT / GITHUB de una forma amigable y en español.
-
-::: warning Aviso
-Esta guía está en constante actualización, podría no estar completa.
-:::
 
 ## Enlaces
 - [Instalar Git](https://git-scm.com/)
@@ -14,8 +10,17 @@ Esta guía está en constante actualización, podría no estar completa.
 Es un software de control de versiones, su propósito es llevar registro de los cambios en archivos de computadora y coordinar el trabajo que varias personas realizan sobre archivos compartidos (También puedes trabajar solo no hay problema :)). Existe la posibilidad de trabajar de forma remota y una opción es GitHub.
 
 ### Flujo de trabajo de GIT
+<div class="text-center">
+<br>
+<img :src="$withBase('/img/caja-git.png')" alt="flujo git" width="500px">
+
+[Fuente](https://medium.com/nerd-for-tech/a-non-scary-introduction-to-the-wondrous-world-of-git-eb213643a4e8)
+
+<br>
 <br>
 <img :src="$withBase('/img/git-flujo.png')" alt="flujo git" width="500px">
+
+</div>
 
 **Tratando de explicar la imagen:** Tenemos nuestro directorio local (una carpeta en nuestro pc) con muchos archivos, Git nos irá registrando los cambios de archivos o códigos cuando nosotros le indiquemos, así podremos viajar en el tiempo retrocediendo cambios o restaurando versiones de código, ya sea en Local o de forma Remota (servidor externo). En la práctica quedará más claro.
 
@@ -48,6 +53,11 @@ Es recomendable utilizar el correo asociado a Github
 git config --global user.email "myemail@example.com"
 ```
 
+```js
+git config user.name
+git config user.email
+```
+
 ### Ayuda
 ``` js
 // Ayuda sobre los comandos
@@ -63,7 +73,7 @@ git init
 
 ``` js
 // Ver que archivos no han sido registrados
-git status
+git status -s
 ```
 
 ``` js
@@ -78,28 +88,12 @@ git commit -m "primer commit"
 
 ``` js
 // Muestra la lista de commit del mas reciente al más antigüo
-git log
+git log --oneline
 ```
 
 En resumidas cuentas nosotros realizamos cambios en nuestros archivos, el comando `status` verificará que archivos han sidos modificados.
 Cuando deseemos registrar esos cambios tendremos que agregarlos con `add .` así ya estará listo para poder hacer un commit.
 El `commit` realiza la copia de ese instante para poder volver en el tiempo si es que es necesario.
-
-## Trucos
-``` js
-// Muestra en una línea los commit realizados
-git log --oneline
-```
-
-``` js
-// Muestra en una línea los commit realizados pero más elegante
-git log --oneline --decorate --all --graph
-```
-
-``` js
-// Solo muestra los archivos modificados
-git status -s
-```
 
 ::: tip Diferencias entre -- y -
 `--decorate` hace referencia a una palabra <br>
@@ -111,6 +105,8 @@ git status -s
 git status -s -b
 git status -sb //Hace lo mismo que el comando anterior
 ```
+
+
 
 ## Creando alias globales
 Los alias nos sirven para crear atajos de comandos, podemos guardar diferentes alias de forma global y quedarán guardados en la configuración de git.

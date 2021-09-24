@@ -3,7 +3,7 @@ module.exports = {
     dest: "docs",
     base: "/desarrollo-web-bluuweb/",
     description:
-        "Curso presencial (Google Meet) de HTML, CSS y Bootstrap 5, Docente: Ignacio Gutiérrez (bluuweb)",
+        "Curso de HTML, CSS y Bootstrap 5, Docente: Ignacio Gutiérrez (bluuweb), plataforma: Udemy",
     head: [
         ["meta", { name: "theme-color", content: "#3eaf7c" }],
         ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
@@ -18,14 +18,18 @@ module.exports = {
         lastUpdated: "Last Updated",
         smoothScroll: true,
         nav: [
-            {
-                text: "Guía",
-                link: "/",
-            },
+            // {
+            //     text: "Guía",
+            //     link: "/",
+            // },
             // { text: 'Guia', link: '/docs/' },
             {
                 text: "Youtube",
                 link: "https://youtube.com/bluuweb",
+            },
+            {
+                text: "Ver curso en Udemy",
+                link: "https://bit.ly/3lNnPeh",
             },
             {
                 text: "Curso Vue.js",
@@ -44,6 +48,7 @@ module.exports = {
             "/04-css-intermedio/",
             "/05-flexbox/",
             "/06-flexbox-practica/",
+            "/07-00-terminal/",
             "/07-01-git/",
             "/07-02-github/",
             "/07-b-fundamentos/",
