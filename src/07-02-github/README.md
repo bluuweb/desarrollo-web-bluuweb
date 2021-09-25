@@ -22,6 +22,13 @@ node_modules/ //Ignora toda la carpeta
 - ``git revert`` es la mejor herramienta para deshacer cambios públicos compartidos.
 - ``git reset`` es más adecuado para deshacer cambios privados locales.
 
+<div class="text-center">
+    <img :src="$withBase('/img/reset.png')" alt="git merge" width="500px">
+    <br>
+    <a href="https://medium.com/mindorks/use-of-git-reset-git-revert-git-checkout-squash-commit-2b721ca2d2d3" target="_blank">Fuente imagen</a>
+</div>
+
+
 ## git log --oneline
 Nos muestra el identificador para poder revisar el historial de commit (Cada confirmación tiene un hash SHA-1 de identificación único.).
 ```sh
@@ -153,7 +160,8 @@ En su lugar es mejor usar ``git revert``, deshace los cambios realizados por un 
 
 <div class="text-center">
     <img :src="$withBase('/img/revert.svg')" alt="revert vs reset">
-    https://www.atlassian.com/es/git/tutorials/undoing-changes/git-revert
+    <br>
+    <a href="https://www.atlassian.com/es/git/tutorials/undoing-changes/git-revert" target="_blank">Fuente imagen</a>
 </div>
 
 
@@ -176,6 +184,12 @@ Ventajas
 ## Ramas o branch
 Hasta el momento solo hemos trabajado en la rama "master" o "main" pero puede que necesitemos crear diferentes ramas para los seguimientos de git.
 
+<div class="text-center">
+    <img :src="$withBase('/img/feature.png')" alt="git merge" width="500px">
+    <br>
+    <a href="https://zepel.io/blog/how-to-create-a-new-branch-in-github/" target="_blank">Fuente imagen</a>
+</div>
+
 ```js
 // Crea una nueva rama
 git branch nombreRama
@@ -192,15 +206,24 @@ git checkout nombreRama
 ```
 
 ```js
+// Nos muestra visualmente las ramas
+git log --oneline --graph
+```
+
+```js
 git push --set-upstream origin nombreRama
 ```
 
 ## git merge
 Podemos unir una rama con la nueva, para eso tenemos que estar en la rama para ejecutar el siguiente comando:
 
-Esto unirá de forma automática la rama actual con la que indiquemos:
+Tenemos que estar en la rama que está esperando los cambios (los nuevos cambios):
 ```sh
 git merge nombreRama
+```
+
+```sh
+git log --oneline --graph
 ```
 
 <div class="text-center">
@@ -215,6 +238,18 @@ git branch -d nombreRama
 ::: tip Atajos
 Podemos utilizar `git checkout -b nuevaRama` para crear la nuevaRama y viajar a ella.
 :::
+
+## Conflictos
+<div class="text-center">
+    <img :src="$withBase('/img/conflicto-2.JPG')" alt="conflicto en ramas unidas">
+</div>
+
+Puedes utilizar las herramientas de VSCode o bien hacer los cambios manualmente en el archivo. **Lo importante es hacer un nuevo commit al finalizar.**
+
+```sh
+git add .
+git commit -m "solucion de conflicto"
+```
 
 ## Tags
 Con los tags podemos hacer versiones de nuestro proyecto.
