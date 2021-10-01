@@ -1,11 +1,15 @@
 # Programación (Fundamentos)
 Aquí conoceremos los fundamentos de programación utilizando un pseudocódigo llamado PSeInt. Si tu no sabes nada de programación deberías comenzar por aquí.
 
+<div class="text-center">
+    <img :src="$withBase('/img/programar.gif')" alt="icono visual studio code git">
+</div>
+
 ## Ventajas
 - Estos conceptos te servirán para la mayoría de los lenguajes de programación.
 - Pasar estas definiciones a Javascript será muy fácil.
 - Nos ayuda visualmente como pensar como programadores.
-- Esta guía tiene ejemplos orientados a Javascript.
+- **Esta guía tiene ejemplos orientados a Javascript.**
 
 ## PSeInt
 PSeInt es una herramienta para asistir a un estudiante en sus primeros pasos en programación. Mediante un simple e intuitivo **pseudolenguaje** en español (complementado con un editor de diagramas de flujo), le permite centrar su atención en los conceptos fundamentales de la algoritmia computacional, minimizando las dificultades propias de un lenguaje y proporcionando un entorno de trabajo con numerosas ayudas y recursos didácticos.
@@ -25,6 +29,10 @@ Tenemos las típicas herramientas como nuevo, abrir, etc. Las importantes serán
 - Ejecutar
 - Ejecutar paso a paso 
 - Dibujar diagrama de flujo
+
+<div class="text-center">
+    <img :src="$withBase('/img/indentar.gif')" alt="icono visual studio code git">
+</div>
 
 ## Click derecho
 Sobre el texto "Algoritmo" damos click derecho nos saldrá una opción de definición, lo cual es sumamente útil para revisar conceptos:
@@ -390,3 +398,124 @@ Algoritmo aprender_while
 
 FinAlgoritmo
 ```
+
+## Array (Arreglos)
+Los arrays son objetos **similares a una lista** cuyo prototipo proporciona métodos **para efectuar operaciones de recorrido** y de mutación. Tanto la longitud como el tipo de los elementos de un array son variables.
+
+```js
+Algoritmo array_for
+	
+	Dimension frutas[3]
+	frutas[1] = "Manzana"
+	frutas[2] = "Platano"
+	frutas[3] = "Sandía"
+	
+	Mostrar frutas[1]
+	Mostrar frutas[2]
+	Mostrar frutas[3]
+	
+FinAlgoritmo
+```
+
+En Javascript es dinámico por ende no necesitamos indicar la dimensión:
+```js
+let frutas = ["Manzana", "Platano", "Sandía"]
+```
+
+## for (para)
+La instrucción **Para (for)** ejecuta una secuencia de instrucciones un número determinado de veces. 
+<div class="text-center">
+    <img :src="$withBase('/img/pseint-10.JPG')" alt="icono visual studio code git">
+</div>
+
+```js
+Algoritmo array_for
+	
+	Dimension frutas[3]
+	frutas[1] = "Manzana"
+	frutas[2] = "Platano"
+	frutas[3] = "Sandía"
+	
+	Para i Desde 1 Hasta 3 Hacer
+		Mostrar frutas(i)
+	FinPara
+
+FinAlgoritmo
+```
+
+
+## for of
+<div class="text-center">
+    <img :src="$withBase('/img/pseint-9.JPG')" alt="icono visual studio code git">
+</div>
+
+```js
+Algoritmo for_of
+	
+	Dimension frutas[3]
+	frutas[1] = "Manzana"
+	frutas[2] = "Platano"
+	frutas[3] = "Sandía"
+	
+	Para Cada elemento de frutas Hacer
+		Mostrar elemento
+	FinPara
+	
+FinAlgoritmo
+```
+
+## Funciones
+Las funciones son uno de los bloques de construcción fundamentales en JavaScript. Una función en JavaScript es similar a un procedimiento — un **conjunto de instrucciones que realiza una tarea o calcula un valor**, pero para que un procedimiento califique como función, debe tomar alguna entrada y devolver una salida donde hay alguna relación obvia entre la entrada y la salida. Para usar una función, debes definirla en algún lugar del ámbito desde el que deseas llamarla.
+
+Función si argumento o parámetros
+```js
+Funcion Saludar
+	Mostrar "Hola Bienvenido!"
+FinFuncion
+
+Algoritmo ejemplo_func
+	
+	Saludar()
+
+FinAlgoritmo
+```
+
+Con argumentos
+```js
+Funcion Saludar (nombreUsuario)
+	Mostrar "Hola Bienvenido! ", nombreUsuario
+FinFuncion
+
+Algoritmo ejemplo_func
+	
+	Saludar("Juanito")
+
+FinAlgoritmo
+```
+
+Con retorno
+```js
+Funcion resultado = Sumar ( n1, n2 )
+	resultado = n1 + n2
+Fin Funcion
+
+Algoritmo ejemplo_func
+	
+	Mostrar "Ingrese número 1"
+	leer numUno
+	Mostrar "Ingrese número 2"
+	leer numDos
+	
+	Mostrar "Suma es: ", Sumar(numUno, numDos)
+
+FinAlgoritmo
+```
+
+## Qué sigue...
+<div class="text-center">
+    <img :src="$withBase('/img/javascript.gif')" alt="icono visual studio code git">
+</div>
+
+<p class="text-center">
+<b>En la próxima sección aterrizaremos todos estos conceptos a Javascript!</b>
+</p>
