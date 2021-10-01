@@ -136,7 +136,7 @@ El punto y coma indica el final de una sentencia, pero Javascript lo detecta aut
 ```js
 Imprimir "Ingrese su nombre"
 leer nombreUsuario
-Imprimir "Bienvenido: " + nombreUsuario
+Imprimir "Bienvenido: " , nombreUsuario
 ```
 
 ## Concatenación
@@ -148,7 +148,7 @@ Algoritmo super_suma
 	
 	Imprimir "Ingrese su nombre"
 	leer nombreUsuario
-	Imprimir "Bienvenido: " + nombreUsuario
+	Imprimir "Bienvenido: " , nombreUsuario
 	
 	Imprimir "Ingrese primero número"
 	leer primerNumero
@@ -158,7 +158,7 @@ Algoritmo super_suma
 	
 	resultadoSuma = primerNumero + segundoNumero
 	
-	Imprimir nombreUsuario + " el resultado es: " + resultadoSuma
+	Imprimir nombreUsuario , " el resultado es: " , resultadoSuma
 	
 FinAlgoritmo
 ```
@@ -297,7 +297,7 @@ Algoritmo super_suma
 		SiNo
 			Mostrar "Era más bajo"
 		FinSi
-		Mostrar "El número era: " + nMaquina
+		Mostrar "El número era: " , nMaquina
 	FinSi
 FinAlgoritmo
 ```
@@ -348,7 +348,7 @@ Crea un bucle o loop que ejecuta una sentencia especificada mientras cierta cond
 Algoritmo while
 	n <- 0
 	Mientras (n<=5) Hacer
-		Escribir 'vuelta: ' + n
+		Escribir 'vuelta: ' , n
 		n <- n+1
 	FinMientras
 FinAlgoritmo
@@ -369,7 +369,7 @@ Algoritmo aprender_while
 
 	intentos = 3
 	
-	Mostrar "adivina número del 1 al 10, tienes: " + intentos + " intentos"
+	Mostrar "adivina número del 1 al 10, tienes: " , intentos , " intentos"
 	Mostrar "Ingresa número"
 	leer nUser
 	
@@ -384,7 +384,7 @@ Algoritmo aprender_while
 
         // restamos 1 intento
 		intentos = intentos - 1
-		Mostrar "Te quedan... " + intentos + " intentos!"
+		Mostrar "Te quedan... " , intentos , " intentos!"
 
         // caputamos número user
 		Leer nUser
@@ -483,7 +483,7 @@ FinAlgoritmo
 Con argumentos
 ```js
 Funcion Saludar (nombreUsuario)
-	Mostrar "Hola Bienvenido! " + nombreUsuario
+	Mostrar "Hola Bienvenido! " , nombreUsuario
 FinFuncion
 
 Algoritmo ejemplo_func
@@ -506,7 +506,7 @@ Algoritmo ejemplo_func
 	Mostrar "Ingrese número 2"
 	leer numDos
 	
-	Mostrar "Suma es: " + Sumar(numUno, numDos)
+	Mostrar "Suma es: " , Sumar(numUno, numDos)
 
 FinAlgoritmo
 ```
