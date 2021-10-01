@@ -56,6 +56,7 @@ module.exports = {
             // "/09-b-accordion/",
             "/10-b-scroll/",
             "/11-01-psint/",
+            "/11-02-js-basico/",
             "/11-b-form/",
             "/12-b-sass/",
             "/14-b-range/",
