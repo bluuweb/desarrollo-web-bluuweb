@@ -3,7 +3,24 @@
 - Aquí conoceremos los fundamentos de Javascript.
 - Es muy importante revisar la sección anterior ["Programación (Fundamentos)"](/11-01-psint/) si no sabes nada de nada.
 
+<div class="text-center">
+    <img :src="$withBase('/img/js-gif.gif')" alt="icono visual studio code git">
+    <br>
+    <a href="https://www.pinterest.es/dancingairplants/geek/" target="_blanck">Fuente</a>
+</div>
+
 JavaScript es un lenguaje de programación que te permite implementar funciones complejas en tus páginas web. [mozilla](https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/What_is_JavaScript#:~:text=JavaScript%20es%20un%20lenguaje%20de%20programaci%C3%B3n%20o%20de%20secuencias%20de%20comandos%20que%20te%20permite%20implementar%20funciones%20complejas%20en%20p%C3%A1ginas%20web)
+
+JavaScript es un lenguaje de programación multiplataforma **orientado a objetos** que se utiliza para hacer que las páginas web sean interactivas (p. ej., Que tienen animaciones complejas, botones en los que se puede hacer clic, menús emergentes, etc.). **También hay versiones de JavaScript de lado del servidor más avanzadas, como Node.js**, que te permiten agregar más funcionalidad a un sitio web que simplemente descargar archivos (como la colaboración en tiempo real entre varias computadoras). Dentro de un entorno (por ejemplo, un navegador web), JavaScript se puede conectar a los objetos de su entorno para proporcionar control programático sobre ellos.
+
+- [Javascript vs Java](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Introduction#javascript_y_java)
+- [ecmascript](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Introduction#javascript_y_la_especificacion_ecmascript)
+- [POO que es](https://profile.es/blog/que-es-la-programacion-orientada-a-objetos/): La Programación Orientada a Objetos (POO) es un paradigma de programación, es decir, un modelo o un estilo de programación que nos da unas guías sobre cómo trabajar con él. Se basa en el concepto de clases y objetos.
+- [Javascript no es POO](https://www.freecodecamp.org/espanol/news/programacion-orientada-a-objectos-en-javascript-explicado-con-ejemplos/): JavaScript no es un lenguaje orientado a objetos basado en clases. Pero todavía tiene formas de usar la programación orientada a objetos (POO).
+
+:::tip Historia
+JavaScript fue desarrollado originalmente por Brendan Eich de Netscape con el nombre de Mocha, el cual fue renombrado posteriormente a LiveScript, para finalmente quedar como JavaScript. [sigue la historia aquí](https://es.wikipedia.org/wiki/JavaScript)
+:::
 
 #### Ejemplos:
 - [brittanychiang.com](https://brittanychiang.com/)
@@ -190,12 +207,23 @@ console.log(false);
 ```
 
 ## Variables
+- [guía variables js](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#conceptos_b%C3%A1sicos)
 - En programación una variable es un espacio de memoria el cual nos servirá para almacenar un tipo de dato con un valor correspondiente.
 - Imagina como una caja que guarda un tipo de dato/valor.
 
 <div class="text-center">
     <img :src="$withBase('/img/pseint-3.JPG')" alt="icono visual studio code git">
 </div>
+
+#### JavaScript tiene tres tipos de declaraciones de variables.
+1. var
+2. let
+3. const
+- [más info](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#declaraciones)
+
+:::tip var vs let vs const
+En capitulos siguientes veremos las diferencias, por ahora comencemos con let.
+:::
 
 ```js
 let x = 10
@@ -212,11 +240,6 @@ En JS el signo **`=`** se conoce como **Operador de asignación simple**
 - A esto se le llama **declarar la variable** con un valor inicial.
 :::
 
-
-:::tip
-`var` es una palabra reservada para crear una varible global en JS. La veremos más adelante.
-:::
-
 ```js
 let x = 10;
 let y = 20;
@@ -231,6 +254,7 @@ Reglas para el nombre de sus variables:
 - Evitar signos extraños como `@#][+{}-` etc.
 - El primer carácter no puede ser un número `var 2res = 'algo'`
 - Se puede utilizar el signo `$` ej: `var $anio = 2021;`
+
 
 ## Práctica variables
 Intena crear las variables (con datos inventados) para que este script funcione:
@@ -551,4 +575,204 @@ console.log("FIN: " + numero);
 ```
 
 Juego adivinar
-- [Math.random()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
+- [Math.random()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Math/random): La función Math.random() retorna un punto flotante, un número pseudo-aleatorio dentro del rango [0, 1).
+
+```js
+// Retorna un entero aleatorio entre min (incluido) y max (excluido)
+// ¡Usando Math.round() te dará una distribución no-uniforme!
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+```
+
+Paso 1:
+```js
+let numeroMaquina = Math.floor(Math.random() * (10 - 1)) + 1;
+console.log(numeroMaquina);
+let numeroUser = parseInt(prompt("Adivine número del 1 al 10"));
+
+let vidas = 3;
+
+while (numeroMaquina !== numeroUser && vidas > 1) {
+    
+    vidas--;
+    numeroUser = parseInt(prompt("Vuelve a intentarlo, tus vidas: " + vidas));
+}
+
+if (numeroMaquina === numeroUser) {
+    console.log("GANASTE");
+} else {
+    console.log("PERDISTE, el número era: " + numeroMaquina);
+}
+```
+
+Paso 2:
+```js{9-13}
+let numeroMaquina = Math.floor(Math.random() * (10 - 1)) + 1;
+console.log(numeroMaquina);
+let numeroUser = parseInt(prompt("Adivine número del 1 al 10"));
+
+let vidas = 3;
+
+while (numeroMaquina !== numeroUser && vidas > 1) {
+    
+    if (numeroMaquina < numeroUser) {
+        console.log("Es más bajo");
+    } else {
+        console.log("Es más alto");
+    }
+
+    vidas--;
+    numeroUser = parseInt(prompt("Vuelve a intentarlo, tus vidas: " + vidas));
+}
+
+if (numeroMaquina === numeroUser) {
+    console.log("GANASTE");
+} else {
+    console.log("PERDISTE, el número era: " + numeroMaquina);
+}
+```
+
+## Array
+- [array](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array): Los arrays son objetos similares a una lista cuyo prototipo proporciona métodos para efectuar operaciones de recorrido y de mutación. Tanto la longitud como el tipo de los elementos de un array son variables.
+
+```js
+let frutas = ["manzana", "platano", "pera"];
+console.log(frutas);
+```
+
+<div class="text-center">
+    <img :src="$withBase('/img/vscode-5.png')" alt="icono visual studio code git">
+</div>
+
+Conceptos claves:
+1. length: Tamaño de array (cantidad de elementos)
+2. índice: Comienzan en cero, es decir, el índice del primer elemento de un array es 0.
+
+```js
+let frutas = ["manzana", "platano", "pera"];
+console.log(frutas);
+console.log(frutas.length);
+console.log(frutas[0]);
+console.log(frutas[1]);
+console.log(frutas[2]);
+console.log(frutas[3]);
+```
+
+:::tip undefined
+Una variable a la que no se le ha asignado valor, o no se ha declarado en absoluto (no se declara, no existe) son de tipo ``undefined``. Un método o sentencia también devuelve ``undefined`` si la variable que se está evaluando no tiene asignado un valor. Una función devuelve ``undefined`` si no se ha devuelto un valor.
+:::
+
+:::warning
+Este es solo el comienzo de los array, más adelante conoceremos en profundidad como trabajar con array, recorrerlos con forEach, agregar o quitar elementos, ordenarlos, filtrar, etc.
+:::
+
+## for
+<div class="text-center">
+    <img :src="$withBase('/img/pseint-10.JPG')" alt="icono visual studio code git">
+</div>
+
+- [for](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for): Crea un bucle que consiste en tres expresiones opcionales, encerradas en paréntesis y separadas por puntos y comas, seguidas de una sentencia ejecutada en un bucle.
+
+```js
+let frutas = ["manzana", "platano", "pera"];
+
+for (let i = 0; i < frutas.length; i++) {
+    console.log(frutas[i]);
+}
+```
+
+## for of
+- [for of](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of): La sentencia sentencia for...of ejecuta un bloque de código para cada elemento de un objeto iterable, como lo son: String, Array, objetos similares a array (por ejemplo, arguments or NodeList), TypedArray, Map, Set e iterables definidos por el usuario.
+
+```js
+for (let fruta of frutas) {
+    console.log(fruta);
+}
+```
+
+:::warning
+La sintaxis de  for...of es específica para las colecciones, y no para todos los objetos. Esta Iterará sobre cualquiera de los elementos de una colección que tengan la propiedad [Symbol.iterator].
+
+**Vamos a tener una sección dedicada a los objetos en Javascript así que paciencia.**
+:::
+
+<div class="text-center">
+    <img :src="$withBase('/img/vscode-6.png')" alt="icono visual studio code git">
+</div>
+
+- [for in](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of#diferencia_entre_for...of_y_for...in): El bucle for...in iterará sobre todas las propiedades de un objeto. Más tecnicamente, iterará sobre cualquier propiedad en el objeto que haya sido internamente definida con su propiedad [[Enumerable]] configurada como true. 
+
+```js
+for (let fruta in frutas) {
+    console.log(fruta);
+}
+```
+
+## function
+- [functions](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Functions): Las funciones son uno de los bloques de construcción fundamentales en JavaScript. Una función en JavaScript es similar a un procedimiento — un **conjunto de instrucciones** que realiza una tarea o calcula un valor, pero para que un procedimiento califique como función, debe tomar alguna entrada y devolver una salida donde hay alguna relación obvia entre la entrada y la salida.
+
+Características:
+- El nombre de la función.
+- Una lista de parámetros de la función, entre paréntesis y separados por comas.
+- Las declaraciones de JavaScript que definen la función, encerradas entre llaves, ``{ ... }``.
+
+```js
+function saludar() {
+    console.log("Bienvenido!");
+}
+
+saludar();
+```
+
+y esto funcionará...
+```js
+saludar();
+function saludar() {
+    console.log("Bienvenido!");
+}
+```
+- una estricta definición de hoisting sugiere que las declaraciones de variables y funciones son físicamente movidas al comienzo del código, pero esto no es lo que ocurre en realidad. Lo que sucede es que las declaraciones de variables y funciones son asignadas en memoria durante la fase de compilación, pero quedan exactamente en dónde las has escrito en el código.
+- [Hoisting](https://developer.mozilla.org/es/docs/Glossary/Hoisting)
+
+:::danger Ojito!!
+"Hoisting" usualmente es una pregunta técnica en una entrevista de trabajo 😲
+:::
+
+Funciones con argumentos/parámetros:
+```js
+function saludar(nombreUsuario) {
+    console.log("Bienvenido! " + nombreUsuario);
+}
+saludar("Ignacio");
+```
+
+Funciones con retorno:
+```js
+function saludar(nombreUsuario) {
+    return "Bienvenido " + nombreUsuario;
+}
+
+console.log(saludar("Ignacio"));
+```
+
+Ejemplo sumar:
+```js
+function sumar(n1, n2) {
+    return parseInt(n1) + parseInt(n2);
+}
+
+let numeroUno = prompt("Ingrese primer número");
+let numeroDos = prompt("Ingrese segundo número");
+
+let resultado = sumar(numeroUno, numeroDos);
+
+console.log("El total es: " + resultado);
+```
+
+## ¿Qué sigue?
+Hasta acá conocimos los fundamentos de programación en Javascript, pero aún nos queda mucho por aprender, continuaremos en la siguiente sección con más JS.
+
+<div class="text-center">
+    <img :src="$withBase('/img/bean.gif')" alt="icono visual studio code git">
+</div>
