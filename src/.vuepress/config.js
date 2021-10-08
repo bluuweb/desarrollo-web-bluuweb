@@ -55,8 +55,6 @@ module.exports = {
             "/08-b-componentes/",
             // "/09-b-accordion/",
             "/10-b-scroll/",
-            "/11-01-psint/",
-            "/11-02-js-basico/",
             "/11-b-form/",
             "/12-b-sass/",
             "/14-b-range/",
@@ -64,6 +62,9 @@ module.exports = {
             "/15-b-php/",
             // "/16-b-parsel/",
             "/17-b-offcanvas/",
+            "/11-01-psint/",
+            "/11-02-js-basico/",
+            "/11-03-js/",
         ],
     },
 

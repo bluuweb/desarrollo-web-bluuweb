@@ -21,6 +21,10 @@ Este curso está publicado en Udemy, puedes acceder con un descuento especial en
 - [Ir al curso en Udemy aquí](https://bit.ly/3lNnPeh)
 :::
 
+## ¿Dudas y preguntas?
+Te invito a nuestro servidor de **Discord**, donde todos nos ayudamos. **ES GRATIS** 👏
+- [Click aquí http://discord.bluuweb.cl](http://discord.bluuweb.cl)
+
 ## Gist
 Aquí iré detallando diferentes notas:
 - [Notas de HTML y CSS](https://gist.github.com/bluuweb/8612c7e1c82bb85bce5b92d67f5b285c)
