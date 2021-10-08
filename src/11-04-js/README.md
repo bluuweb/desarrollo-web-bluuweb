@@ -28,7 +28,7 @@ console.log(gato.nombre)
 console.log(gato.duerme)
 ```
 
-Notación de corchetes 👎:
+Notación de corchetes (nos servirá para recorrerlo):
 ```js
 console.log(gato['nombre'])
 console.log(gato['edad'])
@@ -120,7 +120,27 @@ Encadenamiento opcional: resultado undefined.
 console.log(gato.otros?.favoritos);
 ```
 
+## for...in
+- (for...in)[https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in]: La instrucción for-in itera sobre todas las propiedades enumerables de un objeto que está codificado por cadenas
+
+```js
+const gato = {
+    nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+};
+
+for (const key in gato) {
+    console.log(gato[propiedad]);
+}
+```
+
+
 ## Destructuring Objects
+
+
+
 
 ## Programación funcional
 

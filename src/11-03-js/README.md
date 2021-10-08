@@ -163,7 +163,7 @@ miArray = ["nuevoElemento"]
 
 Válido:
 ```js
-let miArray = []
+const miArray = []
 miArray[0] = ["nuevoElemento"]
 console.log(miArray)
 ```
