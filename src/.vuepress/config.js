@@ -65,6 +65,7 @@ module.exports = {
             "/11-01-psint/",
             "/11-02-js-basico/",
             "/11-03-js/",
+            "/11-04-js/",
         ],
     },
 

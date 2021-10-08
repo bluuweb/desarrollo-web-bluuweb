@@ -770,6 +770,24 @@ let resultado = sumar(numeroUno, numeroDos);
 console.log("El total es: " + resultado);
 ```
 
+:::tip reutilizables
+Una característica fundamental de las funciones es que se pueden reutilizar.
+:::
+
+```js
+function sumar(n1, n2) {
+    return n1 + n2;
+}
+
+let resultadoUno = sumar(10, 20);
+let resultadoDos = sumar(50, 60);
+let resultadoTres = sumar(100, 30);
+
+console.log("El total uno es: " + resultadoUno);
+console.log("El total dos es: " + resultadoDos);
+console.log("El total tres es: " + resultadoTres);
+```
+
 ## ¿Qué sigue?
 Hasta acá conocimos los fundamentos de programación en Javascript, pero aún nos queda mucho por aprender, continuaremos en la siguiente sección con más JS.
 

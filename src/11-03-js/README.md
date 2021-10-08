@@ -1,4 +1,4 @@
-# Javascript (conceptos claves)
+# Javascript (Conceptos claves)
 
 :::tip 
 **Preocuparse por la eficiencia puede ser una distracción.** Es otro factor más que complica el diseño del programa, y ​​cuando estás haciendo algo que ya es difícil, esa cosa extra de la que preocuparte puede ser paralizante. Por lo tanto, **empieza siempre por escribir algo que sea correcto y fácil de entender.** Si te preocupa que sea demasiado lento, que normalmente no lo es, ya que la mayoría del código simplemente no se ejecuta con la frecuencia suficiente para llevar una cantidad significativa de tiempo, **puedes medirlo después y mejorarlo si es necesario.**
@@ -32,7 +32,7 @@ Las plantillas de cadena de caracteres pueden **contener marcadores**, identific
 let nombreUsuario = "bluuweb";
 console.log("\nBienvenido: \n" + nombreUsuario + "\n");
 ```
-con las plantillas literales, se pueden utilizar sus nuevas capacidades (es decir, insertar expresiones con ${ } e incluir caracteres de fin de linea literales dentro de la cadena) para simplificar la sintaxis:
+con las plantillas literales, se pueden utilizar sus nuevas capacidades (es decir, insertar expresiones con ``${ }`` e incluir caracteres de fin de linea literales dentro de la cadena) para simplificar la sintaxis:
 
 ```js
 let nombreUsuario = "bluuweb";
@@ -123,7 +123,7 @@ console.log(i)
 ```
 
 ### const
-``const`` tiene todas las características increíbles que ``let`` tiene, con la ventaja adicional de que las variables declaradas usando ``const`` **son de solo lectura**. Son un valor constante, **lo que significa que una vez que se asigna una variable ``const``, no se puede reasignar.**
+``const`` tiene todas las características increíbles de ``let``, con la ventaja adicional de que las variables declaradas usando ``const`` **son de solo lectura**. Son un valor constante, **lo que significa que una vez que se asigna una variable ``const``, no se puede reasignar.**
 
 Error:
 ```js
@@ -198,19 +198,53 @@ frutas.shift()
 console.log(frutas)
 ```
 
+## Práctica: carrito de compras
+
+- El objetivo es crear una aplicación que nos permita ir agregando elementos a un carrito de compras: [ver ejemplo](https://bluuweb.github.io/ejemplos-javascript-fundamentos/01-carrito-compras.html)
+- [confirm()](https://developer.mozilla.org/es/docs/Web/API/Window/confirm): muestra una ventana de diálogo con un mensaje opcional y dos botones, Aceptar (true) y Cancelar (false).
+
+:::warning promp()
+En el caso que suban el proyecto a un servidor tendrán este mensaje:
+
+Si un documento en una pestaña en segundo plano llama a window.prompt (), la llamada a prompt () volverá inmediatamente, **y no se mostrará ningún diálogo al usuario para esa llamada a prompt ().** 
+
+- [más info](https://www.chromestatus.com/feature/5637107137642496)
+:::
+
+Solución:
+```js
+const frutas = []
+const fruta = prompt('🍒 Feria Market 🍉 ¿qué fruta desea comprar?')
+
+frutas.push(fruta)
+
+while (confirm('¿Desea agregar otro elemento al 🛒?')) {
+    const fruta = prompt('¿qué fruta desea comprar?')
+    frutas.push(fruta)
+}
+
+console.log('Ustede compró: ')
+for (let fruta of frutas) {
+    console.log(fruta)
+}
+```
+
 ## Funciones anónimas
 En JavaScript, usualmente no necesitas nombrar tus funciones, especialmente cuando se pasa una función como argumento a otra función. En su lugar, creamos funciones inline (en línea). No necesitamos nombrar estas funciones porque no las reutilizamos en otro lugar.
 
+Función declarativa:
 ```js
+// declaro la función
 function numAleatorioRango(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const miNumero = numAleatorioRango(1, 10)
-console.log(miNumero)
+// invoco la función
+console.log(numAleatorioRango(1, 11))
 ```
 
-Anónima:
+Función expresada: </br>
+Anónima (expresada en una variable):
 ```js
 const miNumero = function (min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -218,11 +252,26 @@ const miNumero = function (min, max) {
 console.log(miNumero(1, 11))
 ```
 
+Diferencia declarativa vs Expresada:
+```js
+console.log(miNumero(1, 11))
+const miNumero = function (min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+```
+
+:::tip
+La forma correcta de definir una función varía según el comportamiento que esperemos de la misma: **con las funciones declaradas, tenemos la seguridad de que siempre estarán disponibles en tiempo de ejecución**. Con las funciones expresadas, tendremos que éstas no son evaluadas hasta que el intérprete no alcance su posición en el código, lo cual puede generar errores en arquitecturas muy anidadas.
+
+El hecho de que las funciones declarativas se evalúen antes que las expresiones, pueden producir comportamientos no deseados cuando forman parte de condicionales. Para estos casos, **el uso de las funciones expresadas garantiza que éstas formarán parte del flujo general del programa**, lo cual puede evitarnos sorpresa en determinados entornos.
+
+- [fuente](https://www.etnassoft.com/2011/09/02/funciones-declaradas-vs-funciones-expresadas-en-javascript/)
+:::
+
 ES6 nos proporciona el azúcar sintáctico, para no tener que escribir funciones anónimas de este modo. En su lugar, puedes usar la sintaxis de función flecha.
 
 ## Arrow functions
-
-- [Arrow functions](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+- [Arrow functions](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/Arrow_functions): Una expresión de función flecha es una alternativa compacta a una expresión de función tradicional
 
 ```js
 const miNumeroFlecha = (max) => {
@@ -253,7 +302,7 @@ const miNumeroFlecha = (min, max) => Math.floor(Math.random() * (max - min)) + m
 console.log(miNumeroFlecha(1, 11))
 ```
 
-Parámetros opcionales:
+Parámetros opcionales (también se puede hacer con function):
 ```js
 const miNumeroFlecha = (min = 1, max = 10) => Math.floor(Math.random() * (max - min)) + min;
 
@@ -284,40 +333,22 @@ frutas.forEach((fruta, index, array) => {
 })
 ```
 
-## Parámetros Rest
-La sintaxis de los parámetros rest nos permiten representar un número indefinido de argumentos como un array.
-
-- [rest parameters](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/rest_parameters)
-
+En nuestro ejemplo de carrito de compras:
 ```js
-const carrito = (...frutas) => {
-    return frutas.forEach(fruta => console.log(fruta))
+const carrito = []
+const fruta = prompt('🍒 Feria Market 🍉 ¿qué fruta desea comprar?')
+
+carrito.push(fruta)
+
+while (confirm('¿Desea agregar otro elemento al 🛒?')) {
+    const fruta = prompt('¿qué fruta desea comprar?')
+    carrito.push(fruta)
 }
-carrito("manzana", "pera", "sandía")
+
+console.log('Ustede compró: ')
+carrito.forEach((fruta, index) => (
+    console.log(`${index + 1}: ${fruta}`)
+))
 ```
 
-```js
-const carrito = (regalo, ...frutas) => {
-    console.log(regalo)
-    return frutas.forEach(fruta => console.log(fruta))
-}
-carrito("bolsa", "manzana", "pera", "sandía")
-```
-
-## objetos literales
-
-## Destructuring Objects
-
-## delete and add new properties
-
-## Programación funcional
-
-Reduce:
-```js
-const sumar = (...numeros) => {
-    return numeros.reduce((acc, current) => acc + current)
-}
-console.log(sumar(1, 2, 3, 4))
-```
-
-## DOM (dejar en otra hoja)
+Todavía nos quedan muchas cositas interentes de las arrow function pero antes tenemos que conocer los objetos en Javascript. **Nos vemos en la próxima sección** 😍
