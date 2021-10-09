@@ -23,7 +23,7 @@ Este curso está publicado en Udemy, puedes acceder con un descuento especial en
 
 ## ¿Dudas y preguntas?
 Te invito a nuestro servidor de **Discord**, donde todos nos ayudamos. **ES GRATIS** 👏
-- [Click aquí http://discord.bluuweb.cl](http://discord.bluuweb.cl)
+- [Click aquí: https://discord.gg/QCzMM3F3](https://discord.gg/QCzMM3F3)
 
 ## Gist
 Aquí iré detallando diferentes notas:
