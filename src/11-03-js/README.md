@@ -186,16 +186,26 @@ console.log(frutas)
 
 El método ``pop()`` elimina el último elemento de un array y lo devuelve. Este método cambia la longitud del array.
 ```js
-const frutas = ["Banana", "Sandía"]
-frutas.pop()
-console.log(frutas)
+const frutas = ["manzana", "pera"];
+
+frutas.unshift("uva");
+
+const frutaEliminada = frutas.pop();
+
+console.log(frutas);
+console.log(frutaEliminada);
 ```
 
 El método shift() elimina el primer elemento del array y lo retorna. Este método modifica la longitud del array.
 ```js
-const frutas = ["Banana", "Sandía"]
-frutas.shift()
-console.log(frutas)
+const frutas = ["manzana", "pera"];
+
+frutas.unshift("uva");
+
+const frutaEliminada = frutas.shift();
+
+console.log(frutas);
+console.log(frutaEliminada);
 ```
 
 ## Práctica: carrito de compras
