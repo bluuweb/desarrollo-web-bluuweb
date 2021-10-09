@@ -302,8 +302,6 @@ gato.mostrarEnemigos();
 ```
 
 ## Recorrer un objeto
-A partir de ECMAScript 5, hay tres formas nativas para enumerar/recorrer las propiedades de objetos:
-
 - [for in](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...in)
 
 ## for...in
