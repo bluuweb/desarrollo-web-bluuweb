@@ -341,19 +341,192 @@ Existen más métodos como:
 - [Object.key()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)
 - [Object.getOwnPropertyNames()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames)
 
-
-
-
-
-
-
-
-
-
-
-
 ## Destructuring Objects
+- [desestructuración](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) La sintaxis de desestructuración es una expresión de JavaScript que permite desempacar valores de arreglos o propiedades de objetos en distintas variables.
 
+```js
+const gato = {
+    nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+    otros: {
+        amigos: ["Cobarde", "Tímido", "Pegajoso"],
+        favoritos: {
+            comida: {
+                fria: "salmón",
+                caliente: "pollo",
+            },
+        },
+    },
+};
+
+const nombreGato = gato.nombre;
+console.log(nombreGato);
+```
+
+Destructuring de objetos:
+```js
+const gato = {
+    nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+    otros: {
+        amigos: ["Cobarde", "Tímido", "Pegajoso"],
+        favoritos: {
+            comida: {
+                fria: "salmón",
+                caliente: "pollo",
+            },
+        },
+    },
+};
+
+const { nombre, duerme, edad, enemigos } = gato;
+console.log(nombre);
+console.log(duerme);
+console.log(edad);
+console.log(enemigos);
+```
+
+Alias:
+```js
+const { nombre: nombreGato } = gato;
+console.log(nombreGato);
+```
+
+por defecto:
+```js
+const gato = {
+    // nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+    otros: {
+        amigos: ["Cobarde", "Tímido", "Pegajoso"],
+        favoritos: {
+            comida: {
+                fria: "salmón",
+                caliente: "pollo",
+            },
+        },
+    },
+};
+
+const { nombre: nombreGato = "Sin nombre" } = gato;
+console.log(nombreGato);
+```
+
+Anidados:
+```js
+const gato = {
+    nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+    otros: {
+        amigos: ["Cobarde", "Tímido", "Pegajoso"],
+        favoritos: {
+            comida: {
+                fria: "salmón",
+                caliente: "pollo",
+            },
+        },
+    },
+};
+
+const {
+    otros: { amigos },
+} = gato;
+console.log(amigos);
+```
+
+:::tip Array
+La destructuring también sirve para Array, solo reemplazar por ``[]``
+
+
+```js
+const enemigos = ["agua", "perros"]
+const [agua, perro] = enemigos;
+console.log(agua);
+console.log(perro);
+```
+:::
+
+Métodos:
+```js
+const gato = {
+    nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+    comer(comida) {
+        return `${this.nombre} está comiendo ${comida}`;
+    },
+    mostrarEnemigos() {
+        return this.enemigos.forEach((item) => console.log(item));
+    },
+};
+
+const { comer } = gato;
+console.log(comer("pez"));
+
+// undefined está comiendo pez
+```
+
+## Getters y Setters
+- [info](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Working_with_Objects#definici%C3%B3n_de_captadores_getters_y_establecedores_setters)
+- [get](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/get): Enlaza la propiedad de un objeto con una función que será llamada cuando la propiedad es buscada.
+- [set](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/set): La sintaxis  set  asocia la propiedad de un objeto a una función que será llamada cuando haya un intento de asignar valor a esa propiedad.
+
+GET: Tenga en cuenta lo siguiente al trabajar con la sintaxis get:
+- Debe tener exactamente cero parametros.
+- No debe haber múltiples getters para una misma propiedad.
+
+SET: Tenga en cuenta lo siguiente al trabajar con setters:
+- Debe tener exactamente un parámentro
+
+```js
+const gato = {
+    nombre: "Valiente",
+    duerme: true,
+    edad: 10,
+    enemigos: ["agua", "perros"],
+    comer(comida) {
+        return `${this.nombre} está comiendo ${comida}`;
+    },
+    get nombreMayuscula() {
+        return this.nombre.toUpperCase();
+    },
+    set nuevoEnemigo(nuevo) {
+        this.enemigos.push(nuevo);
+    },
+};
+
+// GET
+console.log(gato.nombreMayuscula);
+
+// SET
+gato.nuevoEnemigo = "batman";
+console.log(gato.enemigos);
+```
+
+## ¿Que sigue?
+- Destructuring, Spread, Rest
+- Clases y POO
+- Prototipos
+- Programación funcional
+- Promesas
+- AJAX
+- Async Await
+- DOM
+
+Enlaces:
+- [destructuring, rest, spread](https://www.taniarascia.com/understanding-destructuring-rest-spread/)
+
+
+<!-- ## Prototipos de objetos
 
 
 
@@ -387,4 +560,4 @@ const carrito = (regalo, ...frutas) => {
 carrito("bolsa", "manzana", "pera", "sandía")
 ```
 
-## DOM (dejar en otra hoja)
+## DOM (dejar en otra hoja) -->
