@@ -495,11 +495,11 @@ ctrl + shift + p
 ```
 
 <div class="text-center">
-    <img :src="$withBase('/img/html-1.PNG')" alt="abrir snippet vscode">
+    <img :src="$withBase('/img/html-1.png')" alt="abrir snippet vscode">
 </div>
 
 <div class="text-center">
-    <img :src="$withBase('/img/html-2.PNG')" alt="abrir snippet vscode">
+    <img :src="$withBase('/img/html-2.png')" alt="abrir snippet vscode">
 </div>
 
 ```json
