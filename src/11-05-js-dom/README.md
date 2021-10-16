@@ -300,4 +300,400 @@ boton.addEventListener("click", () => {
 });
 ```
 
+## createElement
+- [createElement](https://developer.mozilla.org/es/docs/Web/API/Document/createElement): El método ``document.createElement()`` crea un elemento HTML especificado por su tagName.
 
+Crear un ``<li>``
+```js
+const li = document.createElement("li");
+li.textContent = "item desde javascript";
+console.log(li)
+```
+
+## appendChild
+- [appendChild](https://developer.mozilla.org/es/docs/Web/API/Node/appendChild): Agrega un nuevo nodo al final de la lista de un elemento hijo de un elemento padre especificado.
+
+```html
+<ul id="listaDinamica">
+    <li>Elemento estático</li>
+</ul>
+```
+
+```js
+// elemento donde vamos a incorporar los <li>
+const listaDinamica = document.querySelector("#listaDinamica");
+
+// Creamos el <li>
+const li = document.createElement("li");
+
+// // Agregamos texto al <li>
+li.textContent = "item desde javascript";
+
+// // Finalmente incorporamos al <ul>
+listaDinamica.appendChild(li);
+listaDinamica.appendChild(li); // ¿qué pasó aquí?
+```
+
+::: warning
+- Si el **child hace una referencia a un nodo existente en el documento**, el método appendChild se mueve de su posición actual a su nueva posición.
+- Ésto significa que el nodo no puede estar en dos puntos del documento de manera simultánea.
+- Así que si el nodo ya contiene un padre, primero es eliminado, y después se añade a la nueva posición.
+- Se puede usar [Node.cloneNode](https://developer.mozilla.org/es/docs/Web/API/Node/cloneNode) para hacer una copia del nodo antes de añadirlo debajo de su nuevo elemento padre. 
+:::
+
+No recomendado:
+```js
+const listaDinamica = document.querySelector("#listaDinamica");
+
+const arrayElementos = ["Perú", "Bolivia", "Colombia"];
+
+arrayElementos.forEach((pais) => {
+    const li = document.createElement("li");
+    li.textContent = pais;
+    listaDinamica.appendChild(li);
+});
+```
+
+No recomendado:
+```js
+arrayElementos.forEach((pais) => {
+    listaDinamica.innerHTML += `
+    <li>${pais}</li>
+    `;
+});
+```
+
+:::warning Reflow
+Aquí se genera [Reflow:](https://developer.mozilla.org/en-US/docs/Glossary/reflow) Ocurre cuando un navegador debe procesar y dibujar parte o la totalidad de una página web nuevamente, como después de una actualización en un sitio interactivo.
+
+- [browser-reflow](https://developers.google.com/speed/docs/insights/browser-reflow)
+:::
+
+:::danger Consideración de seguridad
+- [innerHTML LEER 🙏](https://developer.mozilla.org/es/docs/Web/API/Element/innerHTML#consideraci%C3%B3n_de_seguridad)
+:::
+
+
+## Fragment
+- [new DocumentFragment()](https://developer.mozilla.org/es/docs/Web/API/DocumentFragment)
+- [createDocumentFragment()](https://developer.mozilla.org/es/docs/Web/API/Document/createDocumentFragment)
+- La interfaz DocumentFragment representa un objeto de documento mínimo que no tiene padre. 
+- Se utiliza como una versión ligera de Document que almacena un segmento de una estructura de documento compuesta de nodos como un documento estándar. 
+- La gran diferencia se debe al hecho de que **el fragmento de documento no forma parte de la estructura de árbol del documento activo.**
+- Los cambios realizados en el fragmento no afectan el documento  (incluso en reflow)  ni inciden en el rendimiento cuando se realizan cambios. 
+
+```js
+const listaDinamica = document.querySelector("#listaDinamica");
+
+const arrayElementos = ["Perú", "Bolivia", "Colombia"];
+
+const fragment = document.createDocumentFragment(); // new DocumentFragment()
+
+arrayElementos.forEach((pais) => {
+    const li = document.createElement("li");
+    li.textContent = pais;
+    fragment.appendChild(li);
+});
+
+listaDinamica.appendChild(fragment);
+```
+
+## insertBefore
+- [firstChild](https://developer.mozilla.org/en-US/docs/Web/API/Node/firstChild)
+- [insertBefore](https://developer.mozilla.org/es/docs/Web/API/Node/insertBefore)
+
+```js
+parentNode.insertBefore(newNode, referenceNode);
+```
+
+```js
+arrayElementos.forEach((pais) => {
+    const newNode = document.createElement("li");
+    newNode.textContent = pais;
+
+    // Nos devuelve el primer elemento
+    const referenceNode = fragment.firstChild;
+
+    // En caso de que no exista un nodo hijo tirará null
+    console.log("primer newNode", referenceNode);
+
+    // fragment.insertBefore(newNode, referenceNode);
+    // Si "referenceNode" es null, el newNode se insertará al final de la lista.
+    fragment.insertBefore(newNode, referenceNode);
+});
+```
+
+## Práctica createElement
+Supongamos que necesitamos incorporar de forma dinámica este elemento:
+
+```html
+<li class="list">
+  <b>País: </b> <span class="text-primary">aquí va el país</span>
+</li>
+```
+
+```js
+const listaDinamica = document.querySelector("#listaDinamica");
+
+const arrayElementos = ["Perú", "Bolivia", "Colombia"];
+
+const fragment = new DocumentFragment();
+
+arrayElementos.forEach((pais) => {
+    const li = document.createElement("li");
+    li.className = "list";
+
+    const bold = document.createElement("b");
+    bold.textContent = "País: ";
+
+    const span = document.createElement("span");
+    span.className = "text-primary";
+    span.textContent = pais;
+
+    li.appendChild(bold);
+    li.appendChild(span);
+    fragment.appendChild(li);
+});
+
+listaDinamica.appendChild(fragment);
+```
+
+innerHTML
+```js
+let template = "";
+
+arrayElementos.forEach((pais) => {
+    template += `
+    <li class="list">
+        <b>País: </b> <span class="text-primary">${pais}</span>
+    </li>
+    `;
+});
+
+listaDinamica.innerHTML = template;
+```
+
+:::warning innerHTML vs createElement
+Ojo que aquí estamos reemplazando fragment por let template, por ende hace un efecto parecido y minimizamos el reflow, ya que solo una vez que tenemos nuestro templateString listo, lo incorporamos al HTML.
+
+Aquí un texto completo: [innerHTML vs createElement](https://medium.com/@kevinchi118/innerhtml-vs-createelement-appendchild-3da39275a694#:~:text=While%20clean%2C%20using%20innerHTML%20reparses,multiple%20things%20to%20an%20element)
+
+Pero la batalla es brutal jajaja aquí algunas opiniones al respecto:
+- [1](https://stackoverflow.com/questions/49758867/which-is-better-to-use-doucment-fragment-or-string-concatenation-while-appendi)
+- [2](https://stackoverflow.com/questions/15182402/javascript-document-createelement-or-html-tags)
+- [3](https://stackoverflow.com/questions/2305654/innerhtml-vs-appendchildtxtnode)
+- [4](https://stackoverflow.com/questions/2946656/advantages-of-createelement-over-innerhtml)
+
+¡Alerta de spoiler! no utilizaremos este método.
+:::
+
+## Crear snippet
+- [snippet](https://pablocianes.com/guardar-snippets-personalizados-en-visual-studio-code/)
+
+```
+ctrl + shift + p
+```
+
+<div class="text-center">
+    <img :src="$withBase('/img/html-1.PNG')" alt="abrir snippet vscode">
+</div>
+
+<div class="text-center">
+    <img :src="$withBase('/img/html-2.PNG')" alt="abrir snippet vscode">
+</div>
+
+```json
+"Template in HTML": {
+    "prefix": "template",
+    "body": ["<template>$1</template>"],
+    "description": "Agrega el template en html"
+}
+```
+
+## template
+- [template](https://developer.mozilla.org/es/docs/Web/HTML/Element/template):  es un mecanismo para mantener el contenido HTML del lado del cliente que no se renderiza cuando se carga una página, pero que posteriormente puede ser instanciado durante el tiempo de ejecución empleando JavaScript.
+- Piensa en la plantilla como un fragmento de contenido que está siendo almacenado para un uso posterior en el documento.
+- El analizador procesa el contenido del elemento ``<template>`` durante la carga de la página, pero sólo lo hace para asegurar que esos contenidos son válidos; sin embargo, estos contenidos del elemento no se renderizan.
+- los elementos ``<template>`` contienen un **DocumentFragment** en su propiedad **HTMLTemplateElement.content**.
+
+```html
+<ul id="listaDinamica"></ul>
+
+<template id="liTemplate">
+    <li class="list">
+        <b>País: </b> <span class="text-primary"></span>
+    </li>
+</template>
+
+<script src="app.js"></script>
+```
+
+```js
+const listaDinamica = document.querySelector("#listaDinamica");
+
+const liTemplate = document.querySelector("#liTemplate");
+// es aconsejable clonar
+const clone = liTemplate.content.cloneNode(true);
+
+clone.querySelector("span").textContent = "Perú";
+
+listaDinamica.appendChild(clone);
+```
+
+Fragment + Template
+```js
+const listaDinamica = document.querySelector("#listaDinamica");
+
+const arrayElementos = ["Perú", "Bolivia", "Colombia"];
+
+const fragment = document.createDocumentFragment();
+const liTemplate = document.querySelector("#liTemplate");
+
+arrayElementos.forEach((pais) => {
+    const clone = liTemplate.content.cloneNode(true);
+    clone.querySelector("span").textContent = pais;
+    fragment.appendChild(clone);
+});
+
+listaDinamica.appendChild(fragment);
+```
+
+:::tip
+HTMLTemplateElement tiene una propiedad **content**, que es de **solo lectura** y DocumentFragment contiene el subárbol DOM que representa la plantilla. **Tenga en cuenta que el uso directo del valor de content** podría provocar un comportamiento inesperado; consulte la sección [Evitar el error de DocumentFragment a continuación](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#avoiding_documentfragment_pitfall).
+:::
+
+```js
+const listaDinamica = document.querySelector("#listaDinamica");
+const arrayElementos = ["Perú", "Bolivia", "Colombia"];
+const fragment = document.createDocumentFragment();
+const liTemplate = document.querySelector("#liTemplate");
+
+const clickPais = (e) => console.log("evento", e.target);
+
+arrayElementos.forEach((pais) => {
+    const clone = liTemplate.content.firstElementChild.cloneNode(true);
+    clone.querySelector("span").textContent = pais;
+
+    clone.addEventListener("click", clickPais);
+
+    fragment.appendChild(clone);
+});
+
+listaDinamica.appendChild(fragment);
+```
+
+```js
+const clickPais = (e) => e.target.append(" click");
+```
+
+## Práctica template
+- [ver ejemplo](https://carrito-objeto-simple.netlify.app/)
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito Objeto</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="container mt-5">
+        <div class="row text-center">
+            <article class="col-sm-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Frutilla 🍓</h5>
+                        <button class="btn btn-primary" data-fruta="frutilla">Agregar</button>
+                    </div>
+                </div>
+            </article>
+            <article class="col-sm-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Banana 🍌</h5>
+                        <button class="btn btn-primary" data-fruta="banana">Agregar</button>
+                    </div>
+                </div>
+            </article>
+            <article class="col-sm-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Manzana 🍏</h5>
+                        <button class="btn btn-primary" data-fruta="manzana">Agregar</button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <section class="container mt-3">
+        <ul class="list-group" id="carrito">
+            <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="lead">A list item</span>
+                <span class="badge bg-primary rounded-pill">14</span>
+            </li> -->
+        </ul>
+    </section>
+
+    <template id="template">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="lead">A list item</span>
+            <span class="badge bg-primary rounded-pill">14</span>
+        </li>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
+```
+
+
+```js
+const carrito = document.querySelector("#carrito");
+const template = document.querySelector("#template");
+const fragment = document.createDocumentFragment();
+const agregar = document.querySelectorAll(".card button");
+
+const carritoObjeto = {};
+
+const agregarCarrito = (e) => {
+    // console.log(e.target.dataset);
+    // console.log(e.target.dataset.fruta);
+
+    const producto = {
+        titulo: e.target.dataset.fruta,
+        id: e.target.dataset.fruta,
+        cantidad: 1,
+    };
+
+    if (carritoObjeto.hasOwnProperty(producto.id)) {
+        producto.cantidad = carritoObjeto[producto.id].cantidad + 1;
+    }
+
+    carritoObjeto[producto.id] = producto;
+
+    pintarCarrito();
+};
+
+agregar.forEach((boton) => boton.addEventListener("click", agregarCarrito));
+
+const pintarCarrito = () => {
+    carrito.textContent = "";
+
+    Object.values(carritoObjeto).forEach((item) => {
+        const clone = template.content.cloneNode(true);
+        clone.querySelector(".lead").textContent = item.titulo;
+        clone.querySelector(".rounded-pill").textContent = item.cantidad;
+        fragment.appendChild(clone);
+    });
+    carrito.appendChild(fragment);
+};
+```

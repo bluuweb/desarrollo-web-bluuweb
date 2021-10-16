@@ -514,6 +514,62 @@ gato.nuevoEnemigo = "batman";
 console.log(gato.enemigos);
 ```
 
+## por valor vs por referencia
+- [fuente](https://medium.com/laboratoria-developers/por-valor-vs-por-referencia-en-javascript-de3daf53a8b9)
+- **por valor:** Cuando asignamos valores primitivos (Boolean, Null, Undefined, Number, String y Symbol), el valor asignado es una copia del valor que estamos asignando. 
+- **por referencia:** Pero cuando asignamos valores NO primitivos o complejos (Object, Array y Function), JavaScript copia “la referencia”, lo que implica que no se copia el valor en sí, si no una referencia a través de la cual accedemos al valor original.
+
+Primitivos: (por valor)
+```js
+let a = "hola";
+let b = a;
+console.log(b);
+```
+
+Si cambiamos el valor de a, b sigue siendo "hola"
+```js
+a = "chao";
+console.log(b);
+```
+
+<div class="text-center">
+    <img :src="$withBase('/img/valor.png')" alt="abrir snippet vscode">
+</div>
+
+
+No primitivos: (por referencia)
+```js
+let a = ["hola"];
+let b = a;
+console.log(b);
+```
+
+```js
+let a = ["hola"];
+let b = a;
+
+a.push("chao");
+
+console.log(b);
+```
+
+<div class="text-center">
+    <img :src="$withBase('/img/valor-2.png')" alt="abrir snippet vscode">
+</div>
+
+Lo mismo pasa con los objetos:
+```js
+const a = {
+    nombre: "hola",
+};
+
+const b = a;
+
+a.nombre = "chao";
+
+console.log(b);
+```
+
 ## ¿Que sigue?
 - Destructuring, Spread, Rest
 - Clases y POO
