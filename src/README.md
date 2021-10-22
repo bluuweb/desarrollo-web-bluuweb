@@ -18,19 +18,24 @@ Al finalizar el curso el estudiante podrá construir sitios web responsives util
 
 :::tip 🎉 Accede al curso con un super descuento 🎉
 Este curso está publicado en Udemy, puedes acceder con un descuento especial en el siguiente enlace:
-- [Ir al curso en Udemy aquí](https://bit.ly/3lNnPeh)
+- [Ir al curso en Udemy aquí](curso-bootstrap-5-udemy.bluuweb.cl)
 :::
 
 ## ¿Dudas y preguntas?
 Te invito a nuestro servidor de **Discord**, donde todos nos ayudamos. **ES GRATIS** 👏
-- [Click aquí: https://discord.gg/QCzMM3F3](https://discord.gg/QCzMM3F3)
+- [Click aquí: https://discord.gg/ZrQAJnD7K8](https://discord.gg/ZrQAJnD7K8)
 
 ## Gist
 Aquí iré detallando diferentes notas:
 - [Notas de HTML y CSS](https://gist.github.com/bluuweb/8612c7e1c82bb85bce5b92d67f5b285c)
 
-
-
+## Redes Sociales:
+- [Youtube](https://www.youtube.com/bluuweb)
+- [Twitch](https://www.twitch.tv/bluuweb)
+- [Instagram](https://www.instagram.com/bluuweb_youtube)
+- [Facebook](https://www.facebook.com/bluuweb)
+- [Twitter](https://twitter.com/bluuweb)
+- [Discord](https://discord.gg/ZrQAJnD7K8)
 
 <!-- ## Planificación del curso
 - El curso tiene una duración de **8 semanas consecutivas**.

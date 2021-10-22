@@ -28,16 +28,20 @@ module.exports = {
                 link: "https://youtube.com/bluuweb",
             },
             {
+                text: "Twitch",
+                link: "https://www.twitch.tv/bluuweb",
+            },
+            {
                 text: "Ver curso en Udemy",
-                link: "https://bit.ly/3lNnPeh",
+                link: "https://curso-bootstrap-5-udemy.bluuweb.cl",
             },
             {
                 text: "Curso Vue.js",
-                link: "http://curso-vue-js-udemy.bluuweb.cl",
+                link: "https://curso-vue-js-udemy.bluuweb.cl",
             },
             {
                 text: "Curso React.js",
-                link: "http://curso-react-js-udemy.bluuweb.cl",
+                link: "https://curso-react-js-udemy.bluuweb.cl",
             },
         ],
         sidebar: [
@@ -67,6 +71,7 @@ module.exports = {
             "/11-03-js/",
             "/11-04-js/",
             "/11-05-js-dom/",
+            "/11-06-js-paradigma/",
         ],
     },
 
