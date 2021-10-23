@@ -1,4 +1,4 @@
-# Array methods
+# Javascript (Array methods)
 - Sigamos descubriendo métodos de los array, muy pero muuuuuuuy útiles 🤙. 
 - **Estos métodos no mutan el array original**, sino que nos devuelven uno nuevo.
 - [functional programming](https://www.freecodecamp.org/espanol/learn/javascript-algorithms-and-data-structures/#functional-programming)
@@ -305,11 +305,11 @@ const flatSingle = arrayNumeros.flat();
 console.log(flatSingle);
 ```
 
-Esto no resulta para mi 😭🤷‍♂️ (etapa experimental: 22-10-2021)
 ```js
-const arr3 = [1, 2, [3, 4, [5, 6]]];
-arr3.flat(2);
-console.log(arr3);
+const arrayNumeros = [1, 2, [3, 4, [5, 6]]];
+
+const arrayPlano = arrayNumeros.flat(2);
+console.log(arrayPlano);
 ```
 
 ## split
@@ -385,7 +385,7 @@ const pintarCarrito = () => {
 };
 ```
 
-## Práctica #02:
+<!-- ## Práctica #02:
 
 - [ver ejemplo final](https://falta-agregar-footer-carrito-con-totales.netlify.app/)
 
@@ -549,7 +549,7 @@ const btnDisminuir = (e) => {
     });
     pintarCarrito(nuevoArray);
 };
-```
+``` -->
 
 ## FrontendMentor
 - [Cachipún](https://www.frontendmentor.io/challenges/rock-paper-scissors-game-pTgwgvgH)
