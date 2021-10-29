@@ -75,7 +75,7 @@ formulario.addEventListener("submit", (e) => {
 En las siguientes secciones veremos un especial de formularios con sus respectivas validaciones.
 :::
 
-Sive para cualquier comportamiento por defecto del navegador:
+Sirve para cualquier comportamiento por defecto del navegador:
 ```html
 <a href="#">ancla</a>
 ```
