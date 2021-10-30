@@ -236,9 +236,9 @@ formulario.addEventListener("submit", (e) => {
 
 ## Válidar solo con JS
 
-👀 saqué las validaciones de HTML5
+👀 saqué las validaciones de HTML5, Tambien se puede colocar ``novalidate`` como atributo.
 ```html
-<form id="formulario">
+<form id="formulario" novalidate>
     <input
         class="form-control mb-2"
         name="userName"
