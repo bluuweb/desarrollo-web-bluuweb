@@ -1,5 +1,11 @@
 # Javascript (Promesas, Async, Await)
 
+
+:::tip
+Recuerden que estamos también en Twitch: 
+[https://www.twitch.tv/bluuweb](https://www.twitch.tv/bluuweb) 👏👏
+:::
+
 El objetivo de esta sección es entender el uso de:
 - Callbacks
 - Promesas
