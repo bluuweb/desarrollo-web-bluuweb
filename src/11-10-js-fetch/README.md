@@ -108,6 +108,8 @@ postData('https://example.com/answer', { answer: 42 })
 ## Ejercicio pokeApi
 - [rickandmortyapi](https://rickandmortyapi.com/documentation)
 - [get character](https://rickandmortyapi.com/api/character)
+- [Ejemplo Final](https://rickandmortyv1bluuweb.netlify.app/)
+- [PokeApi tutorial](https://www.youtube.com/watch?v=ydcm7GECaAI)
 
 ```html
 <!DOCTYPE html>
