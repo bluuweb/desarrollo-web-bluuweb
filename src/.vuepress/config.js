@@ -74,7 +74,8 @@ module.exports = {
             "/11-06-js-paradigma/",
             "/11-07-js-delegacion/",
             "/11-08-js-form/",
-            "/11-08-js-promesas/",
+            "/11-09-js-promesas/",
+            "/11-10-js-fetch/",
         ],
     },
 
