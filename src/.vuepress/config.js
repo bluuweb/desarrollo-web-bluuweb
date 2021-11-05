@@ -76,6 +76,7 @@ module.exports = {
             "/11-08-js-form/",
             "/11-09-js-promesas/",
             "/11-10-js-fetch/",
+            "/11-11-js-poo/",
         ],
     },
 
