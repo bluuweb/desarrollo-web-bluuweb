@@ -447,7 +447,7 @@ console.log(juanito.getNotas);
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
@@ -461,29 +461,37 @@ console.log(juanito.getNotas);
             crossorigin="anonymous"
         />
 
-        <title>Rick and Morty v1</title>
+        <title>Hello, world!</title>
     </head>
     <body>
         <div class="container my-5">
-            <h1>Agrega Estudiantes y Profesores</h1>
+            <h1>Estudiantes y Profesores</h1>
+
+            <!-- alerta en caso de falla -->
+            <div class="alert alert-danger my-2 d-none" role="alert">
+                Todos los campos son obligatorios
+            </div>
+
             <form id="formulario">
                 <input
+                    class="form-control mb-2"
                     name="nombre"
+                    placeholder="Ingrese nombre"
                     type="text"
-                    class="form-control my-2"
-                    placeholder="nombre"
                     value="Juanito"
+                    required
                 />
                 <input
+                    class="form-control mb-2"
                     name="edad"
+                    placeholder="Ingrese nombre"
                     type="number"
-                    class="form-control my-2"
-                    placeholder="edad"
                     value="25"
+                    required
                 />
-                <!-- https://getbootstrap.com/docs/5.1/forms/select/#default -->
+
                 <select class="form-select mb-2" name="opcion">
-                    <option value="Estudiante">Estudiante</option>
+                    <option value="Estudiante" selected>Estudiante</option>
                     <option value="Profesor">Profesor</option>
                 </select>
 
@@ -491,33 +499,35 @@ console.log(juanito.getNotas);
             </form>
 
             <section class="row mt-3">
-                <div class="col-6" id="pintarEstudiante"></div>
-                <div class="col-6" id="pintarProfesor"></div>
+                <div class="col-6" id="cardsEstudiantes"></div>
+                <div class="col-6" id="cardsProfesores"></div>
             </section>
-            <template id="templateEstudiante">
-                <article class="card mb-2">
-                    <div class="card-body">
-                        <h5>
-                            <span class="text-primary">Nombre</span>
-                            <span class="badge">Aprobado</span>
-                        </h5>
-                        <h6>opcion</h6>
-                        <p>Edad</p>
-                        <button class="btn btn-success">Aprobar</button>
-                        <button class="btn btn-danger">Reprobar</button>
-                    </div>
-                </article>
-            </template>
-            <template id="templateProfesor">
-                <article class="card bg-dark text-white mb-2">
-                    <div class="card-body">
-                        <h5>Nombre</h5>
-                        <h6>opcion</h6>
-                        <p class="mb-0">Edad</p>
-                    </div>
-                </article>
-            </template>
         </div>
+
+        <template id="templateEstudiante">
+            <article class="card mb-2">
+                <div class="card-body">
+                    <h5>
+                        <span class="text-primary">Nombre</span>
+                        <span class="badge bg-success">Aprobado</span>
+                    </h5>
+                    <h6></h6>
+                    <p class="lead">edad</p>
+                    <button class="btn btn-success">Aprobar</button>
+                    <button class="btn btn-danger">Reprobar</button>
+                </div>
+            </article>
+        </template>
+
+        <template id="templateProfesor">
+            <article class="card mb-2 bg-dark text-white">
+                <div class="card-body">
+                    <h5>nombre</h5>
+                    <h6></h6>
+                    <p class="lead">Edad</p>
+                </div>
+            </article>
+        </template>
 
         <script src="app.js"></script>
     </body>
@@ -525,80 +535,93 @@ console.log(juanito.getNotas);
 ```
 
 ```js
-const pintarEstudiante = document.querySelector("#pintarEstudiante");
-const pintarProfesor = document.querySelector("#pintarProfesor");
-const templateEstudiante = document.querySelector("#templateEstudiante")
-    .content;
+const formulario = document.querySelector("#formulario");
+const cardsEstudiantes = document.querySelector("#cardsEstudiantes");
+const cardsProfesores = document.querySelector("#cardsProfesores");
+const templateEstudiante = document.querySelector(
+    "#templateEstudiante"
+).content;
 const templateProfesor = document.querySelector("#templateProfesor").content;
+const alert = document.querySelector(".alert");
 
 const estudiantes = [];
 const profesores = [];
 
 document.addEventListener("click", (e) => {
-    if (e.target.dataset.nombre) {
-        console.log(e.target.dataset.nombre);
+    // preguntamos por uid
+    if (e.target.dataset.uid) {
         if (e.target.matches(".btn-success")) {
             estudiantes.map((item) => {
-                if (item.nombre === e.target.dataset.nombre) {
-                    item.estado = true;
-                    console.log(item);
+                // modificamos en caso de que sea true
+                if (item.uid === e.target.dataset.uid) {
+                    item.setEstado = true;
                 }
+                // console.log(item);
                 return item;
             });
-            Persona.pintarPersonaUI(estudiantes, "Estudiantes");
         }
         if (e.target.matches(".btn-danger")) {
             estudiantes.map((item) => {
-                if (item.nombre === e.target.dataset.nombre) {
-                    item.estado = false;
-                    console.log(item);
+                if (item.uid === e.target.dataset.uid) {
+                    item.setEstado = false;
                 }
+                console.log(item);
                 return item;
             });
-            Persona.pintarPersonaUI(estudiantes, "Estudiantes");
         }
+        Persona.pintarPersonaUI(estudiantes, "Estudiante");
     }
 });
 
 class Persona {
     constructor(nombre, edad) {
         this.nombre = nombre;
-        this.edad = parseInt(edad);
+        this.edad = edad;
+        // agregamos uid
+        this.uid = `${Date.now()}`;
     }
 
     static pintarPersonaUI(personas, tipo) {
-        if (tipo === "Estudiantes") {
-            pintarEstudiante.textContent = "";
+        if (tipo === "Estudiante") {
+            cardsEstudiantes.textContent = "";
             const fragment = document.createDocumentFragment();
+
             personas.forEach((item) => {
                 fragment.appendChild(item.agregarNuevoEstudiante());
             });
-            pintarEstudiante.appendChild(fragment);
+
+            cardsEstudiantes.appendChild(fragment);
         }
-        if (tipo === "Profesores") {
-            pintarProfesor.textContent = "";
+
+        if (tipo === "Profesor") {
+            cardsProfesores.textContent = "";
             const fragment = document.createDocumentFragment();
             personas.forEach((item) => {
                 fragment.appendChild(item.agregarNuevoProfesor());
             });
-            pintarProfesor.appendChild(fragment);
+            cardsProfesores.appendChild(fragment);
         }
     }
 }
 
 class Estudiante extends Persona {
-    #estudiante = "Estudiante";
     #estado = false;
+    #estudiante = "Estudiante";
 
-    set estado(estado) {
+    set setEstado(estado) {
         this.#estado = estado;
+    }
+
+    get getEstudiante() {
+        return this.#estudiante;
     }
 
     agregarNuevoEstudiante() {
         const clone = templateEstudiante.cloneNode(true);
+
         clone.querySelector("h5 .text-primary").textContent = this.nombre;
-        clone.querySelector("h6").textContent = this.#estudiante;
-        clone.querySelector("p").textContent = this.edad + " años";
+        clone.querySelector("h6").textContent = this.getEstudiante;
+        clone.querySelector(".lead").textContent = this.edad;
 
         if (this.#estado) {
             clone.querySelector(".badge").className = "badge bg-success";
@@ -606,15 +629,16 @@ class Estudiante extends Persona {
             clone.querySelector(".btn-danger").disabled = false;
         } else {
             clone.querySelector(".badge").className = "badge bg-danger";
-            clone.querySelector(".btn-success").disabled = false;
             clone.querySelector(".btn-danger").disabled = true;
+            clone.querySelector(".btn-success").disabled = false;
         }
         clone.querySelector(".badge").textContent = this.#estado
             ? "Aprobado"
             : "Reprobado";
 
-        clone.querySelector(".btn-success").dataset.nombre = this.nombre;
-        clone.querySelector(".btn-danger").dataset.nombre = this.nombre;
+        // reemplaze por uid
+        clone.querySelector(".btn-success").dataset.uid = this.uid;
+        clone.querySelector(".btn-danger").dataset.uid = this.uid;
 
         return clone;
     }
@@ -627,29 +651,36 @@ class Profesor extends Persona {
         const clone = templateProfesor.cloneNode(true);
         clone.querySelector("h5").textContent = this.nombre;
         clone.querySelector("h6").textContent = this.#profesor;
-        clone.querySelector("p").textContent = this.edad + " años";
-        pintarProfesor.appendChild(clone);
+        clone.querySelector(".lead").textContent = this.edad;
+        return clone;
     }
 }
 
-const formulario = document.querySelector("#formulario");
 formulario.addEventListener("submit", (e) => {
     e.preventDefault();
+    alert.classList.add("d-none");
+
     const datos = new FormData(formulario);
+
     const [nombre, edad, opcion] = [...datos.values()];
 
-    // console.log(nombre, edad, opcion);
+    // validación de campos vacíos
+    if (!nombre.trim() || !edad.trim() || !opcion.trim()) {
+        console.log("Elemento vacío");
+        alert.classList.remove("d-none");
+        return;
+    }
+
     if (opcion === "Estudiante") {
         const estudiante = new Estudiante(nombre, edad);
-        console.log(estudiante);
-        estudiante.agregarNuevoEstudiante();
         estudiantes.push(estudiante);
-        Persona.pintarPersonaUI(estudiantes, "Estudiantes");
+        Persona.pintarPersonaUI(estudiantes, opcion);
     }
+
     if (opcion === "Profesor") {
         const profesor = new Profesor(nombre, edad);
-        console.log(profesor);
-        profesor.agregarNuevoProfesor();
+        profesores.push(profesor);
+        Persona.pintarPersonaUI(profesores, opcion);
     }
 });
 ```

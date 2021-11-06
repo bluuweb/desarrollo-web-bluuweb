@@ -77,6 +77,7 @@ module.exports = {
             "/11-09-js-promesas/",
             "/11-10-js-fetch/",
             "/11-11-js-poo/",
+            "/11-12-js-modulos/",
         ],
     },
 
