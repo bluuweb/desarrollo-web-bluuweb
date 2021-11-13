@@ -78,6 +78,8 @@ module.exports = {
             "/11-10-js-fetch/",
             "/11-11-js-poo/",
             "/11-12-js-modulos/",
+            // "/11-13-js-closures/",
+            "/18-01-react/",
         ],
     },
 
