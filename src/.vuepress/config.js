@@ -80,6 +80,7 @@ module.exports = {
             "/11-12-js-modulos/",
             // "/11-13-js-closures/",
             "/18-01-react/",
+            "/18-02-react-formularios/",
         ],
     },
 
