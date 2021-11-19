@@ -81,6 +81,7 @@ module.exports = {
             // "/11-13-js-closures/",
             "/18-01-react/",
             "/18-02-react-formularios/",
+            "/18-03-react-todo/",
         ],
     },
 
