@@ -27,6 +27,10 @@
 Extensiones:
 - [es7-react](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets)
 
+## Enlaces de utilidad
+- [Estructura de archivos](https://es.reactjs.org/docs/faq-structure.html)
+- [Estructura de archivos v2](https://hackernoon.com/structuring-projects-and-naming-components-in-react-1261b6e18d76)
+
 ## ¿Qué es React?
 - React es una biblioteca Javascript para crear interfaces de usuario.
 - React no es un framework (a diferencia de Angular o Vue, que tienen más opiniones).
