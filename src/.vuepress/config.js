@@ -83,6 +83,7 @@ module.exports = {
             "/18-02-react-formularios/",
             "/18-03-react-todo/",
             "/18-04-react-api/",
+            "/18-05-react-router/",
         ],
     },
 

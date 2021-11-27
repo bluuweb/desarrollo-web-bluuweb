@@ -1,8 +1,15 @@
 # JS POO
 
-:::tip
-Recuerden que estamos también en Twitch: 
-[twitch.tv/bluuweb](https://www.twitch.tv/bluuweb) 👏👏
+:::tip ¿Quieres apoyar los directos? 😍
+Tienes varias jugosas alternativas:
+1. [Suscríbete al canal de Youtube (es gratis) click aquí](https://bit.ly/3kLYAqr)
+2. Si estás viendo un video no olvides regalar un 👍 like y comentario 🙏🏼
+3. También puedes ser miembro del canal de Youtube [click aquí](https://www.youtube.com/channel/UCH7IANkyEcsVW_y1IlpkamQ/join)
+6. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
+¿Quiéres apoyar los directos?
+    - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl)
+    - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl)
+    - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
 :::
 
 La programación orientada a objetos es un **paradigma de la programación** en el que se crean objetos para la manipulacón de datos y donde, por lo general, cada objeto ofrece una funcionalidad especial.
