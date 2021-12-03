@@ -85,6 +85,7 @@ module.exports = {
             "/18-04-react-api/",
             "/18-05-react-router/",
             "/18-06-react-context/",
+            "/19-01-sql/",
         ],
     },
 
