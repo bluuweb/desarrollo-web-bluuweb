@@ -78,7 +78,7 @@ CREATE DATABASE prueba;
 
 Diagrama entidad relación:
 <div class="text-center">
-    <img :src="$withBase('/img/todo-relaciones.jpg')" alt="relacion todo sql">
+    <img :src="$withBase('/img/todo-relaciones.JPG')" alt="relacion todo sql">
 </div>
 
 ## CREATE
