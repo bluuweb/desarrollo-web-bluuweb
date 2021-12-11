@@ -127,7 +127,7 @@ SELECT producto_nombre, producto_precio
 FROM productos;
 ```
 
-:::TIP
+:::tip
 Tenga en cuenta que las palabras clave de SQL no distinguen entre mayúsculas y minúsculas. Significa que ``SELECT`` es equivalente a ``select`` o ``Select``. Por convención, usaremos todas las palabras clave SQL en mayúsculas para facilitar la lectura de las consultas.
 :::
 

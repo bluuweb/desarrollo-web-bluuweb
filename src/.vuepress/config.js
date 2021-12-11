@@ -87,6 +87,7 @@ module.exports = {
             "/18-06-react-context/",
             "/19-01-sql/",
             "/19-02-sql/",
+            "/19-03-sql/",
         ],
     },
 
