@@ -271,7 +271,7 @@ JOIN productos p
 ON cop.producto_id = p.producto_id;
 ```
 
-## Próxima clase
+<!-- ## Próxima clase
 - Subconsultas
 - Transacciones
 
@@ -298,4 +298,4 @@ WHERE productos.producto_id = 9;
 -- fin transacción
 
 SELECT * FROM Productos;
-```
+``` -->
