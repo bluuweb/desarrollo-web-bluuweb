@@ -23,7 +23,7 @@ Este curso está publicado en Udemy, puedes acceder con un descuento especial en
 
 ## ¿Dudas y preguntas?
 Te invito a nuestro servidor de **Discord**, donde todos nos ayudamos. **ES GRATIS** 👏
-- [Click aquí: https://discord.gg/ZrQAJnD7K8](https://discord.gg/ZrQAJnD7K8)
+- [Click aquí: https://discord.gg/SKKPdttHmT](https://discord.gg/SKKPdttHmT)
 
 ## Gist
 Aquí iré detallando diferentes notas:
@@ -35,7 +35,7 @@ Aquí iré detallando diferentes notas:
 - [Instagram](https://www.instagram.com/bluuweb_youtube)
 - [Facebook](https://www.facebook.com/bluuweb)
 - [Twitter](https://twitter.com/bluuweb)
-- [Discord](https://discord.gg/ZrQAJnD7K8)
+- [Discord](https://discord.gg/SKKPdttHmT)
 
 <!-- ## Planificación del curso
 - El curso tiene una duración de **8 semanas consecutivas**.
