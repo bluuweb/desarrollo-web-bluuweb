@@ -90,6 +90,7 @@ module.exports = {
             "/19-03-sql/",
             "/19-04-sql/",
             "/20-01-node/",
+            "/20-02-express/",
         ],
     },
 
