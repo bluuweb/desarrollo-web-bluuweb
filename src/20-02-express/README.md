@@ -2,7 +2,13 @@
 En este capítulo realizaremos un proyecto para conocer como trabajar con motores de plantilla y autenticación de usuarios entre otras cosas.
 
 ## Códigos
-- [primera parte github](https://github.com/bluuweb/shorturl-hbs-express-sesiones)
+- [crud básico repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
+- [auth #01 repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
+
+notas del editor
+```
+git push --all origin
+```
 
 ## Objetivos
 - Motores de plantilla (template engine)
@@ -1160,7 +1166,7 @@ module.exports = (req, res, next) => {
 ```
 
 controllers/authController.js
-```js{18-23, 32-35}
+```js{18-23,32-35}
 const loginUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
