@@ -764,7 +764,7 @@ userSchema.pre("save", async function (next) {
         next();
     } catch (error) {
         console.log(error);
-        next();
+        throw new Error("Error al codificar la contraseña");
     }
 });
 
@@ -884,8 +884,18 @@ app.use("/", require("./routes/home"));
 ```
 
 ## Session & flash
+- [express session](http://expressjs.com/en/resources/middleware/session.html): El middleware express-session almacena los datos de sesión en el servidor; sólo guarda el ID de sesión en la propia cookie, no los datos de sesión. De forma predeterminada, utiliza el almacenamiento en memoria y no está diseñado para un entorno de producción. 
+- [express session npm](https://www.npmjs.com/package/express-session)
+- [express session github](https://github.com/expressjs/session)
+- [connect-mongo](https://www.npmjs.com/package/connect-mongo)
 - [connect flash](https://www.npmjs.com/package/connect-flash): El flash es un área especial de la sesión que se utiliza para almacenar mensajes. Los mensajes se escriben en la memoria flash y se borran después de mostrarse al usuario. El flash generalmente se usa en combinación con redireccionamientos, lo que garantiza que el mensaje esté disponible para la siguiente página que se va a representar.
-- [express session](http://expressjs.com/en/resources/middleware/session.html)
+- [best-practice-security](https://expressjs.com/es/advanced/best-practice-security.html)
+
+```
+npm i express-session
+npm i connect-mongo
+npm i connect-flash
+```
 
 ```js
 const session = require("express-session");
@@ -893,8 +903,8 @@ const session = require("express-session");
 app.use(
     session({
         secret: process.env.SESSIONSECRET,
-        resave: true,
-        saveUninitialized: true,
+        resave: false,
+        saveUninitialized: false,
     })
 );
 
@@ -925,7 +935,7 @@ app.use(
     session({
         secret: process.env.SESSIONSECRET,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
     })
 );
 app.use(flash());
@@ -948,20 +958,20 @@ routes/auth.js
 const express = require("express");
 const { body } = require("express-validator");
 const {
-    formRegister,
-    registrarUsuario,
+    loginForm,
+    registerForm,
+    registerUser,
     confirmarCuenta,
-    formLogin,
-    loginUsuario,
+    loginUser,
 } = require("../controllers/authController");
+
 const router = express.Router();
 
-router.get("/register", formRegister);
-
+router.get("/register", registerForm);
 router.post(
     "/register",
     [
-        body("nombre", "Ingrese un nombre").trim().notEmpty().escape(),
+        body("userName", "Ingrese un nombre").trim().notEmpty().escape(),
         body("email", "Ingrese un email válido")
             .trim()
             .isEmail()
@@ -971,18 +981,17 @@ router.post(
             .isLength({ min: 6 })
             .escape()
             .custom((value, { req }) => {
-                if (value !== req.body.passwordRepit) {
+                if (value !== req.body.repassword) {
                     throw new Error("Password no coinciden");
                 } else {
                     return value;
                 }
             }),
     ],
-    registrarUsuario
+    registerUser
 );
-
-router.get("/register/:tokenConfirm", confirmarCuenta);
-router.get("/login", formLogin);
+router.get("/confirmar/:token", confirmarCuenta);
+router.get("/login", loginForm);
 router.post(
     "/login",
     [
@@ -995,7 +1004,7 @@ router.post(
             .isLength({ min: 6 })
             .escape(),
     ],
-    loginUsuario
+    loginUser
 );
 
 module.exports = router;
@@ -1003,106 +1012,232 @@ module.exports = router;
 
 controllers/authControllers.js
 ```js
-const { nanoid } = require("nanoid");
-const { validationResult } = require("express-validator");
 const User = require("../models/User");
+const { validationResult } = require("express-validator");
+const { nanoid } = require("nanoid");
 
-const formRegister = (req, res) => {
-    res.render("register", { mensajes: req.flash("mensajes") });
+const registerForm = (req, res) => {
+    res.render("register", { mensajes: req.flash().mensajes });
 };
 
-const registrarUsuario = async (req, res) => {
-    const { nombre, email, password } = req.body;
+const registerUser = async (req, res) => {
+    // console.log(req.body);
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         req.flash("mensajes", errors.array());
-        return res.redirect("/register");
+        return res.redirect("/auth/register");
     }
 
+    const { userName, email, password } = req.body;
     try {
-        if (await User.findOne({ email })) {
-            throw new Error("Ya existe este usuario");
-        }
+        let user = await User.findOne({ email: email });
+        if (user) throw new Error("ya existe usuario");
 
-        const user = new User({ username: nombre, email, password });
-        user.tokenConfirm = nanoid();
-        console.log(user);
+        user = new User({ userName, email, password, tokenConfirm: nanoid() });
         await user.save();
 
-        // res.json(user);
-        req.flash("mensajes", [
-            { msg: "Revise su correo electrónico para confirmar cuenta" },
-        ]);
-        res.redirect("/login");
+        // enviar correo electrónico con la confirmación de la cuenta
+
+        return res.redirect("/auth/login");
     } catch (error) {
-        // console.log(error);
-        // res.send(error.message);
         req.flash("mensajes", [{ msg: error.message }]);
-        res.redirect("/register");
+        res.redirect("/auth/register");
     }
 };
 
 const confirmarCuenta = async (req, res) => {
-    const { tokenConfirm } = req.params;
-    try {
-        const user = await User.findOne({ tokenConfirm });
-        if (!user) throw new Error("no se pudo confirmar cuenta");
+    const { token } = req.params;
 
+    try {
+        const user = await User.findOne({ tokenConfirm: token });
+
+        if (!user) throw new Error("No existe este usuario");
+
+        user.cuentaConfirmada = true;
         user.tokenConfirm = null;
-        user.confirm = true;
 
         await user.save();
 
+        return res.redirect("/auth/login");
         // res.render("login");
-        req.flash("mensajes", [{ msg: "Cuenta confirmada" }]);
-        res.redirect("/login");
     } catch (error) {
-        console.log(error);
-        res.send(error.message);
+        req.flash("mensajes", [{ msg: error.message }]);
+        res.redirect("/auth/login");
     }
 };
 
-const formLogin = (req, res) => {
-    res.render("login", { mensajes: req.flash("mensajes") });
+const loginForm = (req, res) => {
+    res.render("login", { mensajes: req.flash().mensajes });
 };
 
-const loginUsuario = async (req, res) => {
+const loginUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         req.flash("mensajes", errors.array());
-        return res.redirect("/login");
+        return res.redirect("/auth/login");
     }
 
     const { email, password } = req.body;
-
     try {
         const user = await User.findOne({ email });
+        if (!user) throw new Error("No existe este email");
 
-        if (!user) throw new Error("No existe el usuario");
+        if (!user.cuentaConfirmada) throw new Error("Falta confirmar cuenta");
 
-        if (!user.confirm) throw new Error("Usuario no confirmado");
+        if (!(await user.comparePassword(password)))
+            throw new Error("Contraseña no correcta");
 
-        if (!(await user.comparePassword(password))) {
-            throw new Error("Password incorrecta");
-        }
-
-        res.redirect("/");
+        return res.redirect("/");
     } catch (error) {
-        // console.log(error);
-        // res.send(error.message);
         req.flash("mensajes", [{ msg: error.message }]);
-        res.redirect("/login");
+        res.redirect("/auth/login");
     }
 };
 
 module.exports = {
-    formRegister,
-    registrarUsuario,
+    loginForm,
+    registerForm,
+    registerUser,
     confirmarCuenta,
-    formLogin,
-    loginUsuario,
+    loginUser,
 };
 ```
 
+## Rutas protegidas
+- [passport](http://www.passportjs.org/)
+- [github ejemplo](https://github.com/passport/todos-express-password/blob/master/routes/auth.js#L17)
+
+```
+npm install passport passport-local
+```
+
+```js
+const express = require("express");
+const session = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+const app = express();
+
+app.use(
+    session({
+        secret: "sessionSecreta",
+        resave: false,
+        saveUninitialized: false,
+        name: "secreto-nombre-session",
+    })
+);
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Este va si o si
+passport.serializeUser(
+    (user, done) => done(null, { id: user._id, userName: user.userName }) //se guardará en req.user
+);
+
+// no preguntar en DB???
+passport.deserializeUser(async (user, done) => {
+    return done(null, user); //se guardará en req.user
+});
+
+// preguntar en DB por el usuario???
+passport.deserializeUser(async (user, done) => {
+    const userDB = await User.findById(user.id).exec();
+    return done(null, { id: userDB._id, userName: userDB.userName }); //se guardará en req.user
+});
+```
+
+middlewares/verificarUsuario.js
+```js
+module.exports = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/auth/login");
+};
+```
+
+controllers/authController.js
+```js{18-23, 32-35}
+const loginUser = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash("mensajes", errors.array());
+        return res.redirect("/auth/login");
+    }
+
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) throw new Error("No existe este email");
+
+        if (!user.cuentaConfirmada) throw new Error("Falta confirmar cuenta");
+
+        if (!(await user.comparePassword(password)))
+            throw new Error("Contraseña no correcta");
+
+        req.login(user, function (err) {
+            if (err) {
+                throw new Error("Error de passport");
+            }
+            return res.redirect("/");
+        });
+
+        // return res.redirect("/");
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        res.redirect("/auth/login");
+    }
+};
+
+const cerrarSesion = (req, res) => {
+    req.logout();
+    return res.redirect("/auth/login");
+};
+```
+
+router/auth.js
+```js
+router.post(
+    "/login",
+    [
+        body("email", "Ingrese un email válido")
+            .trim()
+            .isEmail()
+            .normalizeEmail(),
+        body("password", "Contraseña no cumple el formato")
+            .trim()
+            .isLength({ min: 6 })
+            .escape(),
+    ],
+    loginUser
+);
+
+router.get("/logout", cerrarSesion);
+
+module.exports = router;
+```
+
+router/home.js
+```js
+const verificarUsuario = require("../middlewares/verificarUsuario");
+
+router.get("/", verificarUsuario, leerUrls);
+```
+
+controllers/homeController.js
+```js{2}
+const leerUrls = async (req, res) => {
+    console.log(req.user);
+    try {
+        const urls = await Url.find().lean();
+        return res.render("home", { urls: urls });
+    } catch (error) {
+        console.log(error);
+        return res.send("falló algo...");
+    }
+};
+```
 
