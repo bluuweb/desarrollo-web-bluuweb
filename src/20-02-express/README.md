@@ -1247,3 +1247,54 @@ const leerUrls = async (req, res) => {
 };
 ```
 
+## CSRF protection middleware.
+- [expressjs/csurf](https://github.com/expressjs/csurf)
+
+```
+npm install csurf
+```
+
+index.js
+```js
+const csrf = require("csurf");
+
+app.use(csrf());
+app.use("/", require("./routes/home"));
+app.use("/auth", require("./routes/auth"));
+```
+
+:::tip
+Se recomienda reiniciar el servidor (bajar nodemon y volver a levantarlo)
+:::
+
+Todo lo que tenga formulario:
+```js
+const registerForm = (req, res) => {
+    res.render("register", {
+        mensajes: req.flash().mensajes,
+        csrfToken: req.csrfToken(),
+    });
+};
+
+const loginForm = (req, res) => {
+    res.render("login", {
+        mensajes: req.flash().mensajes,
+        csrfToken: req.csrfToken(),
+    });
+};
+```
+
+```html
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+```
+
+Si no quieres enviarlo en cada render:
+```js
+app.use(csrf());
+
+// variables globales para las vistas
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
+```
