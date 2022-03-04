@@ -1,42 +1,49 @@
 # Express Template Engine
+
 En este capítulo realizaremos un proyecto para conocer como trabajar con motores de plantilla y autenticación de usuarios entre otras cosas.
 
 ## Códigos
-- [crud básico repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
-- [auth #01 repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
+
+-   [crud básico repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
+-   [auth #01 repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
 
 notas del editor
+
 ```
 git push --all origin
 ```
 
 ## Objetivos
-- Motores de plantilla (template engine)
-    - [HBS y/o EJS](https://bluuweb.github.io/node/03-vistas/)
-- MongoDB
-    - ShortURL
-- Auth User
-    - Rutas protegidas
-    - Sessions
-    - Passport
-- Email
-    - Enviar confirmación de cuenta
-- Subir archivos
-    - Cambiar foto de perfil
+
+-   Motores de plantilla (template engine)
+    -   [HBS y/o EJS](https://bluuweb.github.io/node/03-vistas/)
+-   MongoDB
+    -   ShortURL
+-   Auth User
+    -   Rutas protegidas
+    -   Sessions
+    -   Passport
+-   Email
+    -   Enviar confirmación de cuenta
+-   Subir archivos
+    -   Cambiar foto de perfil
 
 #### Próximos capítulos:
-- API REST
-- JWT
-- Firebase
-    - Auth
-    - Firestore
-- MEVN / MERN
+
+-   API REST
+-   JWT
+-   Firebase
+    -   Auth
+    -   Firestore
+-   MEVN / MERN
 
 ## Template Engines
-- [Template Engines](https://expressjs.com/es/guide/using-template-engines.html)
-- [express-handlebars](https://www.npmjs.com/package/express-handlebars)
+
+-   [Template Engines](https://expressjs.com/es/guide/using-template-engines.html)
+-   [express-handlebars](https://www.npmjs.com/package/express-handlebars)
 
 En una galaxia muy lejana...
+
 ```
 npm init -y
 npm i -D nodemon
@@ -44,6 +51,7 @@ npm i express express-handlebars
 ```
 
 package.json
+
 ```json
 "scripts": {
     "dev": "nodemon index.js"
@@ -51,6 +59,7 @@ package.json
 ```
 
 nodemon.json
+
 ```json
 {
     "ext": "js,json,hbs"
@@ -58,6 +67,7 @@ nodemon.json
 ```
 
 index.js
+
 ```js
 const express = require("express");
 const app = express();
@@ -71,6 +81,7 @@ app.listen(PORT, () => console.log("server andando 🔥"));
 ```
 
 Directorios
+
 ```
 └── views
     ├── home.hbs
@@ -101,27 +112,30 @@ app.listen(PORT, () => console.log("server andando 🔥"));
 ```
 
 views/layouts/main.hbs
+
 ```html
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-</head>
-<body>
-    {{{body}}}
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Main</title>
+    </head>
+    <body>
+        {{{body}}}
+    </body>
 </html>
 ```
 
 views/home.hbs
+
 ```html
 <h1>{{titulo}}</h1>
 ```
 
 ## Partials/Components
+
 ```js
 const hbs = create({
     extname: ".hbs",
@@ -130,52 +144,71 @@ const hbs = create({
 ```
 
 views/components/Navbar.hbs
+
 ```html
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="/">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/logup">LogUp</a>
-        <a class="nav-link" href="/login">LogIn</a>
-        <a class="nav-link" href="/logup">LogOut</a>
-      </div>
+    <div class="container">
+        <a class="navbar-brand" href="/">Navbar</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link" href="/logup">LogUp</a>
+                <a class="nav-link" href="/login">LogIn</a>
+                <a class="nav-link" href="/logup">LogOut</a>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
 ```
 
 views/layout/main.hbs
+
 ```html
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Main</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        {{> Navbar}}
 
-    {{> Navbar}}
+        <div class="container mt-2">
+            {{{body}}}
+        </div>
 
-    <div class="container mt-2">
-        {{{body}}}
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"
+        ></script>
+    </body>
 </html>
 ```
 
 ## Helpers
-- [nanoid](https://github.com/ai/nanoid#install)
-- [helpers hbs](https://handlebarsjs.com/guide/block-helpers.html#simple-iterators)
+
+-   [nanoid](https://github.com/ai/nanoid#install)
+-   [helpers hbs](https://handlebarsjs.com/guide/block-helpers.html#simple-iterators)
 
 ```js
 app.get("/", (req, res) => {
@@ -192,12 +225,13 @@ app.get("/", (req, res) => {
 
 <ul>
     {{#each urls }}
-        <li>{{this.origin}} - {{this.shortURL}}</li>
+    <li>{{this.origin}} - {{this.shortURL}}</li>
     {{/each}}
 </ul>
 ```
 
 components/Card.hbs
+
 ```html
 <article class="card mb-2">
     <div class="card-body">
@@ -212,15 +246,15 @@ components/Card.hbs
 ```html
 <h1 class="text-center my-5">{{titulo}}</h1>
 
-{{#each urls }}
-    {{> Card url=this}}
-{{/each}}
+{{#each urls }} {{> Card url=this}} {{/each}}
 ```
 
 ## express.Router
-- [Router](https://expressjs.com/es/guide/routing.html): Utilice la clase express.Router para crear manejadores de rutas montables y modulares. Una instancia Router es un sistema de middleware y direccionamiento completo.
+
+-   [Router](https://expressjs.com/es/guide/routing.html): Utilice la clase express.Router para crear manejadores de rutas montables y modulares. Una instancia Router es un sistema de middleware y direccionamiento completo.
 
 routes/home.js
+
 ```js
 const express = require("express");
 const { nanoid } = require("nanoid");
@@ -242,10 +276,17 @@ app.use("/", require("./routes/home"));
 ```
 
 ## CREATE
+
 components/FormAcortar.hbs
+
 ```html
 <form action="/" method="post">
-    <input type="text" placeholder="Ingresa URL" class="form-control my-2" name="originURL">
+    <input
+        type="text"
+        placeholder="Ingresa URL"
+        class="form-control my-2"
+        name="originURL"
+    />
     <button class="btn btn-dark mb-2 w-100">Acortar URL</button>
 </form>
 ```
@@ -253,19 +294,17 @@ components/FormAcortar.hbs
 ```html
 <h1 class="text-center my-5">{{titulo}}</h1>
 
-{{> FormAcortar}}
-
-{{#each urls }}
-    {{> Card url=this}}
-{{/each}}
+{{> FormAcortar}} {{#each urls }} {{> Card url=this}} {{/each}}
 ```
 
 index.js
+
 ```js
 app.use(express.urlencoded({ extended: true }));
 ```
 
 home.js
+
 ```js
 router.post("/", (req, res) => {
     console.log(req.body);
@@ -274,8 +313,9 @@ router.post("/", (req, res) => {
 ```
 
 ## MongoDB
-- [mongodb](https://www.mongodb.com/)
-- [mongoosejs](https://mongoosejs.com/)
+
+-   [mongodb](https://www.mongodb.com/)
+-   [mongoosejs](https://mongoosejs.com/)
 
 ```
 npm i dotenv
@@ -283,11 +323,13 @@ npm i mongoose
 ```
 
 .env
+
 ```
 URI=mongodb+srv://<username>:<password>@cluster0.xxx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 ```
 
 database/conexion.js
+
 ```js
 const mongoose = require("mongoose");
 
@@ -298,6 +340,7 @@ mongoose
 ```
 
 index.js
+
 ```js
 const express = require("express");
 const { create } = require("express-handlebars");
@@ -306,38 +349,42 @@ require("./database/conexion");
 ```
 
 ### Schema
-- [Schema](https://mongoosejs.com/docs/guide.html#definition): Con Mongoose, todo se deriva de un esquema.
-- Cada esquema se asigna a una colección MongoDB y define la forma de los documentos dentro de esa colección.
+
+-   [Schema](https://mongoosejs.com/docs/guide.html#definition): Con Mongoose, todo se deriva de un esquema.
+-   Cada esquema se asigna a una colección MongoDB y define la forma de los documentos dentro de esa colección.
 
 models/Url.js
+
 ```js
-const mongoose = require('mongoose')
-const {Schema} = mongoose
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const urlSchema = new Schema({
     origin: {
         type: String,
         unique: true,
-        required: true
+        required: true,
     },
     shortURL: {
         type: String,
         unique: true,
         required: true,
-        default: nanoid(7)
-    }
-})
+        default: nanoid(7),
+    },
+});
 ```
 
 ### Model
-- Para usar nuestra definición de esquema, necesitamos convertirla a un modelo con el que podamos trabajar.
+
+-   Para usar nuestra definición de esquema, necesitamos convertirla a un modelo con el que podamos trabajar.
 
 ```js
-const Url = mongoose.model('Url', urlSchema)
-module.exports = Url
+const Url = mongoose.model("Url", urlSchema);
+module.exports = Url;
 ```
 
 ### routes/home.js
+
 ```js
 const Url = require("../models/Url");
 router.post("/", async (req, res) => {
@@ -367,7 +414,8 @@ router.post("/", async (req, res) => {
 ```
 
 ## READ
-- [lean](https://mongoosejs.com/docs/tutorials/lean.html): La opción Lean le dice a Mongoose que omita la hidratación de los documentos de resultados. Esto hace que las consultas sean más rápidas y requieran menos memoria, pero los documentos de resultados son simples objetos JavaScript, no documentos Mongoose.
+
+-   [lean](https://mongoosejs.com/docs/tutorials/lean.html): La opción Lean le dice a Mongoose que omita la hidratación de los documentos de resultados. Esto hace que las consultas sean más rápidas y requieran menos memoria, pero los documentos de resultados son simples objetos JavaScript, no documentos Mongoose.
 
 ```js
 router.get("/", async (req, res) => {
@@ -382,9 +430,11 @@ router.get("/", async (req, res) => {
 ```
 
 ## Middlewares
-- [url](https://nodejs.org/api/url.html#class-url)
+
+-   [url](https://nodejs.org/api/url.html#class-url)
 
 middlewares/validarURL.js
+
 ```js
 const { URL } = require("url");
 
@@ -411,6 +461,7 @@ module.exports = validarURL;
 ```
 
 routes/home.js
+
 ```js
 const validarURL = require("../middlewares/validarURL");
 router.post("/", validarURL, async (req, res) => {
@@ -428,7 +479,9 @@ router.post("/", validarURL, async (req, res) => {
 ```
 
 ## Controllers
+
 controllers/urlController.js
+
 ```js
 const Url = require("../models/Url");
 
@@ -460,6 +513,7 @@ module.exports = {
 ```
 
 routes/home.js
+
 ```js
 const express = require("express");
 const { homeUrl, agregarUrl } = require("../controllers/urlController");
@@ -475,14 +529,17 @@ module.exports = router;
 ```
 
 ## DELETE
-- [findByIdAndDelete](https://mongoosejs.com/docs/api.html#model_Model.findByIdAndDelete)
+
+-   [findByIdAndDelete](https://mongoosejs.com/docs/api.html#model_Model.findByIdAndDelete)
 
 Card.hbs
+
 ```html
 <a href="/eliminar/{{url._id}}" class="btn btn-danger">Eliminar</a>
 ```
 
 controllers/urlController.js
+
 ```js
 const eliminarUrl = async (req, res) => {
     const { id } = req.params;
@@ -496,19 +553,23 @@ const eliminarUrl = async (req, res) => {
 ```
 
 routes/home.js
+
 ```js
 router.get("/eliminar/:id", eliminarUrl);
 ```
 
 ## UPDATE
-- [findById](https://mongoosejs.com/docs/api.html#model_Model.findById)
+
+-   [findById](https://mongoosejs.com/docs/api.html#model_Model.findById)
 
 Card.hbs
+
 ```html
 <a href="/editar/{{url._id}}" class="btn btn-warning">Editar</a>
 ```
 
 controllers
+
 ```js
 const editarUrlForm = async (req, res) => {
     const { id } = req.params;
@@ -523,30 +584,44 @@ const editarUrlForm = async (req, res) => {
 ```
 
 routes
+
 ```js
 router.get("/editar/:id", editarUrlForm);
 ```
 
 FormAcortar.hbs
+
 ```html
 {{#if urlDB}}
 
-    <form action="/editar/{{urlDB._id}}" method="post">
-        <input type="text" placeholder="Ingresa URL" class="form-control my-2" name="originURL" value="{{urlDB.origin}}">
-        <button class="btn btn-warning mb-2 w-100">Editar URL</button>
-    </form>
+<form action="/editar/{{urlDB._id}}" method="post">
+    <input
+        type="text"
+        placeholder="Ingresa URL"
+        class="form-control my-2"
+        name="originURL"
+        value="{{urlDB.origin}}"
+    />
+    <button class="btn btn-warning mb-2 w-100">Editar URL</button>
+</form>
 
-    {{else}}
+{{else}}
 
-    <form action="/" method="post">
-        <input type="text" placeholder="Ingresa URL" class="form-control my-2" name="originURL">
-        <button class="btn btn-dark mb-2 w-100">Acortar URL</button>
-    </form>
+<form action="/" method="post">
+    <input
+        type="text"
+        placeholder="Ingresa URL"
+        class="form-control my-2"
+        name="originURL"
+    />
+    <button class="btn btn-dark mb-2 w-100">Acortar URL</button>
+</form>
 
 {{/if}}
 ```
 
 controllers
+
 ```js
 const editarUrl = async (req, res) => {
     const { id } = req.params;
@@ -568,12 +643,15 @@ const editarUrl = async (req, res) => {
 ```
 
 routes
+
 ```js
 router.post("/editar/:id", validarURL, editarUrl);
 ```
 
 ## Redireccionamiento
+
 controllers
+
 ```js
 const redireccionar = async (req, res) => {
     const { shortURL } = req.params;
@@ -593,6 +671,7 @@ const redireccionar = async (req, res) => {
 ```
 
 routes
+
 ```js
 router.get("/:shortURL", redireccionar);
 ```
@@ -600,22 +679,27 @@ router.get("/:shortURL", redireccionar);
 ## clipboard
 
 index.js
+
 ```js
 app.use(express.static(__dirname + "/public"));
 ```
 
 main.hbs
+
 ```html
 <script src="/js/app.js"></script>
 ```
 
 Card.hbs
+
 ```html{5}
 <article class="card mb-2">
     <div class="card-body">
         <p>{{url.origin}}</p>
         <p>{{url.shortURL}}</p>
-        <button class="btn btn-primary" data-short="{{url.shortURL}}" >Copiar</button>
+        <button class="btn btn-primary" data-short="{{url.shortURL}}">
+            Copiar
+        </button>
         <a href="/editar/{{url._id}}" class="btn btn-warning">Editar</a>
         <a href="/eliminar/{{url._id}}" class="btn btn-danger">Eliminar</a>
     </div>
@@ -623,6 +707,7 @@ Card.hbs
 ```
 
 public/js/app.js
+
 ```js
 document.addEventListener("click", (e) => {
     if (e.target.dataset.short) {
@@ -641,14 +726,17 @@ document.addEventListener("click", (e) => {
 ```
 
 ## Register User
+
 En esta sección trabajaremos con el registro de usuarios:
 
 index.js
+
 ```js
 app.use("/", require("./routes/auth"));
 ```
 
 routes/auth.js
+
 ```js
 const express = require("express");
 const { formRegister } = require("../controllers/authController");
@@ -660,6 +748,7 @@ module.exports = router;
 ```
 
 controllers/authController.js
+
 ```js
 const formRegister = (req, res) => {
     res.render("register");
@@ -671,57 +760,58 @@ module.exports = {
 ```
 
 views/register.hbs
+
 ```html
 <h1 class="text-center my-5">Registro de usuarios</h1>
 <div class="row justify-content-center">
     <div class="col-md-6">
-
         <form action="/register" method="post">
             <input
-            class="form-control mb-2"
-            name="nombre"
-            placeholder="Ingrese nombre"
-            type="text"
-            value="bluuweb"
-            >
+                class="form-control mb-2"
+                name="nombre"
+                placeholder="Ingrese nombre"
+                type="text"
+                value="bluuweb"
+            />
             <input
-            class="form-control mb-2"
-            name="email"
-            placeholder="Ingrese email"
-            type="email"
-            value="bluuweb@prueba.com"
-            >
+                class="form-control mb-2"
+                name="email"
+                placeholder="Ingrese email"
+                type="email"
+                value="bluuweb@prueba.com"
+            />
             <input
-            class="form-control mb-2"
-            name="password"
-            placeholder="Ingrese contraseña"
-            type="password"
-            value="123123"
-            >
+                class="form-control mb-2"
+                name="password"
+                placeholder="Ingrese contraseña"
+                type="password"
+                value="123123"
+            />
             <input
-            class="form-control mb-2"
-            name="passwordRepit"
-            placeholder="Repita contraseña"
-            type="password"
-            value="123123"
-            >
+                class="form-control mb-2"
+                name="passwordRepit"
+                placeholder="Repita contraseña"
+                type="password"
+                value="123123"
+            />
             <button type="submit" class="btn btn-primary">Crear Cuenta</button>
         </form>
-
     </div>
 </div>
 ```
 
 ## Model User
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
-- [password auth mongoose](https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1)
-- [resumen ☝](https://stackoverflow.com/questions/14588032/mongoose-password-hashing)
+
+-   [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+-   [password auth mongoose](https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1)
+-   [resumen ☝](https://stackoverflow.com/questions/14588032/mongoose-password-hashing)
 
 :::tip
 Bcrypt supports both sync and async methods. The asynchronous approach is recommended because hashing is CPU intensive, and the synchronous version will block the event loop and prevent your app from handling other requests until it finishes.
 :::
 
 models/User.js
+
 ```js
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
@@ -757,7 +847,7 @@ const userSchema = new Schema({
     },
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function(next) {
     const user = this;
     // only hash the password if it has been modified (or is new)
     if (!user.isModified("password")) return next();
@@ -774,7 +864,7 @@ userSchema.pre("save", async function (next) {
     }
 });
 
-userSchema.methods.comparePassword = async function (candidatePassword) {
+userSchema.methods.comparePassword = async function(candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 };
 
@@ -782,6 +872,7 @@ module.exports = mongoose.model("User", userSchema);
 ```
 
 routes/auth.js
+
 ```js
 const express = require("express");
 const {
@@ -803,6 +894,7 @@ module.exports = router;
 ```
 
 controllers/authController.js
+
 ```js
 const { nanoid } = require("nanoid");
 const User = require("../models/User");
@@ -884,18 +976,20 @@ module.exports = {
 ```
 
 index.js
+
 ```js
 app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/home"));
 ```
 
 ## Session & flash
-- [express session](http://expressjs.com/en/resources/middleware/session.html): El middleware express-session almacena los datos de sesión en el servidor; sólo guarda el ID de sesión en la propia cookie, no los datos de sesión. De forma predeterminada, utiliza el almacenamiento en memoria y no está diseñado para un entorno de producción. 
-- [express session npm](https://www.npmjs.com/package/express-session)
-- [express session github](https://github.com/expressjs/session)
-- [connect-mongo](https://www.npmjs.com/package/connect-mongo)
-- [connect flash](https://www.npmjs.com/package/connect-flash): El flash es un área especial de la sesión que se utiliza para almacenar mensajes. Los mensajes se escriben en la memoria flash y se borran después de mostrarse al usuario. El flash generalmente se usa en combinación con redireccionamientos, lo que garantiza que el mensaje esté disponible para la siguiente página que se va a representar.
-- [best-practice-security](https://expressjs.com/es/advanced/best-practice-security.html)
+
+-   [express session](http://expressjs.com/en/resources/middleware/session.html): El middleware express-session almacena los datos de sesión en el servidor; sólo guarda el ID de sesión en la propia cookie, no los datos de sesión. De forma predeterminada, utiliza el almacenamiento en memoria y no está diseñado para un entorno de producción.
+-   [express session npm](https://www.npmjs.com/package/express-session)
+-   [express session github](https://github.com/expressjs/session)
+-   [connect-mongo](https://www.npmjs.com/package/connect-mongo)
+-   [connect flash](https://www.npmjs.com/package/connect-flash): El flash es un área especial de la sesión que se utiliza para almacenar mensajes. Los mensajes se escriben en la memoria flash y se borran después de mostrarse al usuario. El flash generalmente se usa en combinación con redireccionamientos, lo que garantiza que el mensaje esté disponible para la siguiente página que se va a representar.
+-   [best-practice-security](https://expressjs.com/es/advanced/best-practice-security.html)
 
 ```
 npm i express-session
@@ -930,6 +1024,7 @@ app.get("/destruir-session", (req, res) => {
 ```
 
 flash
+
 ```js
 const express = require("express");
 const session = require("express-session");
@@ -957,9 +1052,11 @@ app.get("/campos-validados", (req, res) => {
 ```
 
 ## Express Validator
-- [express validator](https://express-validator.github.io/docs/)
+
+-   [express validator](https://express-validator.github.io/docs/)
 
 routes/auth.js
+
 ```js
 const express = require("express");
 const { body } = require("express-validator");
@@ -977,7 +1074,10 @@ router.get("/register", registerForm);
 router.post(
     "/register",
     [
-        body("userName", "Ingrese un nombre").trim().notEmpty().escape(),
+        body("userName", "Ingrese un nombre")
+            .trim()
+            .notEmpty()
+            .escape(),
         body("email", "Ingrese un email válido")
             .trim()
             .isEmail()
@@ -1017,6 +1117,7 @@ module.exports = router;
 ```
 
 controllers/authControllers.js
+
 ```js
 const User = require("../models/User");
 const { validationResult } = require("express-validator");
@@ -1111,8 +1212,9 @@ module.exports = {
 ```
 
 ## Rutas protegidas
-- [passport](http://www.passportjs.org/)
-- [github ejemplo](https://github.com/passport/todos-express-password/blob/master/routes/auth.js#L17)
+
+-   [passport](http://www.passportjs.org/)
+-   [github ejemplo](https://github.com/passport/todos-express-password/blob/master/routes/auth.js#L17)
 
 ```
 npm install passport passport-local
@@ -1156,6 +1258,7 @@ passport.deserializeUser(async (user, done) => {
 ```
 
 middlewares/verificarUsuario.js
+
 ```js
 module.exports = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -1166,6 +1269,7 @@ module.exports = (req, res, next) => {
 ```
 
 controllers/authController.js
+
 ```js{18-23,32-35}
 const loginUser = async (req, res) => {
     const errors = validationResult(req);
@@ -1184,7 +1288,7 @@ const loginUser = async (req, res) => {
         if (!(await user.comparePassword(password)))
             throw new Error("Contraseña no correcta");
 
-        req.login(user, function (err) {
+        req.login(user, function(err) {
             if (err) {
                 throw new Error("Error de passport");
             }
@@ -1205,6 +1309,7 @@ const cerrarSesion = (req, res) => {
 ```
 
 router/auth.js
+
 ```js
 router.post(
     "/login",
@@ -1227,6 +1332,7 @@ module.exports = router;
 ```
 
 router/home.js
+
 ```js
 const verificarUsuario = require("../middlewares/verificarUsuario");
 
@@ -1234,6 +1340,7 @@ router.get("/", verificarUsuario, leerUrls);
 ```
 
 controllers/homeController.js
+
 ```js{2}
 const leerUrls = async (req, res) => {
     console.log(req.user);
@@ -1248,14 +1355,18 @@ const leerUrls = async (req, res) => {
 ```
 
 ## CSRF protection middleware.
-- [expressjs/csurf](https://github.com/expressjs/csurf)
+
+-   [expressjs/csurf](https://github.com/expressjs/csurf)
 
 ```
 npm install csurf
 ```
 
 index.js
+
 ```js
+app.use(express.urlencoded({ extended: true }));
+
 const csrf = require("csurf");
 
 app.use(csrf());
@@ -1268,6 +1379,7 @@ Se recomienda reiniciar el servidor (bajar nodemon y volver a levantarlo)
 :::
 
 Todo lo que tenga formulario:
+
 ```js
 const registerForm = (req, res) => {
     res.render("register", {
@@ -1285,10 +1397,11 @@ const loginForm = (req, res) => {
 ```
 
 ```html
-<input type="hidden" name="_csrf" value="{{csrfToken}}">
+<input type="hidden" name="_csrf" value="{{csrfToken}}" />
 ```
 
 Si no quieres enviarlo en cada render:
+
 ```js
 app.use(csrf());
 
@@ -1298,3 +1411,286 @@ app.use((req, res, next) => {
     next();
 });
 ```
+
+## Rutas protegidas (home)
+
+routes/home.js
+
+```js
+router.get("/", verficarUser, leerUrls);
+router.post("/", verficarUser, urlValidar, agregarUrl);
+router.get("/eliminar/:id", verficarUser, eliminarUrl);
+router.get("/editar/:id", verficarUser, editarUrlForm);
+router.post("/editar/:id", verficarUser, urlValidar, editarUrl);
+router.get("/:shortURL", redireccionamiento);
+```
+
+middlewares/urlValida.js
+
+```js
+const { URL } = require("url");
+const urlValidar = (req, res, next) => {
+    try {
+        const { origin } = req.body;
+        const urlFrontend = new URL(origin);
+        if (urlFrontend.origin !== "null") {
+            if (
+                urlFrontend.protocol === "http:" ||
+                urlFrontend.protocol === "https:"
+            ) {
+                return next();
+            }
+            throw new Error("tiene que contener https://");
+        }
+        throw new Error("url no válida 😲");
+    } catch (error) {
+        if (error.message === "Invalid URL") {
+            req.flash("mensajes", [{ msg: "URL no válida" }]);
+        } else {
+            req.flash("mensajes", [{ msg: error.message }]);
+        }
+        return res.redirect("/");
+    }
+};
+
+module.exports = urlValidar;
+```
+
+## Mensajes flash (home)
+
+index.js
+
+```js
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    res.locals.mensajes = req.flash("mensajes");
+    next();
+});
+```
+
+controllers/authController.js
+
+```js
+const registerForm = (req, res) => {
+    res.render("register");
+};
+
+const loginForm = (req, res) => {
+    res.render("login");
+};
+```
+
+controllers/homeController.js
+
+```js{7-8}
+const leerUrls = async (req, res) => {
+    console.log(req.user);
+    try {
+        const urls = await Url.find().lean();
+        return res.render("home", { urls: urls });
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+## ref mongoDB
+
+models/Url.js
+
+```js{12-16}
+const urlSchema = new Schema({
+    origin: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    shortURL: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+});
+```
+
+homeController
+
+Leer
+
+```js{4}
+const leerUrls = async (req, res) => {
+    console.log(req.user);
+    try {
+        const urls = await Url.find({ user: req.user.id }).lean();
+        return res.render("home", { urls: urls });
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+Agregar
+
+```js{8,11}
+const agregarUrl = async (req, res) => {
+    const { origin } = req.body;
+
+    try {
+        const url = new Url({
+            origin: origin,
+            shortURL: nanoid(8),
+            user: req.user.id,
+        });
+        await url.save();
+        req.flash("mensajes", [{ msg: "se agregó url correctamente" }]);
+        return res.redirect("/");
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+Eliminar (opcion 1)
+
+```js
+const eliminarUrl = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const url = await Url.findById(id);
+        if (!url.user.equals(req.user.id)) {
+            throw new Error("no se puede eliminar url");
+        }
+        await url.remove();
+
+        req.flash("mensajes", [{ msg: "se eliminó url correctamente" }]);
+        return res.redirect("/");
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+Form editar
+
+```js
+const editarUrlForm = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const url = await Url.findById(id).lean();
+        if (!url.user.equals(req.user.id)) {
+            throw new Error("no se puede editar url");
+        }
+        return res.render("home", { url: url });
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+POST editar
+
+```js
+const editarUrl = async (req, res) => {
+    const { id } = req.params;
+    const { origin } = req.body;
+    try {
+        const url = await Url.findById(id);
+        if (!url.user.equals(req.user.id)) {
+            throw new Error("no se puede editar url");
+        }
+        await url.updateOne({ origin });
+        req.flash("mensajes", [{ msg: "se editó url correctamente" }]);
+        res.redirect("/");
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+Redireccionamiento
+
+```js
+const redireccionamiento = async (req, res) => {
+    const { shortURL } = req.params;
+    try {
+        const urlDB = await Url.findOne({ shortURL: shortURL });
+        if (!urlDB) throw new Error("404 no se encuentra la url");
+        return res.redirect(urlDB.origin);
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/");
+    }
+};
+```
+
+## Nodemailer
+
+-   [nodemailer](https://nodemailer.com/about/)
+-   [mailtrap.io](https://mailtrap.io/)
+
+```js
+npm install nodemailer
+```
+
+```js
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+
+const registerUser = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash("mensajes", errors.array());
+        return res.redirect("/auth/register");
+    }
+
+    const { userName, email, password } = req.body;
+    try {
+        let user = await User.findOne({ email: email });
+        if (user) throw new Error("ya existe usuario");
+
+        user = new User({ userName, email, password, tokenConfirm: nanoid() });
+        await user.save();
+
+        // enviar correo electrónico con la confirmación de la cuenta
+        const transport = nodemailer.createTransport({
+            host: "smtp.mailtrap.io",
+            port: 2525,
+            auth: {
+                user: process.env.userEmail,
+                pass: process.env.passEmail,
+            },
+        });
+
+        await transport.sendMail({
+            from: '"Fred Foo 👻" <foo@example.com>',
+            to: user.email,
+            subject: "verifique cuenta de correo",
+            html: `<a href="http://localhost:5000/auth/confirmar/${user.tokenConfirm}">verificar cuenta aquí</a>`,
+        });
+
+        req.flash("mensajes", [
+            { msg: "Revisa tu correo electrónico y valida cuenta" },
+        ]);
+        return res.redirect("/auth/login");
+    } catch (error) {
+        req.flash("mensajes", [{ msg: error.message }]);
+        return res.redirect("/auth/register");
+        // return res.json({ error: error.message });
+    }
+};
+```
+
+## Heroku
+
+Subir a producción
