@@ -1691,6 +1691,186 @@ const registerUser = async (req, res) => {
 };
 ```
 
+## Subir archivos
+
+-   [multer](https://www.npmjs.com/package/multer)
+-   [formidable](https://www.npmjs.com/package/formidable)
+-   [Jimp](https://www.npmjs.com/package/jimp)
+-   [tutorial formidable](https://www.section.io/engineering-education/uploading-files-using-formidable-nodejs/)
+
+models/User.js
+
+```js
+imagen: {
+    type: String,
+    default: null,
+},
+```
+
+login.hbs
+
+```html
+<h1 class="text-center">{{user.userName}}</h1>
+<div class="text-center mb-3">
+    {{#if imagen}}
+    <img src="/uploads/{{imagen}}" class="rounded-circle" />
+    {{else}}
+    <img
+        src="/uploads/fotoPerfil.jpg"
+        class="rounded-circle"
+        width="200px"
+        height="200px"
+    />
+    {{/if}}
+</div>
+<form
+    action="/perfil?_csrf={{csrfToken}}"
+    enctype="multipart/form-data"
+    method="post"
+>
+    {{!-- <input type="hidden" name="_csrf" value="{{csrfToken}}" /> --}}
+    <input class="form-control mb-2" type="file" id="formFile" name="myFile" />
+    <button class="btn btn-dark">Cambir foto</button>
+</form>
+```
+
+routes/home.js
+
+```js
+router.get("/perfil", verficarUser, perfilForm);
+router.post("/perfil", verficarUser, cambiarFotoPerfil);
+```
+
+controllers/perfilController.js
+
+```js
+const formidable = require("formidable");
+const fs = require("fs");
+const Jimp = require("jimp");
+const path = require("path");
+const User = require("../models/User");
+
+module.exports.perfilForm = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        return res.render("perfil", { user: req.user, imagen: user.imagen });
+    } catch (error) {
+        req.flash("mensajes", [{ msg: "no se puede leer perfil" }]);
+        return res.redirect("/perfil");
+    }
+};
+
+module.exports.cambiarFotoPerfil = (req, res) => {
+    const form = new formidable.IncomingForm();
+
+    form.maxFileSize = 50 * 1024 * 1024; // 5MB
+
+    form.parse(req, async (err, fields, files) => {
+        // console.log(fields);
+        // console.log(files);
+
+        if (err) {
+            req.flash("mensajes", [{ msg: "falló formidable" }]);
+            return res.redirect("/perfil");
+        }
+
+        const file = files.myFile;
+
+        try {
+            if (file.originalFilename === "") {
+                throw new Error("No se subió ninguna imagen");
+            }
+
+            if (
+                !(
+                    file.mimetype === "image/png" ||
+                    file.mimetype === "image/jpg"
+                )
+            ) {
+                throw new Error("Solo imagen .png o .jpg");
+            }
+
+            if (file.size > 50 * 1024 * 1024) {
+                throw new Error("Máximo 5MB");
+            }
+
+            const extension = file.mimetype.split("/")[1];
+            const dirFile = path.join(
+                __dirname,
+                `../public/uploads/${req.user.id}.${extension}`
+            );
+
+            fs.renameSync(file.filepath, dirFile);
+
+            const image = await Jimp.read(dirFile);
+            image
+                .resize(200, 200)
+                .quality(90)
+                .writeAsync(dirFile);
+
+            const user = await User.findById(req.user.id);
+            user.imagen = `${req.user.id}.${extension}`;
+
+            await user.save();
+
+            req.flash("mensajes", [{ msg: "se guardó la imagen" }]);
+            return res.redirect("/perfil");
+        } catch (error) {
+            console.log(error);
+            req.flash("mensajes", [{ msg: error.message }]);
+            return res.redirect("/perfil");
+        }
+    });
+};
+```
+
+## connet-mongo
+
+-   [connect-mongo npm](https://www.npmjs.com/package/connect-mongo)
+-   [example](https://github.com/jdesboeufs/connect-mongo/blob/master/example/mongoose.js)
+-   [flash problem connet-mongo](https://github.com/jdesboeufs/connect-mongo/issues/195)
+
+```
+npm install connect-mongo
+```
+
+database/db.js
+
+```js
+require("dotenv").config();
+const mongoose = require("mongoose");
+
+const clientDB = mongoose
+    .connect(process.env.URI)
+    .then((m) => {
+        console.log("db conectada 🔥");
+        return m.connection.getClient();
+    })
+    .catch((e) => console.log("falló la conexión " + e));
+
+module.exports = clientDB;
+```
+
+index.js
+
+```js
+const MongoStore = require("connect-mongo");
+const clientDB = require("./database/db");
+
+app.use(
+    session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: false,
+        name: "secret-name-blablabal",
+        store: MongoStore.create({
+            clientPromise: clientDB,
+            dbName: "dbUrlTwitch",
+        }),
+    })
+);
+```
+
 ## Heroku
 
 Subir a producción
