@@ -1781,13 +1781,15 @@ module.exports.cambiarFotoPerfil = (req, res) => {
                 throw new Error("No se subió ninguna imagen");
             }
 
-            if (
-                !(
-                    file.mimetype === "image/png" ||
-                    file.mimetype === "image/jpg"
-                )
-            ) {
-                throw new Error("Solo imagen .png o .jpg");
+            const imageTypes = [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/gif",
+            ];
+
+            if (!imageTypes.includes(file.mimetype)) {
+                throw new Error("Por favor agrega una imagen .jpg o png");
             }
 
             if (file.size > 50 * 1024 * 1024) {
@@ -1871,6 +1873,99 @@ app.use(
 );
 ```
 
+## Saniteze mongo
+
+-   [mongo-sanitize](https://www.npmjs.com/package/mongo-sanitize)
+-   [express-mongo-sanitize](https://www.npmjs.com/package/express-mongo-sanitize)
+-   [hacking-nodejs-and-mongodb](https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html)
+
+express-mongo-sanitize
+
+```js
+const mongoSanitize = require("express-mongo-sanitize");
+app.use(mongoSanitize());
+```
+
+mongo-sanitize
+
+```js
+const sanitize = require("mongo-sanitize");
+
+const registerUser = async (req, res) => {
+    req.body = sanitize(req.body);
+};
+
+const confirmarCuenta = async (req, res) => {
+    req.params = sanitize(req.params);
+};
+
+const loginUser = async (req, res) => {
+    req.body = sanitize(req.body);
+};
+```
+
+## CORS
+
+-   [cors](https://expressjs.com/en/resources/middleware/cors.html)
+
+```js
+const cors = require("cors");
+app.use(cors());
+```
+
+## .env
+
+```
+URI=mongodbURI
+USEREMAIL=
+PASSEMAIL=
+SESSION_SECRET=
+PATHURL=http://localhost:5000
+```
+
 ## Heroku
 
-Subir a producción
+-   [heroku](https://www.heroku.com/pricing)
+
+package.json
+
+```json
+"scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+},
+```
+
+index.js
+
+```js
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        name: "name-session",
+        store: MongoStore.create({
+            clientPromise: clientDB,
+        }),
+        cookie: { secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 },
+    })
+);
+```
+
+En registerUser cambiar variables de entorno
+
+```js
+await transport.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>',
+    to: user.email,
+    subject: "verifique cuenta de correo",
+    html: `<a href="${process.env.PATHURL}/auth/confirmar/${user.tokenConfirm}">verificar cuenta aquí</a>`,
+});
+```
+
+app.js (frontend) cambiar url
+
+```js
+const url = `https://uur.herokuapp.com/${e.target.dataset.short}`;
+```
