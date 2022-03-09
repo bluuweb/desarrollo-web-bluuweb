@@ -1910,7 +1910,11 @@ const loginUser = async (req, res) => {
 
 ```js
 const cors = require("cors");
-app.use(cors());
+const corsOptions = {
+    credentials: true,
+    origin: "https://uur.herokuapp.com/",
+};
+app.use(cors(corsOptions));
 ```
 
 ## .env
@@ -1939,6 +1943,7 @@ package.json
 index.js
 
 ```js
+app.set("trust proxy", 1);
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
