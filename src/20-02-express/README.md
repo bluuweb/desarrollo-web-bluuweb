@@ -1942,7 +1942,7 @@ package.json
 
 index.js
 
-```js
+```js{1,11}
 app.set("trust proxy", 1);
 app.use(
     session({
