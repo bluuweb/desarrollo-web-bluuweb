@@ -18,24 +18,30 @@ Al finalizar el curso el estudiante podrá construir sitios web responsives util
 
 :::tip 🎉 Accede al curso con un super descuento 🎉
 Este curso está publicado en Udemy, puedes acceder con un descuento especial en el siguiente enlace:
-- [Ir al curso en Udemy aquí](curso-bootstrap-5-udemy.bluuweb.cl)
-:::
+
+-   [Ir al curso en Udemy aquí](curso-bootstrap-5-udemy.bluuweb.cl)
+    :::
 
 ## ¿Dudas y preguntas?
+
 Te invito a nuestro servidor de **Discord**, donde todos nos ayudamos. **ES GRATIS** 👏
-- [Click aquí: https://discord.gg/SKKPdttHmT](https://discord.gg/SKKPdttHmT)
+
+-   [Click aquí: https://discord.com/invite/hcG7NBvsGD](https://discord.com/invite/hcG7NBvsGD)
 
 ## Gist
+
 Aquí iré detallando diferentes notas:
-- [Notas de HTML y CSS](https://gist.github.com/bluuweb/8612c7e1c82bb85bce5b92d67f5b285c)
+
+-   [Notas de HTML y CSS](https://gist.github.com/bluuweb/8612c7e1c82bb85bce5b92d67f5b285c)
 
 ## Redes Sociales:
-- [Youtube](https://www.youtube.com/bluuweb)
-- [Twitch](https://www.twitch.tv/bluuweb)
-- [Instagram](https://www.instagram.com/bluuweb_youtube)
-- [Facebook](https://www.facebook.com/bluuweb)
-- [Twitter](https://twitter.com/bluuweb)
-- [Discord](https://discord.gg/SKKPdttHmT)
+
+-   [Youtube](https://www.youtube.com/bluuweb)
+-   [Twitch](https://www.twitch.tv/bluuweb)
+-   [Instagram](https://www.instagram.com/bluuweb_youtube)
+-   [Facebook](https://www.facebook.com/bluuweb)
+-   [Twitter](https://twitter.com/bluuweb)
+-   [Discord](https://discord.com/invite/hcG7NBvsGD)
 
 <!-- ## Planificación del curso
 - El curso tiene una duración de **8 semanas consecutivas**.
@@ -49,10 +55,10 @@ Aquí iré detallando diferentes notas:
 
 #### 🚀 Semana 1
 - Día 01: Bienvenida y HTML: Fundamentos.
-- Día 02: HTML: Tablas y Formulario. 
+- Día 02: HTML: Tablas y Formulario.
 
 #### 🚀 Semana 2
-- Día 03: CSS: Fundamentos. 
+- Día 03: CSS: Fundamentos.
 - Día 04: CSS: Intermedio.
 
 #### 🚀 Semana 3
@@ -81,7 +87,7 @@ Aquí iré detallando diferentes notas:
 ## Programa
 Aquí te doy una pequeña introducción a cada una de las clases:
 
-### 🙌 Semana #01 
+### 🙌 Semana #01
 ##### (Día 01) Bienvenida & HTML Fundamentos
 - Bienvenida: Daremos un recorrido por el programa del curso, conocerás a Ignacio Gutiérrez que se encargará de entregar toda la energía para que los conceptos entren en tu cerebro, conocerás a tus compañeros que te acompañarán en este viaje y para finalizar instalaremos las herramientas necesarias para trabajar y estudiar.
 - Fundamentos de HMTL: Aprenderemos a trabajar con HTML y utilizar sus etiquetas semánticas para estructurar nuestro sitio web.
@@ -89,7 +95,7 @@ Aquí te doy una pequeña introducción a cada una de las clases:
 ##### (Día 02) Tablas y Formularios HTML
 Una parte fundamental de todo sitio web son los formularios, es por esto que dedicaremos una clase especial donde conocerás los diferentes inputs y su implementación.
 
-### 🙌 Semana #02 
+### 🙌 Semana #02
 ##### (Día 03) Introducción a CSS
 Por fin pasaremos al diseño de nuestro sitio web, cada vez se pone más entretenido, por ahora en esta clase aprenderás los fundamentos de CSS.
 
