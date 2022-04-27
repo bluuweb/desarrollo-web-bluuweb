@@ -1,15 +1,21 @@
 # PostgreSQL JOIN
+
 En esta sección conoceremos como realizar consultas en tablas relacionadas utilizando JOIN.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gL9EELZXuKI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Recursos:
-- [Relational DB](http://www.databaseanswers.org/data_models/amazon_and_starbucks/index.htm)
+
+-   [Relational DB](http://www.databaseanswers.org/data_models/amazon_and_starbucks/index.htm)
 
 Modelo entidad relación (ERD):
+
 <div class="text-center">
     <img :src="$withBase('/img/cafe-2.JPG')" alt="relacion todo sql">
 </div>
 
 ## Tablas
+
 ```sql
 DROP TABLE IF EXISTS cliente_ordenes_productos;
 DROP TABLE IF EXISTS cliente_ordenes;
@@ -42,7 +48,7 @@ CREATE TABLE cliente_ordenes_productos (
 );
 
 
-INSERT INTO productos 
+INSERT INTO productos
 (producto_nombre, producto_precio, producto_stock, producto_tipo)
 VALUES
 	('Latte', 2.50, 100, 'café'),
@@ -74,7 +80,7 @@ VALUES
 	('Muffin de Arándano', 454.50, 10, 'muffin');
 
 INSERT INTO clientes (cliente_nombre)
-VALUES 
+VALUES
 	('María'),
 	('Carmen'),
 	('Josefa'),
@@ -91,6 +97,7 @@ SELECT * FROM productos;
 ## Agregar Ordenes
 
 Agregar una nueva orden de un cliente:
+
 ```sql
 INSERT INTO cliente_ordenes (cliente_id)
 VALUES (4);
@@ -99,8 +106,9 @@ SELECT * FROM cliente_ordenes;
 ```
 
 Cliente compra producto con id: 12
+
 ```sql
-INSERT INTO 
+INSERT INTO
 cliente_ordenes_productos (cliente_orden_id, producto_id, cantidad)
 VALUES (1, 12, 1);
 
@@ -108,6 +116,7 @@ SELECT * FROM cliente_ordenes_productos;
 ```
 
 Descontar stock del producto con id: 12
+
 ```sql
 UPDATE productos
 SET producto_stock = producto_stock - 1
@@ -117,8 +126,9 @@ SELECT * FROM productos;
 ```
 
 ¿Si desea agregar otro producto?
+
 ```sql
-INSERT INTO 
+INSERT INTO
 cliente_ordenes_productos (cliente_orden_id, producto_id, cantidad)
 VALUES (1, 27, 2);
 
@@ -135,30 +145,31 @@ Más adelante vamos a realizar una transacción, así validamos que exista el st
 [Más info](https://www.todopostgresql.com/comandos-de-transacciones-en-postgresql/)
 :::
 
-
 :::tip
 Cómo pudimos verificar todo el proceso lo hicimos de manera manual, ingresando estáticamente los id y stock correspondientes. Al finalizar los conceptos de join podremos hacer el ejercicio de manera dinámica.
 :::
 
 ## JOIN
-- [Fuente](https://www.postgresqltutorial.com/postgresql-joins/)
-- La unión o join de PostgreSQL se utiliza para combinar columnas de una o más tablas, en función de los valores de las columnas comunes entre tablas relacionadas.
-- Existen diferentes tipos de join:
-    - INNER JOIN o JOIN
-    - LEFT JOIN
-    - RIGHT JOIN
-    - FULL JOIN o FULL OUTER JOIN
-    - y otros... saquen su autodidacta interior 🤙
+
+-   [Fuente](https://www.postgresqltutorial.com/postgresql-joins/)
+-   La unión o join de PostgreSQL se utiliza para combinar columnas de una o más tablas, en función de los valores de las columnas comunes entre tablas relacionadas.
+-   Existen diferentes tipos de join:
+    -   INNER JOIN o JOIN
+    -   LEFT JOIN
+    -   RIGHT JOIN
+    -   FULL JOIN o FULL OUTER JOIN
+    -   y otros... saquen su autodidacta interior 🤙
 
 <div class="text-center">
     <img :src="$withBase('/img/joins.png')" alt="relacion todo sql">
 </div>
 
-
 ## INNER JOIN
-- [INNER JOIN](https://www.postgresqltutorial.com/postgresql-inner-join/)
+
+-   [INNER JOIN](https://www.postgresqltutorial.com/postgresql-inner-join/)
 
 ¿Si quisieramos pintar, el nombre del producto y la cantidad comprada?
+
 ```sql
 SELECT *
 FROM productos AS p
@@ -174,8 +185,9 @@ ON p.producto_id = cop.producto_id;
 ```
 
 Pintar el total a pagar por producto:
+
 ```sql
-SELECT 
+SELECT
 	p.producto_nombre,
 	p.producto_precio * cop.cantidad "$ producto"
 FROM productos p
@@ -184,8 +196,9 @@ ON p.producto_id = cop.producto_id;
 ```
 
 Pintar la suma total a pagar:
+
 ```sql
-SELECT 
+SELECT
 	SUM(p.producto_precio * cop.cantidad) "Total a pagar"
 FROM productos p
 JOIN cliente_ordenes_productos cop
@@ -193,10 +206,11 @@ ON p.producto_id = cop.producto_id;
 ```
 
 ## LEFT JOIN
-- [LEFT JOIN](https://www.postgresqltutorial.com/postgresql-left-join/)
+
+-   [LEFT JOIN](https://www.postgresqltutorial.com/postgresql-left-join/)
 
 ```sql
-SELECT 
+SELECT
 	*
 FROM productos p
 LEFT JOIN cliente_ordenes_productos cop
@@ -204,6 +218,7 @@ ON p.producto_id = cop.producto_id;
 ```
 
 Pintar productos que no se aún no se venden:
+
 ```sql
 SELECT p.producto_nombre
 FROM productos p
@@ -213,10 +228,11 @@ WHERE cop.producto_id IS NULL;
 ```
 
 ## RIGHT JOIN
-- [RIGHT JOIN](https://www.postgresqltutorial.com/postgresql-right-join/)
+
+-   [RIGHT JOIN](https://www.postgresqltutorial.com/postgresql-right-join/)
 
 ```sql
-SELECT 
+SELECT
 	*
 FROM productos p
 RIGHT JOIN cliente_ordenes_productos cop
@@ -224,18 +240,21 @@ ON p.producto_id = cop.producto_id;
 ```
 
 ## FULL JOIN
-- [FULL JOIN](https://www.postgresqltutorial.com/postgresql-full-outer-join/)
+
+-   [FULL JOIN](https://www.postgresqltutorial.com/postgresql-full-outer-join/)
 
 ```sql
-SELECT 
+SELECT
 	*
 FROM productos p
 FULL JOIN cliente_ordenes_productos cop
 ON p.producto_id = cop.producto_id;
 ```
 
-## JOIN * N TABLAS
+## JOIN \* N TABLAS
+
 Pintar fecha de orden y nombre del producto:
+
 ```sql
 SELECT *
 FROM cliente_ordenes co
@@ -254,15 +273,16 @@ JOIN productos p
 ON	cop.producto_id = p.producto_id;
 ```
 
-Pintar nombre cliente, fecha orden, cantidad, nombre producto y cantidad * precio:
+Pintar nombre cliente, fecha orden, cantidad, nombre producto y cantidad \* precio:
+
 ```sql
-SELECT 
+SELECT
 	c.cliente_nombre,
 	co.orden_fecha,
 	cop.cantidad,
 	p.producto_nombre,
 	cop.cantidad * p.producto_precio total
-FROM clientes c	
+FROM clientes c
 JOIN cliente_ordenes co
 ON c.cliente_id = co.cliente_id
 JOIN cliente_ordenes_productos cop
@@ -282,7 +302,7 @@ VALUES (6);
 SELECT * FROM Cliente_Ordenes;
 
 -- transacción
-INSERT INTO 
+INSERT INTO
 Cliente_Ordenes_Productos (cliente_orden_id, producto_id, cantidad)
 VALUES (3, 9, 1);
 

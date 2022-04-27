@@ -2,48 +2,54 @@
 
 :::tip ¿Quieres apoyar los directos? 😍
 Tienes varias jugosas alternativas:
+
 1. [Suscríbete al canal de Youtube (es gratis) click aquí](https://bit.ly/3kLYAqr)
 2. Si estás viendo un video no olvides regalar un 👍 like y comentario 🙏🏼
 3. También puedes ser miembro del canal de Youtube [click aquí](https://www.youtube.com/channel/UCH7IANkyEcsVW_y1IlpkamQ/join)
-6. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
-¿Quiéres apoyar los directos?
-    - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl)
-    - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl)
-    - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
-:::
+4. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
+   ¿Quiéres apoyar los directos? - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl) - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl) - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
+   :::
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EYmNfsp1aPE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 El objetivo de esta sección es entender el uso de:
-- Callbacks
-- Promesas
-- Try Catch
-- Async Await
-- Introducción a Fetch API
-- ¿Que es una API?
+
+-   Callbacks
+-   Promesas
+-   Try Catch
+-   Async Await
+-   Introducción a Fetch API
+-   ¿Que es una API?
 
 ## Callbacks
-- [Callback](https://developer.mozilla.org/es/docs/Glossary/Callback_function): Una función de callback es una función que se pasa a otra función como un argumento, que luego se invoca dentro de la función externa para completar algún tipo de rutina o acción.
-- Cada vez se ocupan menos.
-- Pasar una función como argumento.
+
+-   [Callback](https://developer.mozilla.org/es/docs/Glossary/Callback_function): Una función de callback es una función que se pasa a otra función como un argumento, que luego se invoca dentro de la función externa para completar algún tipo de rutina o acción.
+-   Cada vez se ocupan menos.
+-   Pasar una función como argumento.
 
 ```js
 const posts = [
     {
-        "userId": 1,
-        "id": 1,
-        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        userId: 1,
+        id: 1,
+        title:
+            "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        body:
+            "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
     },
     {
-        "userId": 1,
-        "id": 2,
-        "title": "qui est esse",
-        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+        userId: 1,
+        id: 2,
+        title: "qui est esse",
+        body:
+            "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
     },
     {
-        "userId": 1,
-        "id": 3,
-        "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
-        "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
+        userId: 1,
+        id: 3,
+        title: "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+        body:
+            "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
     },
 ];
 ```
@@ -61,6 +67,7 @@ findPostById(1, (post) => {
 ```
 
 ### Errores
+
 ```js
 const findPostById = (id, callback) => {
     const post = posts.find((item) => item.id === id);
@@ -105,7 +112,8 @@ findPostById(1, (err, post) => {
 ```
 
 ## Promesas
-- [promise](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises): Una Promise (promesa en castellano) es un objeto que representa la terminación o el fracaso de una operación asíncrona. 
+
+-   [promise](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises): Una Promise (promesa en castellano) es un objeto que representa la terminación o el fracaso de una operación asíncrona.
 
 <div class="text-center">
     <img :src="$withBase('/img/promesa.gif')" alt="abrir snippet vscode">
@@ -133,6 +141,7 @@ findPostById(1)
 ```
 
 Ahorrando teclas:
+
 ```js
 const findPostById = (id) =>
     new Promise((resolve, reject) => {
@@ -147,6 +156,7 @@ findPostById(4)
 ```
 
 ## hell
+
 ```js
 findPostById(1)
     .then((post) => {
@@ -186,8 +196,9 @@ findPostById(4)
 ``` -->
 
 ## async await
-- [async](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function): La declaración de función async define una función asíncrona, la cual devuelve una AsyncFunction.
-- [await](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/await): El operador await es usado para esperar a una Promise. Sólo puede ser usado dentro de una función async function.
+
+-   [async](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function): La declaración de función async define una función asíncrona, la cual devuelve una AsyncFunction.
+-   [await](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/await): El operador await es usado para esperar a una Promise. Sólo puede ser usado dentro de una función async function.
 
 ```js
 const findPostById = (id) =>
@@ -223,6 +234,7 @@ buscar();
 ```
 
 try catch
+
 ```js
 const findPostById = (id) =>
     new Promise((resolve, reject) => {
@@ -245,6 +257,7 @@ buscar();
 ```
 
 Múltiples solicitudes:
+
 ```js
 const buscar = async () => {
     try {
@@ -262,6 +275,7 @@ buscar();
 ```
 
 ### Promise.all
+
 ```js
 const buscar = async () => {
     try {
@@ -284,16 +298,17 @@ buscar();
 Hoy solo veremos una **introducción** para entender el uso de las promesas, async y await.
 :::
 
-- [fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API): La API Fetch proporciona una interfaz para recuperar recursos (incluso a través de la red). Resultará familiar a cualquiera que haya usado XMLHttpRequest, pero la nueva API ofrece un conjunto de características más potente y flexible.
-- El método ``fetch()`` toma un argumento obligatorio, la ruta de acceso al recurso que desea recuperar.
-- Devuelve una Promise que resuelve en Response a esa petición, sea o no correcta.
-- Una vez que Response es recuperada, hay varios métodos disponibles para definir cuál es el contenido del cuerpo y como se debe manejar.
-- [jsonplaceholder](https://jsonplaceholder.typicode.com/)
-- [post 1](https://jsonplaceholder.typicode.com/posts/1)
+-   [fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API): La API Fetch proporciona una interfaz para recuperar recursos (incluso a través de la red). Resultará familiar a cualquiera que haya usado XMLHttpRequest, pero la nueva API ofrece un conjunto de características más potente y flexible.
+-   El método `fetch()` toma un argumento obligatorio, la ruta de acceso al recurso que desea recuperar.
+-   Devuelve una Promise que resuelve en Response a esa petición, sea o no correcta.
+-   Una vez que Response es recuperada, hay varios métodos disponibles para definir cuál es el contenido del cuerpo y como se debe manejar.
+-   [jsonplaceholder](https://jsonplaceholder.typicode.com/)
+-   [post 1](https://jsonplaceholder.typicode.com/posts/1)
 
 ```js
-fetch("https://jsonplaceholder.typicode.com/posts/1")
-    .then((res) => console.log(res));
+fetch("https://jsonplaceholder.typicode.com/posts/1").then((res) =>
+    console.log(res)
+);
 ```
 
 ```js
@@ -333,32 +348,37 @@ findPostById(50);
 ```
 
 ## ¿Qué son las APIs?
-- [api](https://developer.mozilla.org/es/docs/Learn/JavaScript/Client-side_web_APIs/Introduction): Interfaces de Programacion de Aplicaciones (APIs por sus siglas en inglés)
+
+-   [api](https://developer.mozilla.org/es/docs/Learn/JavaScript/Client-side_web_APIs/Introduction): Interfaces de Programacion de Aplicaciones (APIs por sus siglas en inglés)
 
 API **son construcciones disponibles en los lenguajes de programación que permiten a los desarrolladores crear funcionalidades complejas de una manera simple.** Estas abstraen el código más complejo para proveer una sintaxis más fácil de usar en su lugar.
 
 Si quisieras programar gráficos 3D, sería mucho más facil hacerlo usando una API escrita en un lenguaje de alto nivel como JavaScript o Python, en lugar de intentar escribir código de bajo nivel (por ejemplo: C o C++) que controle directamente la GPU del equipo u otras funciones gráficas.
 
 ## APIs en JavaScript del lado cliente
+
 JavaScript del lado cliente, particularmente, tiene muchas APIs disponibles — estas no son parte del lenguaje en sí, sino que están construidas sobre el núcleo de este lenguaje de programación, proporcionándote superpoderes adicionales para usar en tu código. Por lo general, se dividen en dos categorías:
 
-- **Las APIs de navegador:** están integradas en tu navegador web, Por ejemplo, l**a API de Geolocalización** proporciona algunas construcciones simples de JavaScript para obtener datos de ubicación con los que, por ejemplo, trazar tu ubicación en un mapa de Google. **Realmente, el navegador está haciendo uso de códigos de bajo nivel complejos en segundo plano (por ejemplo, C++) para comunicarse con el hardware GPS del dispositivo** (o lo que esté disponible para determinar los datos de posición), recuperar datos de posición y devolverlos al entorno del navegador para su uso en tu código. Pero una vez más, la API se encarga de abstraer esta complejidad.
-- **Las APIs de terceros:** no están incluídas por defecto en el navegador, y por lo general es necesario obtener el código e información desde algún lugar de la Web. Por ejemplo, la API de Twitter permite hacer cosas como mostrar tus últimos tweets en un sitio web.
+-   **Las APIs de navegador:** están integradas en tu navegador web, Por ejemplo, l**a API de Geolocalización** proporciona algunas construcciones simples de JavaScript para obtener datos de ubicación con los que, por ejemplo, trazar tu ubicación en un mapa de Google. **Realmente, el navegador está haciendo uso de códigos de bajo nivel complejos en segundo plano (por ejemplo, C++) para comunicarse con el hardware GPS del dispositivo** (o lo que esté disponible para determinar los datos de posición), recuperar datos de posición y devolverlos al entorno del navegador para su uso en tu código. Pero una vez más, la API se encarga de abstraer esta complejidad.
+-   **Las APIs de terceros:** no están incluídas por defecto en el navegador, y por lo general es necesario obtener el código e información desde algún lugar de la Web. Por ejemplo, la API de Twitter permite hacer cosas como mostrar tus últimos tweets en un sitio web.
 
 ## APIs de navegador más comunes
-- APIs para manipular documentos cargados en el navegador. El ejemplo más obvio es la API DOM
-- APIs que obtienen datos del servidor, comunmente usadas para actualizar pequeñas secciones de una página web. [Fetch API](https://developer.mozilla.org/es/docs/Web/API/Fetch_API).
-- Las APIs para dibujar y manipular graficos: Las más populares son Canvas y WebGL
-- APIS de audio y vídeo como HTMLMediaElement, la Web Audio API, y WebRTC
-- Las APIs de dispositivos:  geolocalización, notificaciones de sistema, vibración de hardware, etc
-- Las APIS de almacenamiento en el lado del cliente:  Web Storage API (sessionStorage, localStorage), IndexedDB API.
+
+-   APIs para manipular documentos cargados en el navegador. El ejemplo más obvio es la API DOM
+-   APIs que obtienen datos del servidor, comunmente usadas para actualizar pequeñas secciones de una página web. [Fetch API](https://developer.mozilla.org/es/docs/Web/API/Fetch_API).
+-   Las APIs para dibujar y manipular graficos: Las más populares son Canvas y WebGL
+-   APIS de audio y vídeo como HTMLMediaElement, la Web Audio API, y WebRTC
+-   Las APIs de dispositivos: geolocalización, notificaciones de sistema, vibración de hardware, etc
+-   Las APIS de almacenamiento en el lado del cliente: Web Storage API (sessionStorage, localStorage), IndexedDB API.
 
 ## APIs populares de terceros
-- Google maps
-- Facebook, Twitter, Instagram, Discord, Youtube, etc
-- jsonplaceholder
+
+-   Google maps
+-   Facebook, Twitter, Instagram, Discord, Youtube, etc
+-   jsonplaceholder
 
 ## ¿Que es API REST?
+
 REST: "Representational State Transfer" o traducido a "Transferencia de presentación de estado".
 
 **Cuando queremos comunicar nuestro mundo del Frontend con el Backend (por ejemplo con Node.js), necesitamos alguna técnica. Aquí es donde nosotros podemos construir nuestra propia API para que nuestras aplicaciones se comuniquen de manera efectiva.**
@@ -368,18 +388,15 @@ REST: "Representational State Transfer" o traducido a "Transferencia de presenta
 **Por ende API REST en simples palabras sería:** Una forma de entregar recursos para su utilización (comunicación) estandarizado y basado en arquitectura REST.
 
 Para que sea REST:
-- REST es STATELESS: TOKEN para cada petición realizada a la API.
-- Crea URIs únicas que permiten al cliente entender y utilizar lo que está exponiendo. ``api.anexsoft.com/users``
-- Tiene que responder a verbos Http: GET, POST, PUT, DELETE
+
+-   REST es STATELESS: TOKEN para cada petición realizada a la API.
+-   Crea URIs únicas que permiten al cliente entender y utilizar lo que está exponiendo. `api.anexsoft.com/users`
+-   Tiene que responder a verbos Http: GET, POST, PUT, DELETE
 
 ## ¿Qué es Restful?
+
 REST es el concepto, **RESTFul es la implementación** y al crear un RESTFul creamos una API, la cual una API es un conjunto de funciones o procedimientos para que sea utilizado por otro software.
 
 ## Recursos
-- [Curso gratuito Udemy](https://www.udemy.com/course/aprende-a-disenar-una-api-restful-correctamente/)
 
-
-
-
-
-
+-   [Curso gratuito Udemy](https://www.udemy.com/course/aprende-a-disenar-una-api-restful-correctamente/)

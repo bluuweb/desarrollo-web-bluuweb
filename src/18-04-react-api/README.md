@@ -1,35 +1,39 @@
 # React Consumir API
+
 En esta sección realizaremos una práctica para ir aterrizando todo lo aprendido.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GqJzxJVISuA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 :::tip ¿Quieres apoyar los directos? 😍
 Tienes varias jugosas alternativas:
+
 1. [Suscríbete al canal de Youtube (es gratis) click aquí](https://bit.ly/3kLYAqr)
 2. Si estás viendo un video no olvides regalar un 👍 like y comentario 🙏🏼
 3. También puedes ser miembro del canal de Youtube [click aquí](https://www.youtube.com/channel/UCH7IANkyEcsVW_y1IlpkamQ/join)
-6. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
-¿Quiéres apoyar los directos?
-    - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl)
-    - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl)
-    - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
-:::
+4. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
+   ¿Quiéres apoyar los directos? - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl) - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl) - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
+   :::
 
 ## Recursos
-- [Proyecto final](https://loving-keller-0ed376.netlify.app/)
-- [repo github](https://github.com/bluuweb/rick-morty-v1-react)
-- [api rick and morty](https://rickandmortyapi.com/)
-- [ruta fetch](https://rickandmortyapi.com/api/character/?name=rick&status=alive)
+
+-   [Proyecto final](https://loving-keller-0ed376.netlify.app/)
+-   [repo github](https://github.com/bluuweb/rick-morty-v1-react)
+-   [api rick and morty](https://rickandmortyapi.com/)
+-   [ruta fetch](https://rickandmortyapi.com/api/character/?name=rick&status=alive)
 
 ## useEffect
-- [useEffect](https://es.reactjs.org/docs/hooks-effect.html): El Hook de efecto te permite llevar a cabo efectos secundarios en componentes funcionales.
-- Peticiones de datos, establecimiento de suscripciones y actualizaciones manuales del DOM en componentes de React serían ejemplos de efectos secundarios. 
+
+-   [useEffect](https://es.reactjs.org/docs/hooks-effect.html): El Hook de efecto te permite llevar a cabo efectos secundarios en componentes funcionales.
+-   Peticiones de datos, establecimiento de suscripciones y actualizaciones manuales del DOM en componentes de React serían ejemplos de efectos secundarios.
 
 :::tip
-Si estás familiarizado con el ciclo de vida de las clases de React y sus métodos, el Hook useEffect equivale a ``componentDidMount``, ``componentDidUpdate`` y ``componentWillUnmount`` combinados.
+Si estás familiarizado con el ciclo de vida de las clases de React y sus métodos, el Hook useEffect equivale a `componentDidMount`, `componentDidUpdate` y `componentWillUnmount` combinados.
 :::
 
 ### Efectos sin saneamiento
-- En ciertas ocasiones, queremos ejecutar código adicional después de que React haya actualizado el DOM. Peticiones de red, mutaciones manuales del DOM y registros, son ejemplos comunes de efectos que no requieren una acción de saneamiento.
-- Decimos esto porque podemos ejecutarlos y olvidarnos de ellos inmediatamente.
+
+-   En ciertas ocasiones, queremos ejecutar código adicional después de que React haya actualizado el DOM. Peticiones de red, mutaciones manuales del DOM y registros, son ejemplos comunes de efectos que no requieren una acción de saneamiento.
+-   Decimos esto porque podemos ejecutarlos y olvidarnos de ellos inmediatamente.
 
 ```js
 import { useEffect, useState } from "react";
@@ -57,15 +61,17 @@ const Efectos = () => {
 export default Efectos;
 ```
 
-### ¿Qué hace useEffect? 
-- Al usar este Hook, le estamos indicando a React que el componente tiene que hacer algo después de renderizarse.
-- React recordará la función que le hemos pasado (nos referiremos a ella como nuestro “efecto”), y la llamará más tarde después de actualizar el DOM.
-- ¿Se ejecuta useEffect después de cada renderizado? ¡Sí! Por defecto se ejecuta después del primer renderizado y después de cada actualización.
+### ¿Qué hace useEffect?
+
+-   Al usar este Hook, le estamos indicando a React que el componente tiene que hacer algo después de renderizarse.
+-   React recordará la función que le hemos pasado (nos referiremos a ella como nuestro “efecto”), y la llamará más tarde después de actualizar el DOM.
+-   ¿Se ejecuta useEffect después de cada renderizado? ¡Sí! Por defecto se ejecuta después del primer renderizado y después de cada actualización.
 
 ### Consejo: Omite efectos para optimizar el rendimiento
-- En algunos casos, sanear o aplicar el efecto después de cada renderizado puede crear problemas de rendimiento. 
-- Puedes indicarle a React que omita aplicar un efecto si ciertos valores no han cambiado entre renderizados. 
-- Para hacerlo, pasa un array como segundo argumento opcional a useEffect:
+
+-   En algunos casos, sanear o aplicar el efecto después de cada renderizado puede crear problemas de rendimiento.
+-   Puedes indicarle a React que omita aplicar un efecto si ciertos valores no han cambiado entre renderizados.
+-   Para hacerlo, pasa un array como segundo argumento opcional a useEffect:
 
 ```js
 useEffect(() => {
@@ -74,6 +80,7 @@ useEffect(() => {
 ```
 
 ¿Qué pasa si aplicamos el siguiente cambio?
+
 ```js
 useEffect(() => {
     console.log(`contador cambio: ${contador}`);
@@ -81,7 +88,7 @@ useEffect(() => {
 ```
 
 :::warning
-React Hook useEffect has a missing dependency: 'contador'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+React Hook useEffect has a missing dependency: 'contador'. Either include it or remove the dependency array react-hooks/exhaustive-deps
 :::
 
 ```js
@@ -95,6 +102,7 @@ Más adelante conoceremos los [Efectos con saneamiento](https://es.reactjs.org/d
 :::
 
 ## App.jsx
+
 ```jsx
 import { useState } from "react";
 import Formulario from "./components/Formulario";
@@ -122,6 +130,7 @@ export default App;
 ```
 
 ## useFormulario.js
+
 ```js
 import { useState } from "react";
 
@@ -146,6 +155,7 @@ export const useFormulario = (initialState = {}) => {
 ```
 
 ## Formulario.jsx
+
 ```jsx
 import { useFormulario } from "../hooks/useFormulario";
 import Swal from "sweetalert2";
@@ -193,6 +203,7 @@ export default Formulario;
 ```
 
 ## PintarPersonajes.jsx
+
 ```jsx
 import Swal from "sweetalert2";
 
@@ -256,6 +267,7 @@ export default PintarPersonajes;
 ```
 
 ## Personaje.jsx
+
 ```jsx
 const Personaje = ({ character = "" }) => {
     const { name, image, species } = character;
@@ -281,6 +293,7 @@ export default Personaje;
 ```
 
 ## Loading.jsx
+
 ```jsx
 const Loading = () => {
     return (
@@ -296,6 +309,7 @@ export default Loading;
 ```
 
 ## customHook opcional
+
 ```js
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";

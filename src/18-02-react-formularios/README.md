@@ -1,52 +1,59 @@
 # React Hooks Formularios
+
 En esta sección aprenderemos a trabajar con formularios en React, utilizando Hooks.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BE-VTP6cyyA?start=323" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 :::tip ¿Quieres apoyar los directos? 😍
 Tienes varias jugosas alternativas:
+
 1. [Suscríbete al canal de Youtube (es gratis) click aquí](https://bit.ly/3kLYAqr)
 2. Si estás viendo un video no olvides regalar un 👍 like y comentario 🙏🏼
 3. También puedes ser miembro del canal de Youtube [click aquí](https://www.youtube.com/channel/UCH7IANkyEcsVW_y1IlpkamQ/join)
-6. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
-¿Quiéres apoyar los directos?
-    - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl)
-    - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl)
-    - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
+4. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
+   ¿Quiéres apoyar los directos? - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl) - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl) - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
+
 :::
 
 :::warning
-- Es recomendable conocer los fundamentos de JS antes de comenzar este curso.
-- [curso de JS gratis](https://www.youtube.com/watch?v=6bBmfiYmJE8&list=PLPl81lqbj-4LKJ1Vx3EySRht6f9xzolZf)
-- [curso de git y github](https://youtu.be/PW_A-lOpVV0)
+
+-   Es recomendable conocer los fundamentos de JS antes de comenzar este curso.
+-   [curso de JS gratis](https://www.youtube.com/watch?v=6bBmfiYmJE8&list=PLPl81lqbj-4LKJ1Vx3EySRht6f9xzolZf)
+-   [curso de git y github](https://youtu.be/PW_A-lOpVV0)
+
 :::
 
 ## Planificación
-- Formularios no controlados
-- Formularios controlados
-- React Hook Form
+
+-   Formularios no controlados
+-   Formularios controlados
+-   React Hook Form
 
 ## Recursos
-- [form react](https://es.reactjs.org/docs/forms.html)
-- [uncontrolled components](https://es.reactjs.org/docs/uncontrolled-components.html)
-- [useRef](https://es.reactjs.org/docs/hooks-reference.html#useref)
-- [formData form react](https://mattboldt.com/2020/05/02/formdata-with-react-hooks-and-fetch/)
-- [Referencias](https://es.reactjs.org/docs/refs-and-the-dom.html)
 
+-   [form react](https://es.reactjs.org/docs/forms.html)
+-   [uncontrolled components](https://es.reactjs.org/docs/uncontrolled-components.html)
+-   [useRef](https://es.reactjs.org/docs/hooks-reference.html#useref)
+-   [formData form react](https://mattboldt.com/2020/05/02/formdata-with-react-hooks-and-fetch/)
+-   [Referencias](https://es.reactjs.org/docs/refs-and-the-dom.html)
 
 Extensiones Navegador (React Developer Tools):
-- [Firefox](https://addons.mozilla.org/es/firefox/addon/react-devtools/)
-- [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=es)
 
+-   [Firefox](https://addons.mozilla.org/es/firefox/addon/react-devtools/)
+-   [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=es)
 
 ## Formulario no controlado
-- [uncontrolled](https://es.reactjs.org/docs/uncontrolled-components.html): En la mayoría de los casos, te recomendamos usar Componentes controlados para implementar formularios. 
-- En un componente controlado, los datos del formulario son manejados por un componente React. 
-- La alternativa son los componentes no controlados, donde los datos del formulario son manejados por el propio DOM.
-- Para escribir un componente no controlado, puedes usar una referencia para que obtengas los valores del formulario desde el DOM.
+
+-   [uncontrolled](https://es.reactjs.org/docs/uncontrolled-components.html): En la mayoría de los casos, te recomendamos usar Componentes controlados para implementar formularios.
+-   En un componente controlado, los datos del formulario son manejados por un componente React.
+-   La alternativa son los componentes no controlados, donde los datos del formulario son manejados por el propio DOM.
+-   Para escribir un componente no controlado, puedes usar una referencia para que obtengas los valores del formulario desde el DOM.
 
 :::tip Referencias y el DOM
-- [refs](https://es.reactjs.org/docs/refs-and-the-dom.html): Las referencias proporcionan una forma de acceder a los nodos del DOM o a elementos React creados en el método de renderizado.
-- [useRef](https://es.reactjs.org/docs/hooks-reference.html#useref): useRef devuelve un objeto ref mutable cuya propiedad ``.current`` se inicializa con el argumento pasado (initialValue). El objeto devuelto se mantendrá persistente durante la vida completa del componente.
-:::
+
+-   [refs](https://es.reactjs.org/docs/refs-and-the-dom.html): Las referencias proporcionan una forma de acceder a los nodos del DOM o a elementos React creados en el método de renderizado.
+-   [useRef](https://es.reactjs.org/docs/hooks-reference.html#useref): useRef devuelve un objeto ref mutable cuya propiedad `.current` se inicializa con el argumento pasado (initialValue). El objeto devuelto se mantendrá persistente durante la vida completa del componente.
+    :::
 
 ```jsx
 import { useRef } from "react";
@@ -97,6 +104,7 @@ export default FormularioNoControlado;
 ```
 
 ### FormData
+
 ```jsx
 import { useRef } from "react";
 
@@ -163,11 +171,13 @@ export default FormularioNoControlado;
 ```
 
 ## Formularios controlados
-- [controlled](https://es.reactjs.org/docs/forms.html#controlled-components)
-- Los componentes React que rendericen un formulario también controlan lo que pasa en ese formulario con las subsecuentes entradas del usuario.
-- Ahora vamos a poder detectar los campos input en tiempo real.
+
+-   [controlled](https://es.reactjs.org/docs/forms.html#controlled-components)
+-   Los componentes React que rendericen un formulario también controlan lo que pasa en ese formulario con las subsecuentes entradas del usuario.
+-   Ahora vamos a poder detectar los campos input en tiempo real.
 
 Ejemplo casi casi:
+
 ```jsx
 import { useState } from "react";
 
@@ -230,6 +240,7 @@ export default Form;
 ```
 
 Ahora si se ve más bonito:
+
 ```jsx
 import { useState } from "react";
 
@@ -298,6 +309,7 @@ export default Form;
 ```
 
 ## Checkbox
+
 ```jsx{6-8}
 <div className="form-check">
     <input
@@ -308,10 +320,7 @@ export default Form;
         onChange={handleChange}
         name="todoCheck"
     />
-    <label
-        className="form-check-label"
-        htmlFor="flexCheckDefault"
-    >
+    <label className="form-check-label" htmlFor="flexCheckDefault">
         Dar prioridad
     </label>
 </div>
@@ -338,6 +347,7 @@ console.log(todo);
 ```
 
 ## Pequeña validación
+
 ```jsx
 const [error, setError] = useState(false);
 
@@ -359,9 +369,7 @@ const handleSubmit = (e) => {
 };
 
 const PintarError = () => (
-    <div
-      className="alert alert-danger"
-    >Todos los campos obligatorios</div>
+    <div className="alert alert-danger">Todos los campos obligatorios</div>
 );
 ```
 
@@ -369,12 +377,12 @@ const PintarError = () => (
 <div className="container mt-2">
     <h2>Formulario</h2>
     {error && <PintarError />}
-    
     ...
 </div>
 ```
 
 Todo junto:
+
 ```jsx
 import { useState } from "react";
 
@@ -476,10 +484,12 @@ export default Form;
 ```
 
 ## Validación
+
 Si lo que estás buscando es una solución completa incluyendo validación, tener en cuenta los campos visitados y manejar el envío del formulario, [Formik](https://formik.org/) es una de las opciones populares.
 
 También existen otras como: [react hook form](https://react-hook-form.com/) la cual veremos a continuación.
 
 ## React hook Form
-- Estamos trabajando en esta sección 👷‍♂️👷‍♀️
-- 👍 al video 😍
+
+-   Estamos trabajando en esta sección 👷‍♂️👷‍♀️
+-   👍 al video 😍

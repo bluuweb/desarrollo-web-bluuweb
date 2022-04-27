@@ -1,23 +1,26 @@
 # React Todo APP
+
 En esta sección realizaremos una práctica para ir aterrizando todo lo aprendido.
 
 :::tip ¿Quieres apoyar los directos? 😍
 Tienes varias jugosas alternativas:
+
 1. [Suscríbete al canal de Youtube (es gratis) click aquí](https://bit.ly/3kLYAqr)
 2. Si estás viendo un video no olvides regalar un 👍 like y comentario 🙏🏼
 3. También puedes ser miembro del canal de Youtube [click aquí](https://www.youtube.com/channel/UCH7IANkyEcsVW_y1IlpkamQ/join)
-6. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
-¿Quiéres apoyar los directos?
-    - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl)
-    - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl)
-    - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
-:::
+4. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
+   ¿Quiéres apoyar los directos? - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl) - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl) - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
+   :::
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Qq1JjKjJWqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Recursos
-- [Proyecto final](https://angry-payne-25371f.netlify.app/)
-- [repo github](https://github.com/bluuweb/todo-app-react-simple)
+
+-   [Proyecto final](https://angry-payne-25371f.netlify.app/)
+-   [repo github](https://github.com/bluuweb/todo-app-react-simple)
 
 ## App.jsx
+
 ```jsx
 import TodoList from "./components/TodoList";
 
@@ -34,6 +37,7 @@ export default App;
 ```
 
 ## TodoList.jsx
+
 ```jsx
 import Formulario from "./Formulario";
 
@@ -45,11 +49,12 @@ const TodoList = () => {
     );
 };
 
-export default TodoList
+export default TodoList;
 ```
 
 ## Formulario.jsx
-- [sweet alert 2](https://sweetalert2.github.io/#download)
+
+-   [sweet alert 2](https://sweetalert2.github.io/#download)
 
 ```
 npm install sweetalert2
@@ -173,6 +178,7 @@ export default Formulario;
 ## Agregar Todo
 
 TodoList.jsx
+
 ```jsx
 import { useState } from "react";
 import Formulario from "./Formulario";
@@ -195,6 +201,7 @@ export default TodoList;
 ```
 
 Formulario.jsx
+
 ```jsx
 const Formulario = ({ addTodo }) => {
 
@@ -210,7 +217,9 @@ addTodo({
 ```
 
 ## Leer Todos
+
 TodoList.jsx
+
 ```jsx
 import { useState } from "react";
 import Formulario from "./Formulario";
@@ -241,6 +250,7 @@ export default TodoList;
 ## Todo.jsx
 
 Todo.jsx
+
 ```jsx
 const Todo = ({ todo }) => {
     const { nombre, descripcion, estado, prioridad } = todo;
@@ -271,7 +281,9 @@ export default Todo;
 ```
 
 ## Delete Todo
+
 TodoList.jsx
+
 ```jsx
 const deleteTodo = (id) => {
     setTodos((old) => old.filter((item) => item.id !== id));
@@ -290,6 +302,7 @@ return (
 ```
 
 Todo.jsx
+
 ```jsx
 const Todo = ({ todo, deleteTodo }) => {
     const { id, nombre, descripcion, estado, prioridad } = todo;
@@ -325,6 +338,7 @@ export default Todo;
 ## Upadate Todo
 
 TodoList.jsx
+
 ```jsx
 const editarTodo = (id) => {
     const editTodo = todos.map((item) =>
@@ -338,21 +352,21 @@ const editarTodo = (id) => {
     todo={item}
     deleteTodo={deleteTodo}
     editarTodo={editarTodo}
-/>
+/>;
 ```
 
 Todo.jsx
+
 ```jsx
-<button
-    className="btn btn-sm btn-warning me-1"
-    onClick={() => editarTodo(id)}
->
+<button className="btn btn-sm btn-warning me-1" onClick={() => editarTodo(id)}>
     Editar
 </button>
 ```
 
 ## Custom Hook
+
 hooks/useFormulario.js
+
 ```js
 import { useState } from "react";
 
@@ -377,6 +391,7 @@ export const useFormulario = (initialState = {}) => {
 ```
 
 Formulario.jsx
+
 ```jsx
 import Swal from "sweetalert2";
 import { useFormulario } from "../hooks/useFormulario";
@@ -487,6 +502,7 @@ export default Formulario;
 ## LocalStorage
 
 TodoList.jsx
+
 ```jsx
 useEffect(() => {
     console.log("Leer todos local");
@@ -502,9 +518,9 @@ useEffect(() => {
 ```
 
 ## Deploy
-- [netlify](https://www.netlify.com/)
+
+-   [netlify](https://www.netlify.com/)
 
 ```
 npm run build
 ```
-

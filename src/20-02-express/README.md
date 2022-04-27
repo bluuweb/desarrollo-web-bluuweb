@@ -2,6 +2,8 @@
 
 En este capítulo realizaremos un proyecto para conocer como trabajar con motores de plantilla y autenticación de usuarios entre otras cosas.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k6gaP1AK4nQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Códigos
 
 -   [crud básico repo](https://github.com/bluuweb/hbs-express-passport-mongoose-express-validator-flash-sessiones/tree/01-crud-basics)
