@@ -333,31 +333,32 @@ export const login = async (req, res) => {
 
 helpers/generateTokens.js
 
+```
+URI_MONGO=
+JWT_SECRET=
+JWT_REFRESH=
+MODO=developer
+```
+
 ```js
 import jwt from "jsonwebtoken";
 
-export const generateToken = (id) => {
-    const expiresIn = 15 * 60 * 1000;
-
-    const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn,
-    });
-
+export const generateToken = (uid) => {
+    const expiresIn = 1000 * 60 * 15;
+    const token = jwt.sign({ uid }, process.env.JWT_SECRET, { expiresIn });
     return { token, expiresIn };
 };
 
-export const generateRefreshToken = (id, res) => {
-    const refreshToken = jwt.sign({ id }, process.env.JWT_REFRESH, {
-        expiresIn: "30d",
+export const generateRefreshToken = (uid, res) => {
+    const expiresIn = 1000 * 60 * 60 * 24 * 30;
+    const refreshToken = jwt.sign({ uid }, process.env.JWT_REFRESH, {
+        expiresIn,
     });
-
-    // 30 días
-    const expires = new Date(Date.now() + 30 * 60 * 60 * 1000);
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        expires,
         secure: !(process.env.MODO === "developer"),
+        expires: new Date(Date.now() + expiresIn),
     });
 };
 ```
@@ -427,23 +428,20 @@ middlewares/validateToken.js
 
 ```js
 import jwt from "jsonwebtoken";
-import { errorsToken } from "../helpers/errorsToken.js";
+import { errorTokens } from "../utils/errorsToken.js";
 
-export const validateToken = (req, res, next) => {
+export const valitateToken = (req, res, next) => {
     try {
         let token = req.headers?.authorization;
         if (!token) throw new Error("No existe el token");
 
-        // Bearer Authentication
         token = token.split(" ")[1];
-
-        const { id } = jwt.verify(token, process.env.JWT_SECRET);
-        req.id = id;
+        const { uid } = jwt.verify(token, process.env.JWT_SECRET);
+        req.uid = uid;
         next();
     } catch (error) {
         console.log(error);
-        const data = errorsToken(error);
-        return res.status(401).json({ ok: false, data });
+        return res.status(401).json({ error: errorTokens(error.message) });
     }
 };
 ```
@@ -451,21 +449,17 @@ export const validateToken = (req, res, next) => {
 helpers/errorsToken.js
 
 ```js
-export const errorsToken = (error) => {
-    let data;
-    switch (error.message) {
+export const errorTokens = (message) => {
+    switch (message) {
         case "jwt malformed":
-            data = "Formato no válido";
-            break;
+            return "Formato no válido";
         case "invalid token":
         case "jwt expired":
         case "invalid signature":
-            data = "Token no válido";
-            break;
+            return "Token no válido";
         default:
-            data = error.message;
+            return message;
     }
-    return data;
 };
 ```
 
@@ -474,8 +468,9 @@ controllers/auth.controller.js
 ```js
 export const infoUser = async (req, res) => {
     try {
-        const user = await User.findById(req.id);
-        res.json({ ok: true, email: user.email });
+        const user = await User.findById(req.uid).lean();
+        delete user.password;
+        return res.json({ user });
     } catch (error) {
         console.log(error);
         return res.status(403).json({ error: error.message });
@@ -522,4 +517,126 @@ export const refreshToken = (req, res) => {
         return res.status(401).json({ error: data });
     }
 };
+```
+
+## Simple HTML
+
+```js
+app.use(express.static("public"));
+```
+
+public/index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
+    </head>
+    <body>
+        <form id="formLogin">
+            <input type="email" value="jhonatan@test.com" id="email" />
+            <input type="password" value="123123" id="password" />
+            <button type="submit">Acceder</button>
+        </form>
+
+        <script>
+            const formLogin = document.querySelector("#formLogin");
+            const email = document.querySelector("#email");
+            const password = document.querySelector("#password");
+
+            formLogin.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                try {
+                    const res = await fetch("/api/v1/auth/login", {
+                        method: "post",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            email: email.value,
+                            password: password.value,
+                        }),
+                    });
+
+                    console.log(res.ok, res.status);
+                    const { token } = await res.json();
+
+                    window.location.href = "/protected.html";
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        </script>
+    </body>
+</html>
+```
+
+public/protected.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ruta protegida</title>
+    </head>
+    <body>
+        <h1>Ruta protegida</h1>
+        <div id="app">
+            <h2>Email</h2>
+            <h3>UID</h3>
+        </div>
+        <button id="logout">Logout</button>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", async (e) => {
+                const app = document.querySelector("#app");
+                try {
+                    const resToken = await fetch("/api/v1/auth/refresh", {
+                        credentials: "include",
+                    });
+                    console.log(resToken.ok, resToken.status);
+                    const { token } = await resToken.json();
+                    // console.log(token);
+
+                    const res = await fetch("/api/v1/auth/protected", {
+                        headers: {
+                            Authorization: "Basic " + token,
+                        },
+                    });
+                    console.log(res.ok, res.status);
+
+                    if (!res.ok) {
+                        window.location.href = "/";
+                    }
+
+                    const { user } = await res.json();
+                    console.log(user);
+
+                    app.innerHTML = `
+                        <h2>Email: ${user.email}</h2>
+                        <h3>UID: ${user._id}</h3>
+                    `;
+                } catch (error) {
+                    console.log(error);
+                }
+
+                const logout = document.querySelector("#logout");
+                logout.addEventListener("click", async () => {
+                    const res = await fetch("/api/v1/auth/logout");
+                    console.log(res.ok, res.status);
+                    if (res.ok) {
+                        window.location.href = "/";
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
 ```
