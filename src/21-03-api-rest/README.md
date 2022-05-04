@@ -640,3 +640,389 @@ public/protected.html
     </body>
 </html>
 ```
+
+## Mejoras 1.0
+
+utils/tokenManager.js
+
+```js
+import jwt from "jsonwebtoken";
+export const generateToken = (uid) => {
+    const expiresIn = 60 * 15;
+
+    try {
+        const token = jwt.sign({ uid }, process.env.JWT_SECRET, { expiresIn });
+        return { token, expiresIn };
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const generateRefreshToken = (uid, res) => {
+    const expiresIn = 60 * 60 * 24 * 30;
+    try {
+        const refreshToken = jwt.sign({ uid }, process.env.JWT_REFRESH, {
+            expiresIn,
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: !(process.env.MODO === "developer"),
+            expires: new Date(Date.now() + expiresIn * 1000),
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const tokenVerificationErrors = {
+    "invalid signature": "La firma del JWT no es válida",
+    "jwt expired": "JWT expirado",
+    "invalid token": "Token no válido",
+    "No Bearer": "Utiliza formato Bearer",
+    "jwt malformed": "JWT formato no válido",
+};
+```
+
+auth.route.js
+
+```js
+router.get("/refresh", requireRefreshToken, refreshToken);
+```
+
+middlewares/requireRefreshToken.js
+
+```js
+import jwt from "jsonwebtoken";
+import { tokenVerificationErrors } from "../utils/tokenManager.js";
+
+export const requireRefreshToken = (req, res, next) => {
+    try {
+        const refreshTokenCookie = req.cookies.refreshToken;
+        if (!refreshTokenCookie) throw new Error("No existe el token");
+
+        const { uid } = jwt.verify(refreshTokenCookie, process.env.JWT_REFRESH);
+
+        req.uid = uid;
+        next();
+    } catch (error) {
+        console.log(error);
+        return res
+            .status(401)
+            .send({ error: tokenVerificationErrors[error.message] });
+    }
+};
+```
+
+controllers/auth.controller.js (refreshToken)
+
+```js
+export const refreshToken = (req, res) => {
+    try {
+        const { token, expiresIn } = generateToken(req.uid);
+        return res.json({ token, expiresIn });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "error de server" });
+    }
+};
+```
+
+## validatorManager.js
+
+auth.route.js
+
+```js
+import { Router } from "express";
+import {
+    infoUser,
+    login,
+    logout,
+    refreshToken,
+    register,
+} from "../controllers/auth.controller.js";
+import { requireRefreshToken } from "../middlewares/requireRefreshToken.js";
+import { requireToken } from "../middlewares/requireToken.js";
+import {
+    loginValidator,
+    registerValidator,
+    tokenCookieValidator,
+    tokenHeaderValidator,
+} from "../middlewares/validatorManager.js";
+
+const router = Router();
+
+router.post("/register", registerValidator, register);
+
+router.post("/login", loginValidator, login);
+
+router.get("/protected", tokenHeaderValidator, requireToken, infoUser);
+router.get("/refresh", tokenCookieValidator, requireRefreshToken, refreshToken);
+
+router.get("/logout", logout);
+
+export default router;
+```
+
+middlewares/validatorManager.js
+
+```js
+import { body, cookie, header, validationResult } from "express-validator";
+
+const validationResultExpress = (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    next();
+};
+
+export const registerValidator = [
+    body("email", "Formato de email incorrecto")
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
+    body("password", "Mínimo 6 carácteres")
+        .trim()
+        .isLength({ min: 6 }),
+    body("password", "Formato de password incorrecta").custom(
+        (value, { req }) => {
+            if (value !== req.body.repassword) {
+                throw new Error("No coinciden las contraseñas");
+            }
+            return value;
+        }
+    ),
+    validationResultExpress,
+];
+
+export const loginValidator = [
+    body("email", "Formato de email incorrecto")
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
+    body("password", "Mínimo 6 carácteres")
+        .trim()
+        .isLength({ min: 6 }),
+    validationResultExpress,
+];
+
+export const tokenHeaderValidator = [
+    header("authorization", "No existe el token")
+        .trim()
+        .notEmpty()
+        .escape(),
+    validationResultExpress,
+];
+
+export const tokenCookieValidator = [
+    cookie("refreshToken", "No existe refresh Token")
+        .trim()
+        .notEmpty()
+        .escape(),
+    validationResultExpress,
+];
+```
+
+## Links (URL)
+
+model/Link.js
+
+```js
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+const linkSchema = new Schema({
+    longLink: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    nanoLink: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+    },
+    uid: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+});
+
+export const Link = mongoose.model("Link", linkSchema);
+```
+
+routes/link.route.js
+
+```js
+import { Router } from "express";
+
+const router = Router();
+
+// GET      api/v1/links                all links
+// GET      api/v1/links/:nanoLink      search link
+// POST     api/v1/links                create link
+// PATCH    api/v1/links                update link
+// DELETE   api/v1/links/:nanoLink      remove link
+
+export default router;
+```
+
+index.js
+
+```js
+import cookieParser from "cookie-parser";
+import "dotenv/config";
+import express from "express";
+import "./database/connectdb.js";
+import authRouter from "./routes/auth.route.js";
+import linkRouter from "./routes/link.route.js";
+
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/links", linkRouter);
+
+// solo para el ejemplo de login/token
+app.use(express.static("public"));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log("🔥🔥🔥 http://localhost:" + PORT));
+```
+
+## getLinks
+
+controllers/link.controller.js
+
+```js
+import { Link } from "../models/Link.js";
+
+export const getLinks = async (req, res) => {
+    try {
+        const links = await Link.find({ uid: req.uid }).lean();
+        return res.json({ links });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Error de servidor" });
+    }
+};
+```
+
+routes/link.route.js
+
+```js
+import { Router } from "express";
+import { getLinks } from "../controllers/link.controller.js";
+import { requireToken } from "../middlewares/requireToken.js";
+import { tokenHeaderValidator } from "../middlewares/validatorManager.js";
+
+const router = Router();
+
+router.get("/", tokenHeaderValidator, requireToken, getLinks);
+
+export default router;
+```
+
+## createLink
+
+middlewares/validatorManager.js
+
+```js
+export const linkValidator = [
+    body("longLink", "Formato link incorrecto")
+        .trim()
+        .custom(async (value) => {
+            try {
+                if (!value.startsWith("http")) {
+                    value = "https://" + value;
+                }
+                await axios.get(value);
+                return value;
+            } catch (error) {
+                throw new Error("Link 404 not found");
+            }
+        }),
+    validationResultExpress,
+];
+```
+
+routes/link.route.js
+
+```js
+router.post("/", tokenHeaderValidator, requireToken, linkValidator, createLink);
+```
+
+controllers/link.controller.js
+
+```js
+export const createLink = async (req, res) => {
+    try {
+        const { longLink } = req.body;
+        const link = new Link({ longLink, nanoLink: nanoid(6), uid: req.uid });
+        const newLink = await link.save();
+        res.json({ newLink });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Error de servidor" });
+    }
+};
+```
+
+## removeLink
+
+link.route.js
+
+```js
+router.delete(
+    "/:id",
+    tokenHeaderValidator,
+    requireToken,
+    paramsLinkValidator,
+    removeLink
+);
+```
+
+middlewares/validatorManager.js
+
+```js
+export const paramsLinkValidator = [
+    param("id", "Formato id incorrecto")
+        .trim()
+        .notEmpty()
+        .escape(),
+    validationResultExpress,
+];
+```
+
+link.controller.js
+
+```js
+export const removeLink = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const link = await Link.findById(id);
+
+        if (!link) return res.status(404).json({ error: "no existe link" });
+
+        if (!link.uid.equals(req.uid))
+            return res.status(401).json({ error: "no es tu link payaso 🤡" });
+
+        await link.remove();
+        return res.json({ link });
+    } catch (error) {
+        console.log(error);
+        if (error.kind === "ObjectId")
+            return res.status(403).json({ error: "Formato id incorrecto" });
+        return res.status(500).json({ error: "Error de servidor" });
+    }
+};
+```
+
+## mongo sanitize
+
+-   [express-mongo-sanitize](https://www.npmjs.com/package/express-mongo-sanitize)
