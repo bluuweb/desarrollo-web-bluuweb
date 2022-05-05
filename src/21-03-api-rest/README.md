@@ -1023,6 +1023,174 @@ export const removeLink = async (req, res) => {
 };
 ```
 
+## updateLink
+
+-   [actualizar usando save()](https://mongoosejs.com/docs/documents.html#updating-using-save)
+
+link.route.js
+
+```js
+router.patch(
+    "/:id",
+    requireToken,
+    paramLinkValidator,
+    bodyLinkValidator,
+    updateLink
+);
+```
+
+link.controller.js
+
+```js
+export const updateLink = async (req, res) => {
+    try {
+        const { id } = req.params;
+        let { longLink } = req.body;
+        if (!longLink.startsWith("https://")) {
+            longLink = "https://" + longLink;
+        }
+
+        const link = await Link.findById(id);
+
+        if (!link) return res.status(404).json({ error: "No existe el link" });
+
+        if (!link.uid.equals(req.uid))
+            return res.status(401).json({ error: "No le pertenece ese id 🤡" });
+
+        link.longLink = longLink;
+
+        await link.save();
+
+        return res.json({ link });
+    } catch (error) {
+        console.log(error);
+        if (error.kind === "ObjectId") {
+            return res.status(403).json({ error: "Formato id incorrecto" });
+        }
+        return res.status(500).json({ error: "error de servidor" });
+    }
+};
+```
+
+## get nanoLink (public)
+
+```js
+// router.get("/:id", requireToken, getLink);
+router.get("/:nanoLink", paramNanoLinkValidator, getNanoLink);
+```
+
+```js
+export const paramNanoLinkValidator = [
+    param("nanoLink", "Formato no válido (expressValidator)")
+        .trim()
+        .notEmpty()
+        .escape(),
+    validationResultExpress,
+];
+```
+
+```js
+// busqueda por nanoLink
+export const getNanoLink = async (req, res) => {
+    try {
+        const { nanoLink } = req.params;
+        const link = await Link.findOne({ nanoLink });
+
+        if (!link) return res.status(404).json({ error: "No existe el link" });
+
+        return res.json({ longLink: link.longLink });
+    } catch (error) {
+        console.log(error);
+        if (error.kind === "ObjectId") {
+            return res.status(403).json({ error: "Formato id incorrecto" });
+        }
+        return res.status(500).json({ error: "error de servidor" });
+    }
+};
+```
+
+## Redireccionamiento (opcional)
+
+index.js
+
+```js
+app.use("/", redirectRouter);
+```
+
+redirect.route.js
+
+```js
+import { Router } from "express";
+import { redirectNanoLink } from "../controllers/redirect.controller.js";
+import { paramNanoLinkValidator } from "../middlewares/validatorManager.js";
+const router = Router();
+
+router.get("/:nanoLink", paramNanoLinkValidator, redirectNanoLink);
+
+export default router;
+```
+
+redirect.controller.js
+
+```js
+import { Link } from "../models/Link.js";
+
+export const redirectNanoLink = async (req, res) => {
+    try {
+        const { nanoLink } = req.params;
+        // console.log(nanoLink);
+        const link = await Link.findOne({ nanoLink });
+
+        if (!link)
+            return res.status(404).json({ error: "No existe el nanoLink" });
+
+        return res.redirect(link.longLink);
+    } catch (error) {
+        console.log(error);
+        if (error.kind === "ObjectId") {
+            return res.status(403).json({ error: "Formato id incorrecto" });
+        }
+        return res.status(500).json({ error: "error de servidor" });
+    }
+};
+```
+
 ## mongo sanitize
 
--   [express-mongo-sanitize](https://www.npmjs.com/package/express-mongo-sanitize)
+-   [injection mongodb](https://stackoverflow.com/questions/13436467/javascript-nosql-injection-prevention-in-mongodb)
+-   El problema radica en que se le pueda pasar un objeto a la consulta `{ $ne: 1 }`, [Leer artículo aquí](https://medium.com/@losantiemi/inyecci%C3%B3n-nosql-en-aplicaciones-de-node-js-y-mongodb-3d4d699f13f4)
+-   Pero con Moongose nosotros hicimos un squema, por ende como definimos los campos como String, estos serán interpretados como tal, por ende no se ejecutará el objeto en cuestión.
+
+## Cors
+
+Levantar web public con liveserver para probar app
+
+```sh
+npm i cors
+```
+
+```
+ORIGIN1=http://127.0.0.1:5500
+```
+
+```js
+import cors from "cors";
+
+const app = express();
+
+const whiteList = [process.env.ORIGIN1];
+app.use(
+    cors({
+        origin: function(origin, callback) {
+            if (whiteList.includes(origin)) {
+                return callback(null, origin);
+            }
+            return callback("No autorizado por CORS");
+        },
+    })
+);
+```
+
+## Deploy Heroku
+
+-   [Heroku](https://dashboard.heroku.com/)
