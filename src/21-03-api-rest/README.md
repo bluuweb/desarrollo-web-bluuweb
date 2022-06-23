@@ -9,6 +9,8 @@ Comenzaremos a trabajar en nuestro MERN/MEVN utilizando:
 
 Separaremos lo que es backend del frontend, por ende este mismo proyecto de back nos servirá tanto para Vue o React.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VrLvbzHVT9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 :::tip
 😍😍😍 Más clases en vivo gratis aquí: [twitch.tv/bluuweb](https://www.twitch.tv/bluuweb) 🤙🤙🤙
 :::
@@ -20,7 +22,9 @@ Tienes varias jugosas alternativas:
 2. Si estás viendo un video no olvides regalar un 👍 like y comentario 🙏🏼
 3. También puedes ser miembro del canal de Youtube [click aquí](https://www.youtube.com/channel/UCH7IANkyEcsVW_y1IlpkamQ/join)
 4. Puedes adquirir cursos premium en Udemy 👇🏼👇🏼👇🏼
-   ¿Quiéres apoyar los directos? - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl) - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl) - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
+    - [Curso de HTML + CSS + Bootstrap 5 + Git y más UDEMY](http://curso-bootstrap-5-udemy.bluuweb.cl) 
+    - [Curso de React + Firebase UDEMY](https://curso-react-js-udemy.bluuweb.cl)
+    - [Curso Vue.js + Firebase UDEMY](https://curso-vue-js-udemy.bluuweb.cl)
 
 :::
 

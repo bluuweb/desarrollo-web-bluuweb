@@ -92,6 +92,7 @@ module.exports = {
             "/20-01-node/",
             "/20-02-express/",
             "/21-03-api-rest/",
+            "/21-04-mevn/",
         ],
     },
 
