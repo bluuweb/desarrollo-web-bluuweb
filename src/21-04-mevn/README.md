@@ -160,3 +160,264 @@ const create = () => {
 </script>
 
 ```
+
+## Pinia
+- [pinia.vuejs.org](https://pinia.vuejs.org): Pinia es una biblioteca de tiendas para Vue, le permite compartir un estado entre componentes/páginas.
+
+user-store-setup.js
+```js
+import { defineStore } from "pinia";
+import { api } from "src/boot/axios";
+import { ref } from "vue";
+
+export const useUserStore = defineStore("user", () => {
+  const user = ref(null);
+  const token = ref(null);
+  const expiresIn = ref(null);
+
+  const access = async () => {
+    try {
+      const res = await api.post("/auth/login", {
+        email: "rigo@test.com",
+        password: "123123",
+      });
+      token.value = res.data.token;
+      expiresIn.value = res.data.expiresIn;
+      setTime();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setTime = () => {
+    setTimeout(() => {
+      refreshToken();
+    }, expiresIn.value * 1000 - 6000);
+  };
+
+  const refreshToken = async () => {
+    try {
+      const res = await api.get("/auth/refresh");
+      token.value = res.data.token;
+      expiresIn.value = res.data.expiresIn;
+      setTime();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await api.get("/auth/logout");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      resetStore();
+    }
+  };
+
+  const resetStore = () => {
+    user.value = null;
+    token.value = null;
+    expiresIn.value = null;
+  };
+
+  return {
+    user,
+    token,
+    expiresIn,
+    access,
+    refreshToken,
+    logout,
+  };
+});
+```
+
+IndexPage.vue
+```vue
+<template>
+  <q-page padding>
+    <q-btn @click="userStore.access">Ingresar</q-btn>
+    <q-btn @click="logoutUser">Salir</q-btn>
+    <q-btn @click="createLink">Crear Link</q-btn>
+    {{ userStore.token }} - {{ userStore.expiresIn }}
+  </q-page>
+</template>
+
+<script setup>
+import { api } from "src/boot/axios";
+import { useUserStore } from "../stores/user-store-setup";
+
+const userStore = useUserStore();
+
+// userStore.refreshToken();
+
+const logoutUser = async () => {
+  await userStore.logout();
+};
+
+const createLink = async () => {
+  try {
+    const res = await api({
+      method: "POST",
+      url: "/links",
+      headers: {
+        Authorization: "Bearer " + token.value,
+      },
+      data: {
+        longLink: "https://axios-http.com/docs/req_config",
+      },
+    });
+    console.log(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+</script>
+```
+
+router/routes.js
+```js
+const routes = [
+  {
+    path: "/",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/IndexPage.vue") },
+      {
+        path: "protected",
+        component: () => import("pages/ProtectedPage.vue"),
+        meta: {
+          auth: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/ErrorNotFound.vue"),
+  },
+];
+
+export default routes;
+```
+
+router/index.js
+```js
+import { route } from "quasar/wrappers";
+import {
+  createRouter,
+  createMemoryHistory,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
+import routes from "./routes";
+
+import { useUserStore } from "../stores/user-store-setup";
+
+export default route(function (/* { store, ssrContext } */) {
+  const createHistory = process.env.SERVER
+    ? createMemoryHistory
+    : process.env.VUE_ROUTER_MODE === "history"
+    ? createWebHistory
+    : createWebHashHistory;
+
+  const Router = createRouter({
+    scrollBehavior: () => ({ left: 0, top: 0 }),
+    routes,
+    history: createHistory(process.env.VUE_ROUTER_BASE),
+  });
+
+  Router.beforeEach(async (to, from, next) => {
+    const authRequired = to.meta?.auth;
+    const userStore = useUserStore();
+
+    if (authRequired) {
+      await userStore.refreshToken();
+      if (userStore.token) {
+        return next();
+      } else {
+        return next("/");
+      }
+    }
+    next();
+  });
+
+  return Router;
+});
+```
+
+## Ayudante localstorage
+Ahora bien, en las rutas protegidas no tenemos problemas, pero si tenemos una sesión de usuario iniciada y este refresca el sitio web en una ruta que no sea protegida, perdemos el token. Por ende nos vamos ayudar de localstorage.
+
+:::warning
+Tomar en consideración que **no guardamos el token en localstorage**, solo es un ayudante para no hacer solicitudes innecesarias.
+:::
+
+```js
+const access = async () => {
+  try {
+    const res = await api.post("/auth/login", {
+      email: "rigo@test.com",
+      password: "123123",
+    });
+    token.value = res.data.token;
+    expiresIn.value = res.data.expiresIn;
+    localStorage.setItem("user", true);
+    setTime();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const refreshToken = async () => {
+  try {
+    const res = await api.get("/auth/refresh");
+    token.value = res.data.token;
+    expiresIn.value = res.data.expiresIn;
+    setTime();
+  } catch (error) {
+    console.log(error);
+    localStorage.removeItem("user");
+  }
+};
+
+const logout = async () => {
+  try {
+    await api.get("/auth/logout");
+  } catch (error) {
+    console.log(error);
+  } finally {
+    resetStore();
+    localStorage.removeItem("user");
+  }
+};
+```
+
+router/index.js
+```js
+Router.beforeEach(async (to, from, next) => {
+  const authRequired = to.meta?.auth;
+  const userStore = useUserStore();
+
+  if (localStorage.getItem("user")) {
+    await userStore.refreshToken();
+    if (userStore.token) {
+      return next();
+    } else {
+      localStorage.removeItem("user");
+      return next("/");
+    }
+  }
+
+  if (authRequired) {
+    await userStore.refreshToken();
+    if (userStore.token) {
+      return next();
+    } else {
+      return next("/");
+    }
+  }
+  next();
+});
+```
