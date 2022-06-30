@@ -421,3 +421,220 @@ Router.beforeEach(async (to, from, next) => {
   next();
 });
 ```
+
+## Login & Register
+
+- [errors axios](https://axios-http.com/es/docs/handling_errors)
+- [q-form quasar](https://quasar.dev/vue-components/form)
+- [regex email](http://w3.unpocodetodo.info/utiles/regex-ejemplos.php?type=email)
+
+pinia
+```js
+const access = async (email, password) => {
+    try {
+    const res = await api.post("/auth/login", {
+      email,
+      password,
+    });
+    console.log(res);
+    token.value = res.data.token;
+    expiresIn.value = res.data.expiresIn;
+    sessionStorage.setItem("user", "🔥🔥");
+    setTime();
+    return res.data;
+  } catch (error) {
+    //https://axios-http.com/es/docs/handling_errors
+    if (error.response) {
+      // console.log(error.response.data);
+      throw error.response.data;
+    } else if (error.request) {
+      // console.log(error.request);
+    } else {
+      // console.log("Error", error.message);
+    }
+    throw { error: "error de servidor" };
+  }
+};
+```
+
+login
+```vue
+<template>
+  <q-page padding class="row justify-center">
+    <div class="col-12 col-sm-6 col-md-4">
+      <h3>Login {{ userStore.token }}</h3>
+      <!-- https://quasar.dev/vue-components/form -->
+      <!-- http://w3.unpocodetodo.info/utiles/regex-ejemplos.php?type=email -->
+      <q-form @submit.prevent="handleSubmit" ref="form">
+        <q-input
+          v-model="email"
+          type="text"
+          label="Ingrese correo electrónico"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Por favor escriba algo',
+            (val) =>
+              /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(val) ||
+              'Formato Email incorrecto',
+          ]"
+        ></q-input>
+        <q-input
+          v-model="password"
+          type="password"
+          label="Ingrese contraseña"
+          :rules="[
+            (val) =>
+              (val && val.length > 5) || 'Contraseña mayor a 6 carácteres',
+          ]"
+        ></q-input>
+        <div class="q-mt-sm">
+          <q-btn label="Login" type="submit" color="primary"></q-btn>
+        </div>
+      </q-form>
+    </div>
+  </q-page>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useUserStore } from "../stores/user-store";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
+
+const $q = useQuasar();
+const router = useRouter();
+const userStore = useUserStore();
+
+const email = ref("");
+const password = ref("");
+const form = ref(null);
+
+const handleSubmit = async () => {
+  try {
+    if (await form.value.validate()) {
+      await userStore.access(email.value, password.value);
+      email.value = "";
+      password.value = "";
+      router.push("/");
+    }
+  } catch (error) {
+    console.log("desde loginComponents: ", error);
+    if (error.error) {
+      alertError(error.error);
+    }
+    if (error.errors) {
+      alertError(error.errors[0].msg);
+    }
+  }
+};
+
+const alertError = (message = "Error de servidor") => {
+  $q.dialog({
+    title: "Error",
+    message: message,
+  });
+};
+
+// const resetValidation = () => form.value.resetValidation();
+</script>
+```
+
+Register
+```vue
+<template>
+  <q-page padding class="row justify-center">
+    <div class="col-12 col-sm-6 col-md-4">
+      <h3>Login {{ userStore.token }}</h3>
+      <!-- https://quasar.dev/vue-components/form -->
+      <!-- http://w3.unpocodetodo.info/utiles/regex-ejemplos.php?type=email -->
+      <q-form @submit.prevent="handleSubmit" ref="form">
+        <q-input
+          v-model="email"
+          type="text"
+          label="Ingrese correo electrónico"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Por favor escriba algo',
+            (val) =>
+              /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(val) ||
+              'Formato Email incorrecto',
+          ]"
+        ></q-input>
+        <q-input
+          v-model="password"
+          type="password"
+          label="Ingrese contraseña"
+          :rules="[
+            (val) =>
+              (val && val.length > 5) || 'Contraseña mayor a 6 carácteres',
+          ]"
+        ></q-input>
+        <q-input
+          v-model="repassword"
+          type="password"
+          label="Ingrese contraseña"
+          :rules="[
+            (val) =>
+              (val && val === password) || 'No coinciden las contraseñas',
+          ]"
+        ></q-input>
+        <div class="q-mt-sm">
+          <q-btn label="Login" type="submit" color="primary"></q-btn>
+        </div>
+      </q-form>
+    </div>
+  </q-page>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useUserStore } from "../stores/user-store";
+import { useRouter } from "vue-router";
+import { dialogAlertError } from "../composables/alertError";
+
+const router = useRouter();
+const userStore = useUserStore();
+const { alertError } = dialogAlertError();
+
+const email = ref("");
+const password = ref("");
+const repassword = ref("");
+const form = ref(null);
+
+const handleSubmit = async () => {
+  try {
+    if (await form.value.validate()) {
+      await userStore.register(email.value, password.value, repassword.value);
+      email.value = "";
+      password.value = "";
+      repassword.value = "";
+      router.push("/");
+    }
+  } catch (error) {
+    console.log("desde loginComponents: ", error);
+    if (error.error) {
+      alertError(error.error);
+    }
+    if (error.errors) {
+      alertError(error.errors[0].msg);
+    }
+  }
+};
+</script>
+```
+
+composables
+```js
+import { useQuasar } from "quasar";
+
+export const dialogAlertError = () => {
+  const $q = useQuasar();
+
+  const alertError = (message = "Error de servidor") => {
+    $q.dialog({
+      title: "Error",
+      message: message,
+    });
+  };
+
+  return { alertError };
+};
+```
