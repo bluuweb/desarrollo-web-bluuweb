@@ -638,3 +638,166 @@ export const dialogAlertError = () => {
   return { alertError };
 };
 ```
+
+## Environment variables
+- En Quasar puedes pasar las variables de entorno directamente en el archivo quasar.config.js
+- [handling process env](https://quasar.dev/quasar-cli-webpack/handling-process-env)
+
+quasar.config.js
+```js
+module.exports = function (ctx) {
+
+  build: {
+      // ctx.env será para modo desarrollo
+      env: {
+        API: ctx.dev
+          ? 'https://dev.api.com'
+          : 'https://prod.api.com'
+      }
+  }
+
+}
+```
+
+## Redirección
+routes.js
+```js
+import { api } from "src/boot/axios";
+
+const redirectLink = async (to, from, next) => {
+  try {
+    const { data } = await api.get(`links/${to.params.nanoid}`);
+    window.location.href = data.longLink;
+    next();
+  } catch (error) {
+    next("/404");
+  }
+};
+
+const routes = [
+  {
+    path: "/",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/IndexPage.vue"),
+        meta: {
+          auth: true,
+        },
+      },
+      {
+        path: "/:nanoid",
+        component: () => import("pages/RedirectPage.vue"),
+        beforeEnter: redirectLink,
+      },
+    ],
+  },
+  {
+    path: "/404",
+    component: () => import("pages/ErrorNotFound.vue"),
+  },
+  {
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/ErrorNotFound.vue"),
+  },
+];
+
+export default routes;
+
+```
+
+RedirectPage.vue
+```vue
+<template>
+  <q-page class="q-pa-md text-center q-pt-xl">
+    <h3>Te estamos redirigiendo a tu destino...</h3>
+    <q-circular-progress
+      indeterminate
+      size="50px"
+      color="primary"
+      class="q-ma-md"
+    />
+  </q-page>
+</template>
+
+<script setup></script>
+```
+
+## resetValidation
+1. Establecer los q-input en **lazy-rules** (la validación comienza después del primer desenfoque)
+2. Agregue una ref al form
+3. [más info aquí](https://quasar.dev/vue-components/input#internal-validation)
+
+```vue{9,19,35,39}
+<script setup>
+import { ref } from "vue";
+import { useLinkStore } from "src/stores/link-store";
+import { useNotify } from "../componsables/notifyHook";
+
+const useLink = useLinkStore();
+const { showNotify } = useNotify();
+
+const formAddLink = ref(null);
+const link = ref("");
+const loading = ref(false);
+
+const addLink = async () => {
+  try {
+    loading.value = true;
+    await useLink.createLink(link.value);
+    showNotify("Link agregado con éxito", "green");
+    link.value = "";
+    formAddLink.value.resetValidation();
+  } catch (error) {
+    console.log(error.errors);
+    if (error.errors) {
+      return error.errors.forEach((item) => {
+        showNotify(item.msg);
+      });
+    }
+    showNotify(error);
+  } finally {
+    loading.value = false;
+  }
+};
+</script>
+
+<template>
+  <q-form @submit.prevent="addLink" ref="formAddLink">
+    <q-input
+      v-model="link"
+      label="Ingrese link aquí"
+      lazy-rules
+      :rules="[(val) => (val && val.trim() !== '') || 'Escribe algo por favor']"
+    ></q-input>
+    <q-btn
+      class="q-mt-sm full-width"
+      label="Agregar"
+      color="primary"
+      type="submit"
+      :loading="loading"
+    ></q-btn>
+  </q-form>
+</template>
+```
+
+## Producción
+- Backend:
+  - [railway.app](https://railway.app/)
+  - [render.com](https://render.com/)
+  - [heroku.com](https://www.heroku.com/)
+- Frontend:
+  - [netlify.com](https://www.netlify.com/)
+  - [firebase.com](https://firebase.google.com/)
+
+### Frontend deploy
+-   [fuente](https://stackoverflow.com/questions/56468161/netlify-does-not-recognize-the-url-params-when-using-react-router-dom)
+-   Crear archivo `_redirects` en `public` con:
+
+```
+/* /index.html 200
+```
+
+- Subir carpeta dist/spa
+- Posterior al deploy del backend cambiar variables de entorno en: quasar.config.js
