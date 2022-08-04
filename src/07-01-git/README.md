@@ -126,7 +126,7 @@ git status -sb //Hace lo mismo que el comando anterior
 **Vim** es el editor de código en la línea de comandos
 
 ::: warning Salir del modo edición "Vim"
-Para salir del modo edición de la líneas de comando precionar `:q`, en caso de realizar algún cambio sin guardar escribir `:qa` <br>
+Para salir del modo edición de la líneas de comando presionar `:q`, en caso de realizar algún cambio sin guardar escribir `:qa` <br>
 `:q!` también sirve para salir sin guardar
 :::
 
